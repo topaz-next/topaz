@@ -24,11 +24,11 @@
 #include "../entities/mobentity.h"
 #include "../entities/trustentity.h"
 #include "../items/item_weapon.h"
+#include "../mobskill.h"
 #include "../packets/char_sync.h"
 #include "../packets/entity_update.h"
 #include "../packets/message_standard.h"
 #include "../packets/trust_sync.h"
-#include "../mobskill.h"
 #include "../status_effect_container.h"
 #include "../weapon_skill.h"
 #include "../zone_instance.h"
@@ -42,14 +42,14 @@ std::vector<TrustSpell_ID*> g_PTrustIDList;
 
 struct Trust_t
 {
-    uint32 trustID;
-    look_t look;          // appearance data
-    string_t name;        // script name string
-    string_t packet_name; // packet name string
-    ECOSYSTEM EcoSystem;  // ecosystem
+    uint32    trustID;
+    look_t    look;        // appearance data
+    string_t  name;        // script name string
+    string_t  packet_name; // packet name string
+    ECOSYSTEM EcoSystem;   // ecosystem
 
-    uint8 name_prefix;
-    uint8 size; // размер модели
+    uint8  name_prefix;
+    uint8  size; // размер модели
     uint16 m_Family;
 
     uint16 behaviour;
@@ -61,7 +61,7 @@ struct Trust_t
 
     uint16 cmbDmgMult;
     uint16 cmbDelay;
-    uint8 speed;
+    uint8  speed;
     // stat ranks
     uint8 strRank;
     uint8 dexRank;
@@ -78,7 +78,7 @@ struct Trust_t
     uint16 m_MobSkillList;
 
     // magic stuff
-    bool hasSpellScript;
+    bool   hasSpellScript;
     uint16 spellList;
 
     // resists
@@ -277,8 +277,8 @@ void SpawnTrust(CCharEntity* PMaster, uint32 TrustID)
 
 CTrustEntity* LoadTrust(CCharEntity* PMaster, uint32 TrustID)
 {
-    auto* PTrust = new CTrustEntity(PMaster);
-    auto trustData = *std::find_if(g_PTrustList.begin(), g_PTrustList.end(), [TrustID](Trust_t* t) { return t->trustID == TrustID; });
+    auto* PTrust    = new CTrustEntity(PMaster);
+    auto* trustData = *std::find_if(g_PTrustList.begin(), g_PTrustList.end(), [TrustID](Trust_t* t) { return t->trustID == TrustID; });
 
     PTrust->loc              = PMaster->loc;
     PTrust->m_OwnerID.id     = PMaster->id;
@@ -313,11 +313,11 @@ CTrustEntity* LoadTrust(CCharEntity* PMaster, uint32 TrustID)
     LoadTrustStatsAndSkills(PTrust);
 
     // Use Mob formulas to work out base "weapon" damage, but scale down to reasonable values.
-    auto mobStyleDamage = static_cast<float>(mobutils::GetWeaponDamage(PTrust));
-    auto baseDamage = mobStyleDamage * 0.5f;
+    auto mobStyleDamage   = static_cast<float>(mobutils::GetWeaponDamage(PTrust));
+    auto baseDamage       = mobStyleDamage * 0.5f;
     auto damageMultiplier = static_cast<float>(trustData->cmbDmgMult) / 100.0f;
-    auto adjustedDamage = baseDamage * damageMultiplier;
-    auto finalDamage = std::max(adjustedDamage, 1.0f);
+    auto adjustedDamage   = baseDamage * damageMultiplier;
+    auto finalDamage      = std::max(adjustedDamage, 1.0f);
 
     (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_MAIN]))->setDamage(static_cast<uint16>(finalDamage));
     (dynamic_cast<CItemWeapon*>(PTrust->m_Weapons[SLOT_RANGED]))->setDamage(static_cast<uint16>(finalDamage));
@@ -351,9 +351,9 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 
     // Helpers to map HP/MPScale around 100 to 1-7 grades
     // std::clamp doesn't play nice with uint8, so -> unsigned int
-    auto mapRanges = [](unsigned int inputStart, unsigned int inputEnd, unsigned int outputStart, unsigned int outputEnd, unsigned int inputVal) -> unsigned int
-    {
-        unsigned int inputRange = inputEnd - inputStart;
+    auto mapRanges = [](unsigned int inputStart, unsigned int inputEnd, unsigned int outputStart, unsigned int outputEnd,
+                        unsigned int inputVal) -> unsigned int {
+        unsigned int inputRange  = inputEnd - inputStart;
         unsigned int outputRange = outputEnd - outputStart;
 
         unsigned int output = (inputVal - inputStart) * outputRange / inputRange + outputStart;
@@ -361,11 +361,10 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         return std::clamp(output, outputStart, outputEnd);
     };
 
-    auto scaleToGrade = [mapRanges](float input) -> unsigned int
-    {
-        unsigned int multipliedInput = static_cast<unsigned int>(input * 100U);
+    auto scaleToGrade = [mapRanges](float input) -> unsigned int {
+        unsigned int multipliedInput    = static_cast<unsigned int>(input * 100U);
         unsigned int reverseMappedGrade = mapRanges(70U, 140U, 1U, 7U, multipliedInput);
-        unsigned int outputGrade = std::clamp(7U - reverseMappedGrade, 1U, 7U);
+        unsigned int outputGrade        = std::clamp(7U - reverseMappedGrade, 1U, 7U);
         return outputGrade;
     };
 
@@ -377,29 +376,29 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
     // http://ffxi-stat-calc.sourceforge.net/cgi-bin/ffxistats.cgi?mode=document
 
     // HP
-    float raceStat = 0;
-    float jobStat = 0;
-    float sJobStat = 0;
+    float raceStat  = 0;
+    float jobStat   = 0;
+    float sJobStat  = 0;
     int32 bonusStat = 0;
 
-    int32 baseValueColumn = 0;
-    int32 scaleTo60Column = 1;
+    int32 baseValueColumn   = 0;
+    int32 scaleTo60Column   = 1;
     int32 scaleOver30Column = 2;
     int32 scaleOver60Column = 3;
     int32 scaleOver75Column = 4;
-    int32 scaleOver60 = 2;
-    int32 scaleOver75 = 3;
+    int32 scaleOver60       = 2;
+    int32 scaleOver75       = 3;
 
     uint8 grade;
 
-    int32 mainLevelOver30 = std::clamp(mLvl - 30, 0, 30);
-    int32 mainLevelUpTo60 = (mLvl < 60 ? mLvl - 1 : 59);
+    int32 mainLevelOver30     = std::clamp(mLvl - 30, 0, 30);
+    int32 mainLevelUpTo60     = (mLvl < 60 ? mLvl - 1 : 59);
     int32 mainLevelOver60To75 = std::clamp(mLvl - 60, 0, 15);
-    int32 mainLevelOver75 = (mLvl < 75 ? 0 : mLvl - 75);
+    int32 mainLevelOver75     = (mLvl < 75 ? 0 : mLvl - 75);
 
-    int32 mainLevelOver10 = (mLvl < 10 ? 0 : mLvl - 10);
+    int32 mainLevelOver10           = (mLvl < 10 ? 0 : mLvl - 10);
     int32 mainLevelOver50andUnder60 = std::clamp(mLvl - 50, 0, 10);
-    int32 mainLevelOver60 = (mLvl < 60 ? 0 : mLvl - 60);
+    int32 mainLevelOver60           = (mLvl < 60 ? 0 : mLvl - 60);
 
     int32 subLevelOver10 = std::clamp(sLvl - 10, 0, 20);
     int32 subLevelOver30 = (sLvl < 30 ? 0 : sLvl - 30);
@@ -430,7 +429,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 
     // MP
     raceStat = 0;
-    jobStat = 0;
+    jobStat  = 0;
     sJobStat = 0;
 
     grade = scaleToGrade(PTrust->MPscale);
@@ -458,7 +457,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 
     if (sLvl > 0)
     {
-        grade = grade::GetJobGrade(sJob, 1);
+        grade    = grade::GetJobGrade(sJob, 1);
         sJobStat = grade::GetMPScale(grade, 0) + grade::GetMPScale(grade, scaleTo60Column);
     }
 
@@ -531,7 +530,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         {
             PTrust->WorkingSkills.skill[i] = static_cast<uint16>(maxSkill * map_config.alter_ego_skill_multiplier);
         }
-        else //if the mob is WAR/BLM and can cast spell
+        else // if the mob is WAR/BLM and can cast spell
         {
             // set skill as high as main level, so their spells won't get resisted
             uint16 maxSubSkill = battleutils::GetMaxSkill((SKILLTYPE)i, sJob, mLvl > 99 ? 99 : mLvl);
@@ -575,7 +574,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 
     // Default TP selectors
     controller->m_GambitsContainer->tp_trigger = G_TP_TRIGGER::ASAP;
-    controller->m_GambitsContainer->tp_select = G_SELECT::RANDOM;
+    controller->m_GambitsContainer->tp_select  = G_SELECT::RANDOM;
 
     auto skillList = battleutils::GetMobSkillList(PTrust->m_MobSkillList);
     for (uint16 skill_id : skillList)
@@ -590,12 +589,8 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
                 break;
             }
 
-            skill = TrustSkill_t {
-                G_REACTION::WS,
-                skill_id,
-                PWeaponSkill->getPrimarySkillchain(),
-                PWeaponSkill->getSecondarySkillchain(),
-                PWeaponSkill->getTertiarySkillchain(),
+            skill = TrustSkill_t{
+                G_REACTION::WS, skill_id, PWeaponSkill->getPrimarySkillchain(), PWeaponSkill->getSecondarySkillchain(), PWeaponSkill->getTertiarySkillchain(),
             };
         }
         else // MobSkills
@@ -609,9 +604,9 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
             skill = {
                 G_REACTION::MS,
                 skill_id,
-                skill.primary = PMobSkill->getPrimarySkillchain(),
+                skill.primary   = PMobSkill->getPrimarySkillchain(),
                 skill.secondary = PMobSkill->getSecondarySkillchain(),
-                skill.tertiary = PMobSkill->getTertiarySkillchain(),
+                skill.tertiary  = PMobSkill->getTertiarySkillchain(),
             };
 
             controller->m_GambitsContainer->tp_skills.emplace_back(skill);

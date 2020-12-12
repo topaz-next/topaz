@@ -27,16 +27,15 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "basic.h"
 
 /************************************************************************
-*																		*
-*  																		*
-*																		*
-************************************************************************/
+ *																		*
+ *  																		*
+ *																		*
+ ************************************************************************/
 
 class CAddtoEquipSet : public CBasicPacket
 {
 public:
-
-    CAddtoEquipSet(uint8* data);
+    CAddtoEquipSet(uint8* orig);
 };
 
 #endif

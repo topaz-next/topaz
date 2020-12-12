@@ -22,7 +22,7 @@
 #include "lua_action.h"
 #include "../packets/action.h"
 
-CLuaAction::CLuaAction(lua_State *L)
+CLuaAction::CLuaAction(lua_State* L)
 {
     if (!lua_isnil(L, -1) && !lua_isnil(L, -2))
     {
@@ -39,7 +39,6 @@ CLuaAction::CLuaAction(action_t* Action)
 {
     m_PLuaAction = Action;
 }
-
 
 int32 CLuaAction::ID(lua_State* L)
 {
@@ -65,11 +64,9 @@ int32 CLuaAction::recast(lua_State* L)
         m_PLuaAction->recast = (uint16)lua_tointeger(L, 1);
         return 0;
     }
-    else
-    {
-        lua_pushinteger(L, m_PLuaAction->recast);
-        return 1;
-    }
+
+    lua_pushinteger(L, m_PLuaAction->recast);
+    return 1;
 }
 
 int32 CLuaAction::actionID(lua_State* L)
@@ -79,11 +76,9 @@ int32 CLuaAction::actionID(lua_State* L)
         m_PLuaAction->actionid = (uint16)lua_tointeger(L, 1);
         return 0;
     }
-    else
-    {
-        lua_pushinteger(L, m_PLuaAction->actionid);
-        return 1;
-    }
+
+    lua_pushinteger(L, m_PLuaAction->actionid);
+    return 1;
 }
 
 inline int32 CLuaAction::param(lua_State* L)
@@ -98,11 +93,9 @@ inline int32 CLuaAction::param(lua_State* L)
                 actionList.actionTargets[0].param = (int32)lua_tointeger(L, 2);
                 return 0;
             }
-            else
-            {
-                lua_pushinteger(L, actionList.actionTargets[0].param);
-                return 1;
-            }
+
+            lua_pushinteger(L, actionList.actionTargets[0].param);
+            return 1;
         }
     }
     return 0;
@@ -120,11 +113,9 @@ inline int32 CLuaAction::messageID(lua_State* L)
                 actionList.actionTargets[0].messageID = (uint16)lua_tointeger(L, 2);
                 return 0;
             }
-            else
-            {
-                lua_pushinteger(L, actionList.actionTargets[0].messageID);
-                return 1;
-            }
+
+            lua_pushinteger(L, actionList.actionTargets[0].messageID);
+            return 1;
         }
     }
     return 0;
@@ -142,11 +133,9 @@ int32 CLuaAction::animation(lua_State* L)
                 actionList.actionTargets[0].animation = (uint16)lua_tointeger(L, 2);
                 return 0;
             }
-            else
-            {
-                lua_pushinteger(L, actionList.actionTargets[0].animation);
-                return 1;
-            }
+
+            lua_pushinteger(L, actionList.actionTargets[0].animation);
+            return 1;
         }
     }
     return 0;
@@ -164,11 +153,9 @@ int32 CLuaAction::speceffect(lua_State* L)
                 actionList.actionTargets[0].speceffect = static_cast<SPECEFFECT>(lua_tointeger(L, 2));
                 return 0;
             }
-            else
-            {
-                lua_pushinteger(L, actionList.actionTargets[0].speceffect);
-                return 1;
-            }
+
+            lua_pushinteger(L, actionList.actionTargets[0].speceffect);
+            return 1;
         }
     }
     return 0;
@@ -186,11 +173,9 @@ int32 CLuaAction::reaction(lua_State* L)
                 actionList.actionTargets[0].reaction = static_cast<REACTION>(lua_tointeger(L, 2));
                 return 0;
             }
-            else
-            {
-                lua_pushinteger(L, actionList.actionTargets[0].reaction);
-                return 1;
-            }
+
+            lua_pushinteger(L, actionList.actionTargets[0].reaction);
+            return 1;
         }
     }
     return 0;
@@ -208,11 +193,9 @@ inline int32 CLuaAction::additionalEffect(lua_State* L)
                 actionList.actionTargets[0].additionalEffect = static_cast<SUBEFFECT>(lua_tointeger(L, 2));
                 return 0;
             }
-            else
-            {
-                lua_pushinteger(L, actionList.actionTargets[0].additionalEffect);
-                return 1;
-            }
+
+            lua_pushinteger(L, actionList.actionTargets[0].additionalEffect);
+            return 1;
         }
     }
     return 0;
@@ -230,16 +213,13 @@ inline int32 CLuaAction::addEffectParam(lua_State* L)
                 actionList.actionTargets[0].addEffectParam = (int32)lua_tointeger(L, 2);
                 return 0;
             }
-            else
-            {
-                lua_pushinteger(L, actionList.actionTargets[0].addEffectParam);
-                return 1;
-            }
+
+            lua_pushinteger(L, actionList.actionTargets[0].addEffectParam);
+            return 1;
         }
     }
     return 0;
 }
-
 
 int32 CLuaAction::addEffectMessage(lua_State* L)
 {
@@ -253,11 +233,9 @@ int32 CLuaAction::addEffectMessage(lua_State* L)
                 actionList.actionTargets[0].addEffectMessage = (uint16)lua_tointeger(L, 2);
                 return 0;
             }
-            else
-            {
-                lua_pushinteger(L, actionList.actionTargets[0].addEffectMessage);
-                return 1;
-            }
+
+            lua_pushinteger(L, actionList.actionTargets[0].addEffectMessage);
+            return 1;
         }
     }
     return 0;

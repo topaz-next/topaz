@@ -21,38 +21,35 @@
 
 #include "../../common/showmsg.h"
 
-#include <string.h>
 #include "../../common/timer.h"
+#include <cstring>
 
 #include "../ai/ai_container.h"
 
 #include "../lua/luautils.h"
 
 #include "../conquest_system.h"
-#include "../map.h"
 #include "../entities/mobentity.h"
 #include "../entities/npcentity.h"
-#include "zoneutils.h"
-#include "mobutils.h"
 #include "../items/item_weapon.h"
+#include "../map.h"
+#include "../mob_modifier.h"
 #include "../mob_spell_list.h"
 #include "../packets/entity_update.h"
 #include "../zone_instance.h"
-#include "../mob_modifier.h"
+#include "mobutils.h"
+#include "zoneutils.h"
 
-
-std::map<uint16, CZone*> g_PZoneList;   // глобальный массив указателей на игровые зоны
-CNpcEntity*  g_PTrigger;    // триггер для запуска событий
-
+std::map<uint16, CZone*> g_PZoneList; // глобальный массив указателей на игровые зоны
+CNpcEntity*              g_PTrigger;  // триггер для запуска событий
 
 namespace zoneutils
 {
-
 /************************************************************************
-*                                                                       *
-*  Реакция зон на смену времени суток                                   *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Реакция зон на смену времени суток                                   *
+ *                                                                       *
+ ************************************************************************/
 
 void TOTDChange(TIMETYPE TOTD)
 {
@@ -63,11 +60,11 @@ void TOTDChange(TIMETYPE TOTD)
 }
 
 /************************************************************************
-*                                                                       *
-*  Initialize weather for each zone and launch task if not weather      *
-*  static                                                               *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Initialize weather for each zone and launch task if not weather      *
+ *  static                                                               *
+ *                                                                       *
+ ************************************************************************/
 
 void InitializeWeather()
 {
@@ -84,17 +81,18 @@ void InitializeWeather()
             {
                 PZone.second->SetWeather((WEATHER)PZone.second->m_WeatherVector.at(0).common);
 
-                //ShowDebug(CL_YELLOW"zonetuils::InitializeWeather: Static weather of %s updated to %u\n" CL_RESET, PZone.second->GetName(), PZone.second->m_WeatherVector.at(0).m_common);
+                // ShowDebug(CL_YELLOW"zonetuils::InitializeWeather: Static weather of %s updated to %u\n" CL_RESET, PZone.second->GetName(),
+                // PZone.second->m_WeatherVector.at(0).m_common);
             }
             else
             {
                 PZone.second->SetWeather(WEATHER_NONE); // If not weather data found, initialize with WEATHER_NONE
 
-                //ShowDebug(CL_YELLOW"zonetuils::InitializeWeather: Static weather of %s updated to WEATHER_NONE\n" CL_RESET, PZone.second->GetName());
+                // ShowDebug(CL_YELLOW"zonetuils::InitializeWeather: Static weather of %s updated to WEATHER_NONE\n" CL_RESET, PZone.second->GetName());
             }
         }
     }
-    ShowDebug(CL_CYAN"InitializeWeather Finished\n" CL_RESET);
+    ShowDebug(CL_CYAN "InitializeWeather Finished\n" CL_RESET);
 }
 
 void SavePlayTime()
@@ -103,14 +101,14 @@ void SavePlayTime()
     {
         PZone.second->SavePlayTime();
     }
-    ShowDebug(CL_CYAN"Player playtime saving finished\n" CL_RESET);
+    ShowDebug(CL_CYAN "Player playtime saving finished\n" CL_RESET);
 }
 
 /************************************************************************
-*                                                                       *
-*  Возвращаем указатель на класс зоны с указанным ID.                   *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Возвращаем указатель на класс зоны с указанным ID.                   *
+ *                                                                       *
+ ************************************************************************/
 
 CZone* GetZone(uint16 ZoneID)
 {
@@ -125,37 +123,35 @@ CZone* GetZone(uint16 ZoneID)
 CNpcEntity* GetTrigger(uint16 TargID, uint16 ZoneID)
 {
     g_PTrigger->targid = TargID;
-    g_PTrigger->id = ((4096 + ZoneID) << 12) + TargID;
+    g_PTrigger->id     = ((4096 + ZoneID) << 12) + TargID;
 
-    ShowWarning(CL_YELLOW"Server need NPC <%u>\n" CL_RESET, g_PTrigger->id);
+    ShowWarning(CL_YELLOW "Server need NPC <%u>\n" CL_RESET, g_PTrigger->id);
     return g_PTrigger;
 }
 
 /************************************************************************
-*                                                                       *
-*  Получаем указатель на любую сущность по ID                           *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Получаем указатель на любую сущность по ID                           *
+ *                                                                       *
+ ************************************************************************/
 
 CBaseEntity* GetEntity(uint32 ID, uint8 filter)
 {
     uint16 zoneID = (ID >> 12) & 0x0FFF;
-    CZone* PZone = GetZone(zoneID);
+    CZone* PZone  = GetZone(zoneID);
     if (PZone)
     {
         return PZone->GetEntity((uint16)(ID & 0x0FFF), filter);
     }
-    else
-    {
-        return nullptr;
-    }
+
+    return nullptr;
 }
 
 /************************************************************************
-*                                                                       *
-*  Получаем указатель на персонажа по имени                             *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Получаем указатель на персонажа по имени                             *
+ *                                                                       *
+ ************************************************************************/
 
 CCharEntity* GetCharByName(int8* name)
 {
@@ -172,10 +168,10 @@ CCharEntity* GetCharByName(int8* name)
 }
 
 /************************************************************************
-*                                                                       *
-*  Получаем указатель на CCharEntity по id и targid                     *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Получаем указатель на CCharEntity по id и targid                     *
+ *                                                                       *
+ ************************************************************************/
 
 CCharEntity* GetCharFromWorld(uint32 charid, uint16 targid)
 {
@@ -189,7 +185,7 @@ CCharEntity* GetCharFromWorld(uint32 charid, uint16 targid)
         CBaseEntity* PEntity = PZone.second->GetEntity(targid, TYPE_PC);
         if (PEntity != nullptr && PEntity->id == charid)
         {
-            return (CCharEntity*)PEntity;
+            return dynamic_cast<CCharEntity*>(PEntity);
         }
     }
     return nullptr;
@@ -202,51 +198,58 @@ CCharEntity* GetChar(uint32 charid)
         CBaseEntity* PEntity = PZone.second->GetCharByID(charid);
         if (PEntity)
         {
-            return (CCharEntity*)PEntity;
+            return dynamic_cast<CCharEntity*>(PEntity);
         }
     }
     return nullptr;
 }
 
-
 CCharEntity* GetCharToUpdate(uint32 primary, uint32 ternary)
 {
-    CCharEntity* PPrimary = nullptr;
+    CCharEntity* PPrimary   = nullptr;
     CCharEntity* PSecondary = nullptr;
-    CCharEntity* PTernary = nullptr;
+    CCharEntity* PTernary   = nullptr;
 
     for (auto PZone : g_PZoneList)
     {
-        PZone.second->ForEachChar([primary, ternary, &PPrimary, &PSecondary, &PTernary](CCharEntity* PChar)
-        {
+        PZone.second->ForEachChar([primary, ternary, &PPrimary, &PSecondary, &PTernary](CCharEntity* PChar) {
             if (!PPrimary)
             {
                 if (PChar->id == primary)
+                {
                     PPrimary = PChar;
+                }
                 else if (PChar->PParty && PChar->PParty->GetPartyID() == primary)
+                {
                     PSecondary = PChar;
+                }
                 else if (PChar->id == ternary)
+                {
                     PTernary = PChar;
+                }
             }
         });
         if (PPrimary)
+        {
             return PPrimary;
+        }
     }
     if (PSecondary)
+    {
         return PSecondary;
+    }
 
     return PTernary;
 }
 /************************************************************************
-*                                                                       *
-*  Загружаем список NPC в указанную зону                                *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Загружаем список NPC в указанную зону                                *
+ *                                                                       *
+ ************************************************************************/
 
 void LoadNPCList()
 {
-    const char* Query =
-        "SELECT \
+    const char* Query = "SELECT \
           npcid,\
           npc_list.name,\
           pos_rot,\
@@ -275,46 +278,46 @@ void LoadNPCList()
 
     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
     {
-        while(Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
             const char* contentTag = (const char*)Sql_GetData(SqlHandle, 16);
 
-            if (luautils::IsContentEnabled(contentTag) == false)
+            if (!luautils::IsContentEnabled(contentTag))
             {
                 continue;
             }
 
-            uint32 NpcID = Sql_GetUIntData(SqlHandle, 0);
+            uint32 NpcID  = Sql_GetUIntData(SqlHandle, 0);
             uint16 ZoneID = (NpcID - 0x1000000) >> 12;
 
             if (GetZone(ZoneID)->GetType() != ZONETYPE_DUNGEON_INSTANCED)
             {
                 CNpcEntity* PNpc = new CNpcEntity;
-                PNpc->targid = NpcID & 0xFFF;
-                PNpc->id = NpcID;
+                PNpc->targid     = NpcID & 0xFFF;
+                PNpc->id         = NpcID;
 
                 PNpc->name.insert(0, (const char*)Sql_GetData(SqlHandle, 1));
 
                 PNpc->loc.p.rotation = (uint8)Sql_GetIntData(SqlHandle, 2);
-                PNpc->loc.p.x = Sql_GetFloatData(SqlHandle, 3);
-                PNpc->loc.p.y = Sql_GetFloatData(SqlHandle, 4);
-                PNpc->loc.p.z = Sql_GetFloatData(SqlHandle, 5);
-                PNpc->loc.p.moving = (uint16)Sql_GetUIntData(SqlHandle, 6);
+                PNpc->loc.p.x        = Sql_GetFloatData(SqlHandle, 3);
+                PNpc->loc.p.y        = Sql_GetFloatData(SqlHandle, 4);
+                PNpc->loc.p.z        = Sql_GetFloatData(SqlHandle, 5);
+                PNpc->loc.p.moving   = (uint16)Sql_GetUIntData(SqlHandle, 6);
 
                 PNpc->m_TargID = (uint32)Sql_GetUIntData(SqlHandle, 6) >> 16; // вполне вероятно
 
-                PNpc->speed = (uint8)Sql_GetIntData(SqlHandle, 7);    // Overwrites baseentity.cpp's defined speed
+                PNpc->speed    = (uint8)Sql_GetIntData(SqlHandle, 7); // Overwrites baseentity.cpp's defined speed
                 PNpc->speedsub = (uint8)Sql_GetIntData(SqlHandle, 8); // Overwrites baseentity.cpp's defined speedsub
 
-                PNpc->animation = (uint8)Sql_GetIntData(SqlHandle, 9);
+                PNpc->animation    = (uint8)Sql_GetIntData(SqlHandle, 9);
                 PNpc->animationsub = (uint8)Sql_GetIntData(SqlHandle, 10);
 
                 PNpc->namevis = (uint8)Sql_GetIntData(SqlHandle, 11);
-                PNpc->status = (STATUSTYPE)Sql_GetIntData(SqlHandle, 12);
+                PNpc->status  = (STATUSTYPE)Sql_GetIntData(SqlHandle, 12);
                 PNpc->m_flags = (uint32)Sql_GetUIntData(SqlHandle, 13);
 
                 PNpc->name_prefix = (uint8)Sql_GetIntData(SqlHandle, 15);
-                PNpc->widescan = (uint8)Sql_GetIntData(SqlHandle, 17);
+                PNpc->widescan    = (uint8)Sql_GetIntData(SqlHandle, 17);
 
                 memcpy(&PNpc->look, Sql_GetData(SqlHandle, 14), 20);
 
@@ -324,29 +327,21 @@ void LoadNPCList()
     }
 
     // handle npc spawn functions after they're all done loading
-    ForEachZone([](CZone* PZone)
-    {
-        PZone->ForEachNpc([](CNpcEntity* PNpc)
-        {
-            luautils::OnNpcSpawn(PNpc);
-        });
-    });
-
+    ForEachZone([](CZone* PZone) { PZone->ForEachNpc([](CNpcEntity* PNpc) { luautils::OnNpcSpawn(PNpc); }); });
 }
 
 /************************************************************************
-*                                                                       *
-*  Загружаем список монстров в указанную зону                           *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Загружаем список монстров в указанную зону                           *
+ *                                                                       *
+ ************************************************************************/
 
 void LoadMOBList()
 {
     uint8 normalLevelRangeMin = luautils::GetSettingsVariable("NORMAL_MOB_MAX_LEVEL_RANGE_MIN");
     uint8 normalLevelRangeMax = luautils::GetSettingsVariable("NORMAL_MOB_MAX_LEVEL_RANGE_MAX");
 
-    const char* Query =
-        "SELECT mob_groups.zoneid, mobname, mobid, pos_rot, pos_x, pos_y, pos_z, \
+    const char* Query = "SELECT mob_groups.zoneid, mobname, mobid, pos_rot, pos_x, pos_y, pos_z, \
             respawntime, spawntype, dropid, mob_groups.HP, mob_groups.MP, minLevel, maxLevel, \
             modelid, mJob, sJob, cmbSkill, cmbDmgMult, cmbDelay, behavior, links, mobType, immunity, \
             systemid, mobsize, speed, \
@@ -372,7 +367,7 @@ void LoadMOBList()
     {
         while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
-            uint16 ZoneID = (uint16)Sql_GetUIntData(SqlHandle, 0);
+            uint16   ZoneID   = (uint16)Sql_GetUIntData(SqlHandle, 0);
             ZONETYPE zoneType = GetZone(ZoneID)->GetType();
 
             if (zoneType != ZONETYPE_DUNGEON_INSTANCED)
@@ -385,13 +380,13 @@ void LoadMOBList()
                 PMob->targid = (uint16)PMob->id & 0x0FFF;
 
                 PMob->m_SpawnPoint.rotation = (uint8)Sql_GetIntData(SqlHandle, 3);
-                PMob->m_SpawnPoint.x = Sql_GetFloatData(SqlHandle, 4);
-                PMob->m_SpawnPoint.y = Sql_GetFloatData(SqlHandle, 5);
-                PMob->m_SpawnPoint.z = Sql_GetFloatData(SqlHandle, 6);
+                PMob->m_SpawnPoint.x        = Sql_GetFloatData(SqlHandle, 4);
+                PMob->m_SpawnPoint.y        = Sql_GetFloatData(SqlHandle, 5);
+                PMob->m_SpawnPoint.z        = Sql_GetFloatData(SqlHandle, 6);
 
                 PMob->m_RespawnTime = Sql_GetUIntData(SqlHandle, 7) * 1000;
-                PMob->m_SpawnType = (SPAWNTYPE)Sql_GetUIntData(SqlHandle, 8);
-                PMob->m_DropID = Sql_GetUIntData(SqlHandle, 9);
+                PMob->m_SpawnType   = (SPAWNTYPE)Sql_GetUIntData(SqlHandle, 8);
+                PMob->m_DropID      = Sql_GetUIntData(SqlHandle, 9);
 
                 PMob->HPmodifier = (uint32)Sql_GetIntData(SqlHandle, 10);
                 PMob->MPmodifier = (uint32)Sql_GetIntData(SqlHandle, 11);
@@ -404,20 +399,20 @@ void LoadMOBList()
                 PMob->SetMJob(Sql_GetIntData(SqlHandle, 15));
                 PMob->SetSJob(Sql_GetIntData(SqlHandle, 16));
 
-                ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setMaxHit(1);
-                ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setSkillType(Sql_GetIntData(SqlHandle, 17));
+                (dynamic_cast<CItemWeapon*>(PMob->m_Weapons[SLOT_MAIN]))->setMaxHit(1);
+                (dynamic_cast<CItemWeapon*>(PMob->m_Weapons[SLOT_MAIN]))->setSkillType(Sql_GetIntData(SqlHandle, 17));
                 PMob->m_dmgMult = Sql_GetUIntData(SqlHandle, 18);
-                ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
-                ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
+                (dynamic_cast<CItemWeapon*>(PMob->m_Weapons[SLOT_MAIN]))->setDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
+                (dynamic_cast<CItemWeapon*>(PMob->m_Weapons[SLOT_MAIN]))->setBaseDelay((Sql_GetIntData(SqlHandle, 19) * 1000) / 60);
 
                 PMob->m_Behaviour = (uint16)Sql_GetIntData(SqlHandle, 20);
-                PMob->m_Link = (uint8)Sql_GetIntData(SqlHandle, 21);
-                PMob->m_Type = (uint8)Sql_GetIntData(SqlHandle, 22);
-                PMob->m_Immunity = (IMMUNITY)Sql_GetIntData(SqlHandle, 23);
+                PMob->m_Link      = (uint8)Sql_GetIntData(SqlHandle, 21);
+                PMob->m_Type      = (uint8)Sql_GetIntData(SqlHandle, 22);
+                PMob->m_Immunity  = (IMMUNITY)Sql_GetIntData(SqlHandle, 23);
                 PMob->m_EcoSystem = (ECOSYSTEM)Sql_GetIntData(SqlHandle, 24);
                 PMob->m_ModelSize = (uint8)Sql_GetIntData(SqlHandle, 25);
 
-                PMob->speed = (uint8)Sql_GetIntData(SqlHandle, 26);
+                PMob->speed    = (uint8)Sql_GetIntData(SqlHandle, 26);
                 PMob->speedsub = (uint8)Sql_GetIntData(SqlHandle, 26);
 
                 /*if(PMob->speed != 0)
@@ -444,19 +439,19 @@ void LoadMOBList()
                 PMob->setModifier(Mod::HTHRES, (uint16)(Sql_GetFloatData(SqlHandle, 38) * 1000));
                 PMob->setModifier(Mod::IMPACTRES, (uint16)(Sql_GetFloatData(SqlHandle, 39) * 1000));
 
-                PMob->setModifier(Mod::FIRERES, (int16)((Sql_GetFloatData(SqlHandle, 40) - 1) * -100)); // These are stored as floating percentages
-                PMob->setModifier(Mod::ICERES, (int16)((Sql_GetFloatData(SqlHandle, 41) - 1) * -100)); // and need to be adjusted into modifier units.
-                PMob->setModifier(Mod::WINDRES, (int16)((Sql_GetFloatData(SqlHandle, 42) - 1) * -100)); // Higher RES = lower damage.
-                PMob->setModifier(Mod::EARTHRES, (int16)((Sql_GetFloatData(SqlHandle, 43) - 1) * -100)); // Negatives signify lower resist chance.
+                PMob->setModifier(Mod::FIRERES, (int16)((Sql_GetFloatData(SqlHandle, 40) - 1) * -100));    // These are stored as floating percentages
+                PMob->setModifier(Mod::ICERES, (int16)((Sql_GetFloatData(SqlHandle, 41) - 1) * -100));     // and need to be adjusted into modifier units.
+                PMob->setModifier(Mod::WINDRES, (int16)((Sql_GetFloatData(SqlHandle, 42) - 1) * -100));    // Higher RES = lower damage.
+                PMob->setModifier(Mod::EARTHRES, (int16)((Sql_GetFloatData(SqlHandle, 43) - 1) * -100));   // Negatives signify lower resist chance.
                 PMob->setModifier(Mod::THUNDERRES, (int16)((Sql_GetFloatData(SqlHandle, 44) - 1) * -100)); // Positives signify increased resist chance.
                 PMob->setModifier(Mod::WATERRES, (int16)((Sql_GetFloatData(SqlHandle, 45) - 1) * -100));
                 PMob->setModifier(Mod::LIGHTRES, (int16)((Sql_GetFloatData(SqlHandle, 46) - 1) * -100));
                 PMob->setModifier(Mod::DARKRES, (int16)((Sql_GetFloatData(SqlHandle, 47) - 1) * -100));
 
-                PMob->m_Element = (uint8)Sql_GetIntData(SqlHandle, 48);
-                PMob->m_Family = (uint16)Sql_GetIntData(SqlHandle, 49);
+                PMob->m_Element     = (uint8)Sql_GetIntData(SqlHandle, 48);
+                PMob->m_Family      = (uint16)Sql_GetIntData(SqlHandle, 49);
                 PMob->m_name_prefix = (uint8)Sql_GetIntData(SqlHandle, 50);
-                PMob->m_flags = (uint32)Sql_GetIntData(SqlHandle, 51);
+                PMob->m_flags       = (uint32)Sql_GetIntData(SqlHandle, 51);
 
                 // Cap Level if Necessary (Don't Cap NMs)
                 if (normalLevelRangeMin > 0 && !(PMob->m_Type & MOBTYPE_NOTORIOUS) && PMob->m_minLevel > normalLevelRangeMin)
@@ -469,13 +464,15 @@ void LoadMOBList()
                     PMob->m_maxLevel = normalLevelRangeMax;
                 }
 
-                //Special sub animation for Mob (yovra, jailer of love, phuabo)
+                // Special sub animation for Mob (yovra, jailer of love, phuabo)
                 // yovra 1: en hauteur, 2: en bas, 3: en haut
                 // phuabo 1: sous l'eau, 2: sort de l'eau, 3: rentre dans l'eau
                 PMob->animationsub = (uint32)Sql_GetIntData(SqlHandle, 52);
 
                 if (PMob->animationsub != 0)
+                {
                     PMob->setMobMod(MOBMOD_SPAWN_ANIMATIONSUB, PMob->animationsub);
+                }
 
                 // Setup HP / MP Stat Percentage Boost
                 PMob->HPscale = Sql_GetFloatData(SqlHandle, 53);
@@ -489,21 +486,21 @@ void LoadMOBList()
                 PMob->m_Pool = Sql_GetUIntData(SqlHandle, 59);
 
                 PMob->allegiance = Sql_GetUIntData(SqlHandle, 60);
-                PMob->namevis = Sql_GetUIntData(SqlHandle, 61);
-                PMob->m_Aggro = Sql_GetUIntData(SqlHandle, 62);
+                PMob->namevis    = Sql_GetUIntData(SqlHandle, 61);
+                PMob->m_Aggro    = Sql_GetUIntData(SqlHandle, 62);
 
-                PMob->m_roamFlags = (uint16)Sql_GetUIntData(SqlHandle, 63);
+                PMob->m_roamFlags    = (uint16)Sql_GetUIntData(SqlHandle, 63);
                 PMob->m_MobSkillList = Sql_GetUIntData(SqlHandle, 64);
 
                 PMob->m_TrueDetection = Sql_GetUIntData(SqlHandle, 65);
-                PMob->m_Detects = Sql_GetUIntData(SqlHandle, 66);
+                PMob->m_Detects       = Sql_GetUIntData(SqlHandle, 66);
 
                 PMob->setMobMod(MOBMOD_CHARMABLE, Sql_GetUIntData(SqlHandle, 67));
 
                 // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable
                 // can be set in mob_spawn_mods or in their onInitialize
-                if (PMob->m_Type & MOBTYPE_EVENT || PMob->m_Type & MOBTYPE_FISHED || PMob->m_Type & MOBTYPE_BATTLEFIELD ||
-                    PMob->m_Type & MOBTYPE_NOTORIOUS || zoneType == ZONETYPE_BATTLEFIELD || zoneType == ZONETYPE_DYNAMIS)
+                if (PMob->m_Type & MOBTYPE_EVENT || PMob->m_Type & MOBTYPE_FISHED || PMob->m_Type & MOBTYPE_BATTLEFIELD || PMob->m_Type & MOBTYPE_NOTORIOUS ||
+                    zoneType == ZONETYPE_BATTLEFIELD || zoneType == ZONETYPE_DYNAMIS)
                 {
                     PMob->setMobMod(MOBMOD_CHARMABLE, 0);
                 }
@@ -517,10 +514,8 @@ void LoadMOBList()
     }
 
     // handle mob initialise functions after they're all loaded
-    ForEachZone([](CZone* PZone)
-    {
-        PZone->ForEachMob([](CMobEntity* PMob)
-        {
+    ForEachZone([](CZone* PZone) {
+        PZone->ForEachMob([](CMobEntity* PMob) {
             luautils::OnMobInitialize(PMob);
             luautils::ApplyMixins(PMob);
             luautils::ApplyZoneMixins(PMob);
@@ -540,8 +535,7 @@ void LoadMOBList()
     });
 
     // attach pets to mobs
-    const char* PetQuery =
-        "SELECT mob_groups.zoneid, mob_mobid, pet_offset \
+    const char* PetQuery = "SELECT mob_groups.zoneid, mob_mobid, pet_offset \
         FROM mob_pets \
         LEFT JOIN mob_spawn_points ON mob_pets.mob_mobid = mob_spawn_points.mobid \
         LEFT JOIN mob_groups ON mob_spawn_points.groupid = mob_groups.groupid \
@@ -555,16 +549,18 @@ void LoadMOBList()
     {
         while (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
         {
-            uint16 ZoneID = (uint16)Sql_GetUIntData(SqlHandle, 0);
-            uint32 masterid = (uint32)Sql_GetUIntData(SqlHandle,1);
-            uint32 petid = masterid + (uint32)Sql_GetUIntData(SqlHandle,2);
+            uint16 ZoneID   = (uint16)Sql_GetUIntData(SqlHandle, 0);
+            uint32 masterid = (uint32)Sql_GetUIntData(SqlHandle, 1);
+            uint32 petid    = masterid + (uint32)Sql_GetUIntData(SqlHandle, 2);
 
-            CMobEntity* PMaster = (CMobEntity*)GetZone(ZoneID)->GetEntity(masterid & 0x0FFF, TYPE_MOB);
-            CMobEntity* PPet = (CMobEntity*)GetZone(ZoneID)->GetEntity(petid & 0x0FFF, TYPE_MOB);
+            CMobEntity* PMaster = dynamic_cast<CMobEntity*>(GetZone(ZoneID)->GetEntity(masterid & 0x0FFF, TYPE_MOB));
+            CMobEntity* PPet    = dynamic_cast<CMobEntity*>(GetZone(ZoneID)->GetEntity(petid & 0x0FFF, TYPE_MOB));
 
             if (PMaster == nullptr)
             {
-                ShowError("zoneutils::loadMOBList PMaster is NULL. masterid: %d. Make sure x,y,z are not zeros, and that all entities are entered in the database!\n", masterid);
+                ShowError(
+                    "zoneutils::loadMOBList PMaster is NULL. masterid: %d. Make sure x,y,z are not zeros, and that all entities are entered in the database!\n",
+                    masterid);
             }
             else if (PPet == nullptr)
             {
@@ -578,7 +574,7 @@ void LoadMOBList()
             {
                 // pet is always spawned by master
                 PPet->m_AllowRespawn = false;
-                PPet->m_SpawnType = SPAWNTYPE_SCRIPTED;
+                PPet->m_SpawnType    = SPAWNTYPE_SCRIPTED;
                 PPet->SetDespawnTime(0s);
 
                 PMaster->PPet = PPet;
@@ -589,50 +585,43 @@ void LoadMOBList()
 }
 
 /************************************************************************
-*                                                                       *
-*  Creates a new zone.                                                  *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Creates a new zone.                                                  *
+ *                                                                       *
+ ************************************************************************/
 
 CZone* CreateZone(uint16 ZoneID)
 {
-    static const char* Query =
-        "SELECT zonetype FROM zone_settings "
-        "WHERE zoneid = %u LIMIT 1";
+    static const char* Query = "SELECT zonetype FROM zone_settings "
+                               "WHERE zoneid = %u LIMIT 1";
 
-    if (Sql_Query(SqlHandle, Query, ZoneID) != SQL_ERROR &&
-        Sql_NumRows(SqlHandle) != 0 &&
-        Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    if (Sql_Query(SqlHandle, Query, ZoneID) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
     {
         if ((ZONETYPE)Sql_GetUIntData(SqlHandle, 0) == ZONETYPE_DUNGEON_INSTANCED)
         {
             return new CZoneInstance((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
         }
-        else
-        {
-            return new CZone((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
-        }
+
+        return new CZone((ZONEID)ZoneID, GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID));
     }
-    else
-    {
-        ShowFatalError(CL_RED"zoneutils::CreateZone: Cannot load zone settings (%u)\n" CL_RESET, ZoneID);
-        return nullptr;
-    }
+
+    ShowFatalError(CL_RED "zoneutils::CreateZone: Cannot load zone settings (%u)\n" CL_RESET, ZoneID);
+    return nullptr;
 }
 
 /************************************************************************
-*                                                                       *
-*  Инициализация зон. Возрождаем всех монстров при старте сервера.      *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Инициализация зон. Возрождаем всех монстров при старте сервера.      *
+ *                                                                       *
+ ************************************************************************/
 
 void LoadZoneList()
 {
     TracyZoneScoped;
-    g_PTrigger = new CNpcEntity();  // нужно в конструкторе CNpcEntity задавать модель по умолчанию
+    g_PTrigger = new CNpcEntity(); // нужно в конструкторе CNpcEntity задавать модель по умолчанию
 
     std::vector<uint16> zones;
-    const char* query = "SELECT zoneid FROM zone_settings WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
+    const char*         query = "SELECT zoneid FROM zone_settings WHERE IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -674,10 +663,10 @@ void LoadZoneList()
 }
 
 /************************************************************************
-*                                                                       *
-*  Узнаем текущий регион по номеру зоны                                 *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Узнаем текущий регион по номеру зоны                                 *
+ *                                                                       *
+ ************************************************************************/
 
 REGIONTYPE GetCurrentRegion(uint16 ZoneID)
 {
@@ -975,10 +964,10 @@ REGIONTYPE GetCurrentRegion(uint16 ZoneID)
 }
 
 /************************************************************************
-*                                                                       *
-*                                                                       *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *                                                                       *
+ *                                                                       *
+ ************************************************************************/
 
 CONTINENTTYPE GetCurrentContinent(uint16 ZoneID)
 {
@@ -992,37 +981,36 @@ int GetWeatherElement(WEATHER weather)
     // TODO: Fix weather ordering; at the moment, this current fire, water, earth, wind, snow, thunder
     // order MUST be preserved due to the weather enums going in this order. Those enums will
     // most likely have rippling effects, such as how weather data is stored in the db
-    static uint8 Element[] =
-    {
-        0,  //WEATHER_NONE
-        0,  //WEATHER_SUNSHINE
-        0,  //WEATHER_CLOUDS
-        0,  //WEATHER_FOG
-        1,  //WEATHER_HOT_SPELL
-        1,  //WEATHER_HEAT_WAVE
-        6,  //WEATHER_RAIN
-        6,  //WEATHER_SQUALL
-        4,  //WEATHER_DUST_STORM
-        4,  //WEATHER_SAND_STORM
-        3,  //WEATHER_WIND
-        3,  //WEATHER_GALES
-        2,  //WEATHER_SNOW
-        2,  //WEATHER_BLIZZARDS
-        5,  //WEATHER_THUNDER
-        5,  //WEATHER_THUNDERSTORMS
-        7,  //WEATHER_AURORAS
-        7,  //WEATHER_STELLAR_GLARE
-        8,  //WEATHER_GLOOM
-        8,  //WEATHER_DARKNESS
+    static uint8 Element[] = {
+        0, // WEATHER_NONE
+        0, // WEATHER_SUNSHINE
+        0, // WEATHER_CLOUDS
+        0, // WEATHER_FOG
+        1, // WEATHER_HOT_SPELL
+        1, // WEATHER_HEAT_WAVE
+        6, // WEATHER_RAIN
+        6, // WEATHER_SQUALL
+        4, // WEATHER_DUST_STORM
+        4, // WEATHER_SAND_STORM
+        3, // WEATHER_WIND
+        3, // WEATHER_GALES
+        2, // WEATHER_SNOW
+        2, // WEATHER_BLIZZARDS
+        5, // WEATHER_THUNDER
+        5, // WEATHER_THUNDERSTORMS
+        7, // WEATHER_AURORAS
+        7, // WEATHER_STELLAR_GLARE
+        8, // WEATHER_GLOOM
+        8, // WEATHER_DARKNESS
     };
     return Element[weather];
 }
 
 /************************************************************************
-*                                                                       *
-*  Освобождаем список зон                                               *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Освобождаем список зон                                               *
+ *                                                                       *
+ ************************************************************************/
 
 void FreeZoneList()
 {
@@ -1035,7 +1023,7 @@ void FreeZoneList()
     g_PTrigger = nullptr;
 }
 
-void ForEachZone(std::function<void(CZone*)> func)
+void ForEachZone(const std::function<void(CZone*)>& func)
 {
     for (auto PZone : g_PZoneList)
     {
@@ -1045,7 +1033,7 @@ void ForEachZone(std::function<void(CZone*)> func)
 
 uint64 GetZoneIPP(uint16 zoneID)
 {
-    uint64 ipp = 0;
+    uint64      ipp   = 0;
     const char* query = "SELECT zoneip, zoneport FROM zone_settings WHERE zoneid = %u;";
 
     int ret = Sql_Query(SqlHandle, query, zoneID);
@@ -1058,16 +1046,16 @@ uint64 GetZoneIPP(uint16 zoneID)
     }
     else
     {
-        ShowFatalError(CL_RED"zoneutils::GetZoneIPP: Cannot find zone %u\n" CL_RESET, zoneID);
+        ShowFatalError(CL_RED "zoneutils::GetZoneIPP: Cannot find zone %u\n" CL_RESET, zoneID);
     }
     return ipp;
 }
 
 /************************************************************************
-*                                                                       *
-*  Checks whether or not the zone is a residential area                 *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Checks whether or not the zone is a residential area                 *
+ *                                                                       *
+ ************************************************************************/
 
 bool IsResidentialArea(CCharEntity* PChar)
 {

@@ -21,54 +21,54 @@
 
 #include "jailutils.h"
 
-#include "../entities/charentity.h"
 #include "../conquest_system.h"
+#include "../entities/charentity.h"
 
 #include "../ai/ai_container.h"
 #include "../ai/controllers/player_controller.h"
 
 /************************************************************************
-*                                                                       *
-*                                                                       *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *                                                                       *
+ *                                                                       *
+ ************************************************************************/
 
 namespace jailutils
 {
-    /************************************************************************
-    *                                                                       *
-    *                                                                       *
-    *                                                                       *
-    ************************************************************************/
+/************************************************************************
+ *                                                                       *
+ *                                                                       *
+ *                                                                       *
+ ************************************************************************/
 
-    bool InPrison(CCharEntity* PChar)
-    {
-        return PChar->m_GMlevel == 0 && PChar->getZone() == ZONE_MORDION_GAOL;
-    }
+bool InPrison(CCharEntity* PChar)
+{
+    return PChar->m_GMlevel == 0 && PChar->getZone() == ZONE_MORDION_GAOL;
+}
 
-    /************************************************************************
-    *                                                                       *
-    *                                                                       *
-    *                                                                       *
-    ************************************************************************/
+/************************************************************************
+ *                                                                       *
+ *                                                                       *
+ *                                                                       *
+ ************************************************************************/
 
-    void Add(CCharEntity* PChar)
-    {
-        PChar->PAI->SetController(nullptr);
+void Add(CCharEntity* PChar)
+{
+    PChar->PAI->SetController(nullptr);
 
-        // TODO:
-    }
+    // TODO:
+}
 
-    /************************************************************************
-    *                                                                       *
-    *                                                                       *
-    *                                                                       *
-    ************************************************************************/
+/************************************************************************
+ *                                                                       *
+ *                                                                       *
+ *                                                                       *
+ ************************************************************************/
 
-    void Del(CCharEntity* PChar)
-    {
-        PChar->PAI->SetController(std::make_unique<CPlayerController>(PChar));
+void Del(CCharEntity* PChar)
+{
+    PChar->PAI->SetController(std::make_unique<CPlayerController>(PChar));
 
-        // TODO:
-    }
-};
+    // TODO:
+}
+}; // namespace jailutils

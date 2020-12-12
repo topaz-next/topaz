@@ -21,14 +21,14 @@
 
 ===========================================================================
 */
-#include <time.h>
+#include <ctime>
 
-#include "roe.h"
-#include "vana_time.h"
 #include "lua/luautils.h"
 #include "packets/chat_message.h"
+#include "roe.h"
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
+#include "vana_time.h"
 
 #include "packets/roe_questlog.h"
 #include "packets/roe_sparkupdate.h"
@@ -37,7 +37,7 @@
 #define ROE_CACHETIME 15
 
 std::array<RoeCheckHandler, ROE_NONE> RoeHandlers;
-RoeSystemData roeutils::RoeSystem;
+RoeSystemData                         roeutils::RoeSystem;
 
 void SaveEminenceDataNice(CCharEntity* PChar)
 {
@@ -155,13 +155,13 @@ int32 ParseTimedSchedule(lua_State* L)
     lua_pushnil(L);
     while (lua_next(L, -2) != 0)
     {
-        uint8 day = static_cast<uint8>(lua_tointeger(L, -2)-1);
+        uint8 day = static_cast<uint8>(lua_tointeger(L, -2) - 1);
 
         lua_pushnil(L);
         while (lua_next(L, -2) != 0)
         {
-            auto block = lua_tointeger(L, -2)-1;
-            uint16 recordID = static_cast<uint16>(lua_tointeger(L, -1));
+            auto   block                                           = lua_tointeger(L, -2) - 1;
+            uint16 recordID                                        = static_cast<uint16>(lua_tointeger(L, -1));
             roeutils::RoeSystem.TimedRecordTable.at(day).at(block) = recordID;
             lua_pop(L, 1);
         }
@@ -187,8 +187,8 @@ bool event(ROE_EVENT eventID, CCharEntity* PChar, const RoeDatagramList& payload
         return false;
     }
 
-    lua_State* L = luautils::LuaHandle;
-    uint32 stackTop = lua_gettop(L);
+    lua_State* L        = luautils::LuaHandle;
+    uint32     stackTop = lua_gettop(L);
     lua_getglobal(L, "tpz");
     lua_getfield(L, -1, "roe");
 
@@ -199,7 +199,7 @@ bool event(ROE_EVENT eventID, CCharEntity* PChar, const RoeDatagramList& payload
         if (handler.bitmap.test(PChar->m_eminenceLog.active[i]))
         {
             lua_getfield(L, -1, "onRecordTrigger");
-            uint8 args { 0 };
+            uint8 args{ 0 };
 
             CLuaBaseEntity LuaAllyEntity(PChar);
             Lunar<CLuaBaseEntity>::push(L, &LuaAllyEntity);
@@ -216,22 +216,22 @@ bool event(ROE_EVENT eventID, CCharEntity* PChar, const RoeDatagramList& payload
             lua_pushinteger(L, PChar->m_eminenceLog.progress[i]);
             lua_setfield(L, -2, "progress");
 
-            for (auto& datagram : payload)  // Append datagrams to param table
+            for (const auto& datagram : payload) // Append datagrams to param table
             {
                 lua_pushstring(L, datagram.luaKey.c_str());
                 switch (datagram.type)
                 {
-                case RoeDatagramPayload::mob:
-                {
-                    CLuaBaseEntity LuaMobEntity(datagram.data.mobEntity);
-                    Lunar<CLuaBaseEntity>::push(L, &LuaMobEntity);
-                    break;
-                }
-                case RoeDatagramPayload::uinteger:
-                {
-                    lua_pushinteger(L, datagram.data.uinteger);
-                    break;
-                }
+                    case RoeDatagramPayload::mob:
+                    {
+                        CLuaBaseEntity LuaMobEntity(datagram.data.mobEntity);
+                        Lunar<CLuaBaseEntity>::push(L, &LuaMobEntity);
+                        break;
+                    }
+                    case RoeDatagramPayload::uinteger:
+                    {
+                        lua_pushinteger(L, datagram.data.uinteger);
+                        break;
+                    }
                 }
                 lua_settable(L, -3);
             }
@@ -249,17 +249,21 @@ bool event(ROE_EVENT eventID, CCharEntity* PChar, const RoeDatagramList& payload
 
 bool event(ROE_EVENT eventID, CCharEntity* PChar, const RoeDatagram& data) // shorthand for single-datagram calls.
 {
-    return event(eventID, PChar, RoeDatagramList { data });
+    return event(eventID, PChar, RoeDatagramList{ data });
 }
 
 void SetEminenceRecordCompletion(CCharEntity* PChar, uint16 recordID, bool newStatus)
 {
     uint16 page = recordID / 8;
-    uint8 bit = recordID % 8;
+    uint8  bit  = recordID % 8;
     if (newStatus)
+    {
         PChar->m_eminenceLog.complete[page] |= (1 << bit);
+    }
     else
+    {
         PChar->m_eminenceLog.complete[page] &= ~(1 << bit);
+    }
 
     for (int i = 0; i < 4; i++)
     {
@@ -271,7 +275,7 @@ void SetEminenceRecordCompletion(CCharEntity* PChar, uint16 recordID, bool newSt
 bool GetEminenceRecordCompletion(CCharEntity* PChar, uint16 recordID)
 {
     uint16 page = recordID / 8;
-    uint8 bit = recordID % 8;
+    uint8  bit  = recordID % 8;
     return PChar->m_eminenceLog.complete[page] & (1 << bit);
 }
 
@@ -308,7 +312,7 @@ bool AddEminenceRecord(CCharEntity* PChar, uint16 recordID)
             charutils::SaveEminenceData(PChar);
             return true;
         }
-        else if (PChar->m_eminenceLog.active[i] == recordID)
+        if (PChar->m_eminenceLog.active[i] == recordID)
         {
             return false;
         }
@@ -322,7 +326,7 @@ bool DelEminenceRecord(CCharEntity* PChar, uint16 recordID)
     {
         if (PChar->m_eminenceLog.active[i] == recordID)
         {
-            PChar->m_eminenceLog.active[i] = 0;
+            PChar->m_eminenceLog.active[i]   = 0;
             PChar->m_eminenceLog.progress[i] = 0;
             PChar->m_eminenceCache.activemap.reset(recordID);
             // Shift entries up so records are shown in retail-accurate order.
@@ -384,25 +388,27 @@ void onCharLoad(CCharEntity* PChar)
     }
 
     // Build eminence lookup map
-    for (int i = 0; i < 31; i++)
+    for (unsigned short record : PChar->m_eminenceLog.active)
     {
-        uint16 record = PChar->m_eminenceLog.active[i];
-        if (record) PChar->m_eminenceCache.activemap.set(record);
+        if (record)
+        {
+            PChar->m_eminenceCache.activemap.set(record);
+        }
     }
 
     // Only chars with First Step Forward complete can get timed/daily records
     if (GetEminenceRecordCompletion(PChar, 1))
     {
         // Time gets messy, avert your eyes.
-        auto jstnow = time(nullptr) + JST_OFFSET;
+        auto jstnow     = time(nullptr) + JST_OFFSET;
         auto lastOnline = PChar->lastOnline;
 
-        {   // Daily Reset
-            auto* jst = gmtime(&jstnow);
-            jst->tm_hour = 0;
-            jst->tm_min = 0;
-            jst->tm_sec = 0;
-            auto lastJstMidnight = timegm(jst) - JST_OFFSET;     // Unix timestamp of the last JST midnight
+        { // Daily Reset
+            auto* jst            = gmtime(&jstnow);
+            jst->tm_hour         = 0;
+            jst->tm_min          = 0;
+            jst->tm_sec          = 0;
+            auto lastJstMidnight = timegm(jst) - JST_OFFSET; // Unix timestamp of the last JST midnight
 
             if (lastOnline < lastJstMidnight)
             {
@@ -410,12 +416,12 @@ void onCharLoad(CCharEntity* PChar)
             }
         }
 
-        {   // 4hr Reset
-            auto* jst = gmtime(&jstnow);
-            jst->tm_hour = jst->tm_hour & 0xFC;
-            jst->tm_min = 0;
-            jst->tm_sec = 0;
-            auto lastJstTimedBlock = timegm(jst) - JST_OFFSET;   // Unix timestamp of the start of the current 4-hr block
+        { // 4hr Reset
+            auto* jst              = gmtime(&jstnow);
+            jst->tm_hour           = jst->tm_hour & 0xFC;
+            jst->tm_min            = 0;
+            jst->tm_sec            = 0;
+            auto lastJstTimedBlock = timegm(jst) - JST_OFFSET; // Unix timestamp of the start of the current 4-hr block
 
             if (lastOnline < lastJstTimedBlock || PChar->m_eminenceLog.active[30] != GetActiveTimedRecord())
             {
@@ -428,7 +434,7 @@ void onCharLoad(CCharEntity* PChar)
 
 uint16 GetActiveTimedRecord()
 {
-    uint8 day = static_cast<uint8>(CVanaTime::getInstance()->getJstWeekDay());
+    uint8 day   = static_cast<uint8>(CVanaTime::getInstance()->getJstWeekDay());
     uint8 block = static_cast<uint8>(CVanaTime::getInstance()->getJstHour() / 4);
     return RoeSystem.TimedRecordTable[day][block];
 }
@@ -440,7 +446,7 @@ void AddActiveTimedRecord(CCharEntity* PChar)
     PChar->m_eminenceCache.activemap &= ~RoeSystem.TimedRecords;
 
     // Add current timed record to slot 31
-    auto timedRecordID = GetActiveTimedRecord();
+    auto timedRecordID              = GetActiveTimedRecord();
     PChar->m_eminenceLog.active[30] = timedRecordID;
     PChar->m_eminenceCache.activemap.set(timedRecordID);
     PChar->pushPacket(new CRoeUpdatePacket(PChar));
@@ -450,7 +456,6 @@ void AddActiveTimedRecord(CCharEntity* PChar)
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, timedRecordID, 0, MSGBASIC_ROE_TIMED));
         SetEminenceRecordCompletion(PChar, timedRecordID, false);
     }
-
 }
 
 void ClearDailyRecords(CCharEntity* PChar)
@@ -469,14 +474,16 @@ void ClearDailyRecords(CCharEntity* PChar)
     for (auto record : RoeSystem.DailyRecordIDs)
     {
         uint16 page = record / 8;
-        uint8 bit = record % 8;
+        uint8  bit  = record % 8;
         PChar->m_eminenceLog.complete[page] &= ~(1 << bit);
     }
 
     charutils::SaveEminenceData(PChar);
 
     for (int i = 0; i < 4; i++)
+    {
         PChar->pushPacket(new CRoeQuestLogPacket(PChar, i));
+    }
 }
 
 void CycleTimedRecords()
@@ -487,8 +494,8 @@ void CycleTimedRecords()
         return;
     }
 
-    zoneutils::ForEachZone([](CZone* PZone){
-        PZone->ForEachChar([](CCharEntity* PChar){
+    zoneutils::ForEachZone([](CZone* PZone) {
+        PZone->ForEachChar([](CCharEntity* PChar) {
             if (GetEminenceRecordCompletion(PChar, 1))
             {
                 AddActiveTimedRecord(PChar);
@@ -505,13 +512,7 @@ void CycleDailyRecords()
         return;
     }
 
-    zoneutils::ForEachZone([](CZone* PZone){
-        PZone->ForEachChar([](CCharEntity* PChar){
-            ClearDailyRecords(PChar);
-        });
-    });
+    zoneutils::ForEachZone([](CZone* PZone) { PZone->ForEachChar([](CCharEntity* PChar) { ClearDailyRecords(PChar); }); });
 }
 
-
-} /* namespace roe */
-
+} // namespace roeutils

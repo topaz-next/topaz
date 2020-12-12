@@ -4,17 +4,16 @@
 #include "../../../common/cbasetypes.h"
 #include "../../entities/charentity.h"
 #include "../../entities/trustentity.h"
-#include "../ai_container.h"
-#include "../controllers/trust_controller.h"
 #include "../../mob_spell_container.h"
 #include "../../status_effect.h"
 #include "../../status_effect_container.h"
+#include "../ai_container.h"
+#include "../controllers/trust_controller.h"
 
 #include <set>
 
 namespace gambits
 {
-
 enum class G_TARGET : uint16
 {
     SELF       = 0,
@@ -64,17 +63,17 @@ enum class G_REACTION : uint16
 
 enum class G_SELECT : uint16
 {
-    HIGHEST    = 0,
-    LOWEST     = 1,
-    SPECIFIC   = 2,
-    RANDOM     = 3,
-    MB_ELEMENT = 4,
+    HIGHEST       = 0,
+    LOWEST        = 1,
+    SPECIFIC      = 2,
+    RANDOM        = 3,
+    MB_ELEMENT    = 4,
     SPECIAL_AYAME = 5,
 };
 
 enum class G_TP_TRIGGER : uint16
 {
-    ASAP = 0,
+    ASAP   = 0,
     RANDOM = 1,
     OPENER = 2,
     CLOSER = 3,
@@ -82,9 +81,9 @@ enum class G_TP_TRIGGER : uint16
 
 struct Predicate_t
 {
-    G_TARGET target;
+    G_TARGET    target;
     G_CONDITION condition;
-    uint32 condition_arg = 0;
+    uint32      condition_arg = 0;
 
     bool parseInput(std::string key, uint32 value)
     {
@@ -112,8 +111,8 @@ struct Predicate_t
 struct Action_t
 {
     G_REACTION reaction;
-    G_SELECT select;
-    uint32 select_arg = 0;
+    G_SELECT   select;
+    uint32     select_arg = 0;
 
     bool parseInput(std::string key, uint32 value)
     {
@@ -141,9 +140,9 @@ struct Action_t
 struct Gambit_t
 {
     std::vector<Predicate_t> predicates;
-    std::vector<Action_t> actions;
-    uint16 retry_delay = 0;
-    time_point last_used;
+    std::vector<Action_t>    actions;
+    uint16                   retry_delay = 0;
+    time_point               last_used;
 };
 
 // TODO
@@ -156,65 +155,43 @@ struct Chain_t
 struct TrustSkill_t
 {
     G_REACTION skill_type;
-    uint32 skill_id;
-    uint8 primary;
-    uint8 secondary;
-    uint8 tertiary;
+    uint32     skill_id;
+    uint8      primary;
+    uint8      secondary;
+    uint8      tertiary;
 };
 
 class CGambitsContainer
 {
 public:
     CGambitsContainer(CTrustEntity* trust)
-        : POwner(trust)
+    : POwner(trust)
     {
     }
     ~CGambitsContainer() = default;
 
-    void AddGambit(Gambit_t gambit);
+    void AddGambit(const Gambit_t& gambit);
     void Tick(time_point tick);
 
     // TODO: make private
     std::vector<TrustSkill_t> tp_skills;
-    G_TP_TRIGGER tp_trigger;
-    G_SELECT tp_select;
+    G_TP_TRIGGER              tp_trigger;
+    G_SELECT                  tp_select;
 
 private:
     bool CheckTrigger(CBattleEntity* trigger_target, Predicate_t& predicate);
     bool TryTrustSkill();
 
-    CTrustEntity* POwner;
-    time_point m_lastAction;
+    CTrustEntity*         POwner;
+    time_point            m_lastAction;
     std::vector<Gambit_t> gambits;
 
-    std::set<JOBTYPE> melee_jobs =
-    {
-        JOB_WAR,
-        JOB_MNK,
-        JOB_THF,
-        JOB_PLD,
-        JOB_DRK,
-        JOB_BST,
-        JOB_SAM,
-        JOB_NIN,
-        JOB_DRG,
-        JOB_BLU,
-        JOB_PUP,
-        JOB_DNC,
-        JOB_RUN,
+    std::set<JOBTYPE> melee_jobs = {
+        JOB_WAR, JOB_MNK, JOB_THF, JOB_PLD, JOB_DRK, JOB_BST, JOB_SAM, JOB_NIN, JOB_DRG, JOB_BLU, JOB_PUP, JOB_DNC, JOB_RUN,
     };
 
-    std::set<JOBTYPE> caster_jobs =
-    {
-        JOB_WHM,
-        JOB_BLM,
-        JOB_RDM,
-        JOB_BRD,
-        JOB_SMN,
-        JOB_BLU,
-        JOB_SCH,
-        JOB_GEO,
-        JOB_RUN,
+    std::set<JOBTYPE> caster_jobs = {
+        JOB_WHM, JOB_BLM, JOB_RDM, JOB_BRD, JOB_SMN, JOB_BLU, JOB_SCH, JOB_GEO, JOB_RUN,
     };
 };
 

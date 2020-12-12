@@ -15,7 +15,7 @@ std::unordered_map<CHAR_SUBSTATE, std::unordered_set<uint16>> regular_client_pac
 #endif
 
 std::unordered_map<CHAR_SUBSTATE, std::unordered_map<uint16, bool>> allowList;
-std::unordered_map<uint16, uint32> ratelimitList; // Default will be 0 - No Limit
+std::unordered_map<uint16, uint32>                                  ratelimitList; // Default will be 0 - No Limit
 
 void Init()
 {
@@ -39,7 +39,7 @@ void Init()
     allowList[SUBSTATE_IN_CS][0x05A] = true; // Map Update (Conquest, Besieged, Campaign)
     allowList[SUBSTATE_IN_CS][0x05B] = true; // Event Update (Completion or Update)
     allowList[SUBSTATE_IN_CS][0x05C] = true; // Event Update (Update Player Position)
-    allowList[SUBSTATE_IN_CS][0x060] = true; // Event Update (String Update)  
+    allowList[SUBSTATE_IN_CS][0x060] = true; // Event Update (String Update)
     allowList[SUBSTATE_IN_CS][0x061] = true; // Full Char Update
     allowList[SUBSTATE_IN_CS][0x0B5] = true; // Chat Message
     allowList[SUBSTATE_IN_CS][0x0B6] = true; // Tell Message
@@ -77,8 +77,8 @@ bool IsRateLimitedPacket(CCharEntity* PChar, uint16 SmallPD_Type)
     TracyZoneScoped;
     using namespace std::chrono;
     uint32 lastPacketRecievedTime = PChar->m_PacketRecievedTimestamps[SmallPD_Type];
-    uint32 timeNowSeconds = static_cast<uint32>(time_point_cast<seconds>(server_clock::now()).time_since_epoch().count());
-    uint32 ratelimitTime = ratelimitList[SmallPD_Type];
+    uint32 timeNowSeconds         = static_cast<uint32>(time_point_cast<seconds>(server_clock::now()).time_since_epoch().count());
+    uint32 ratelimitTime          = ratelimitList[SmallPD_Type];
 
     PChar->m_PacketRecievedTimestamps[SmallPD_Type] = timeNowSeconds;
 

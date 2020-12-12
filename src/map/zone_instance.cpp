@@ -21,26 +21,24 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "zone_instance.h"
 #include "../common/timer.h"
+#include "ai/ai_container.h"
 #include "entities/charentity.h"
 #include "lua/luautils.h"
-#include "utils/zoneutils.h"
 #include "status_effect_container.h"
-#include "ai/ai_container.h"
+#include "utils/zoneutils.h"
 
 /************************************************************************
-*                                                                       *
-*  Класс CZoneInstance                                                  *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *  Класс CZoneInstance                                                  *
+ *                                                                       *
+ ************************************************************************/
 
 CZoneInstance::CZoneInstance(ZONEID ZoneID, REGIONTYPE RegionID, CONTINENTTYPE ContinentID)
-    : CZone(ZoneID, RegionID, ContinentID)
+: CZone(ZoneID, RegionID, ContinentID)
 {
 }
 
-CZoneInstance::~CZoneInstance()
-{
-}
+CZoneInstance::~CZoneInstance() = default;
 
 CCharEntity* CZoneInstance::GetCharByName(int8* name)
 {
@@ -48,7 +46,10 @@ CCharEntity* CZoneInstance::GetCharByName(int8* name)
     for (const auto& instance : instanceList)
     {
         PEntity = instance->GetCharByName(name);
-        if (PEntity) break;
+        if (PEntity)
+        {
+            break;
+        }
     }
     return PEntity;
 }
@@ -59,7 +60,10 @@ CCharEntity* CZoneInstance::GetCharByID(uint32 id)
     for (const auto& instance : instanceList)
     {
         PEntity = instance->GetCharByID(id);
-        if (PEntity) break;
+        if (PEntity)
+        {
+            break;
+        }
     }
     return PEntity;
 }
@@ -72,7 +76,10 @@ CBaseEntity* CZoneInstance::GetEntity(uint16 targid, uint8 filter)
         for (const auto& instance : instanceList)
         {
             PEntity = instance->GetEntity(targid, filter);
-            if (PEntity) break;
+            if (PEntity)
+            {
+                break;
+            }
         }
     }
     return PEntity;
@@ -158,10 +165,7 @@ void CZoneInstance::DecreaseZoneCounter(CCharEntity* PChar)
         {
             if (instance->Failed() || instance->Completed())
             {
-                instanceList.erase(std::find_if(instanceList.begin(), instanceList.end(), [&instance](const auto& el)
-                {
-                    return el.get() == instance;
-                }));
+                instanceList.erase(std::find_if(instanceList.begin(), instanceList.end(), [&instance](const auto& el) { return el.get() == instance; }));
             }
             else
             {
@@ -177,7 +181,7 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
     TPZ_DEBUG_BREAK_IF(PChar->loc.zone != nullptr);
     TPZ_DEBUG_BREAK_IF(PChar->PTreasurePool != nullptr);
 
-    //return char to instance (d/c or logout)
+    // return char to instance (d/c or logout)
     if (!PChar->PInstance)
     {
         for (const auto& instance : instanceList)
@@ -203,7 +207,7 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
 
         if (PChar->targid >= 0x700)
         {
-            ShowError(CL_RED"CZone::InsertChar : targid is high (03hX)\n" CL_RESET, PChar->targid);
+            ShowError(CL_RED "CZone::InsertChar : targid is high (03hX)\n" CL_RESET, PChar->targid);
             return;
         }
 
@@ -232,7 +236,7 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
     }
     else
     {
-        //instance no longer exists: put them outside (at exit)
+        // instance no longer exists: put them outside (at exit)
         PChar->loc.prevzone = GetID();
 
         uint16 zoneid = luautils::OnInstanceLoadFailed(this);
@@ -356,7 +360,7 @@ void CZoneInstance::ForEachChar(std::function<void(CCharEntity*)> func)
     {
         for (auto PChar : instance->GetCharList())
         {
-            func((CCharEntity*)PChar.second);
+            func(dynamic_cast<CCharEntity*>(PChar.second));
         }
     }
 }
@@ -365,7 +369,7 @@ void CZoneInstance::ForEachCharInstance(CBaseEntity* PEntity, std::function<void
 {
     for (auto PChar : PEntity->PInstance->GetCharList())
     {
-        func((CCharEntity*)PChar.second);
+        func(dynamic_cast<CCharEntity*>(PChar.second));
     }
 }
 
@@ -373,7 +377,7 @@ void CZoneInstance::ForEachMobInstance(CBaseEntity* PEntity, std::function<void(
 {
     for (auto PMob : PEntity->PInstance->m_mobList)
     {
-        func((CMobEntity*)PMob.second);
+        func(dynamic_cast<CMobEntity*>(PMob.second));
     }
 }
 

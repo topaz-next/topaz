@@ -1,32 +1,31 @@
 ﻿#include "gambits_container.h"
 
 #include "../../ability.h"
-#include "../../enmity_container.h"
-#include "../../spell.h"
-#include "../../mobskill.h"
-#include "../../weapon_skill.h"
 #include "../../ai/states/ability_state.h"
-#include "../../ai/states/mobskill_state.h"
 #include "../../ai/states/magic_state.h"
+#include "../../ai/states/mobskill_state.h"
 #include "../../ai/states/range_state.h"
 #include "../../ai/states/weaponskill_state.h"
+#include "../../enmity_container.h"
+#include "../../mobskill.h"
+#include "../../spell.h"
 #include "../../utils/battleutils.h"
 #include "../../utils/trustutils.h"
-
-#include "../controllers/player_controller.h"
 #include "../../weapon_skill.h"
+
+#include "../../weapon_skill.h"
+#include "../controllers/player_controller.h"
 
 namespace gambits
 {
-
 // Validate gambit before it's inserted into the gambit list
 // Check levels, etc.
-void CGambitsContainer::AddGambit(Gambit_t gambit)
+void CGambitsContainer::AddGambit(const Gambit_t& gambit)
 {
     TracyZoneScoped;
 
     bool available = true;
-    for (auto& action : gambit.actions)
+    for (const auto& action : gambit.actions)
     {
         if (action.reaction == G_REACTION::MA && action.select == G_SELECT::SPECIFIC)
         {
@@ -53,19 +52,16 @@ void CGambitsContainer::Tick(time_point tick)
 
     // TODO: Is this necessary?
     // Not already doing something
-    if (POwner->PAI->IsCurrentState<CAbilityState>() ||
-        POwner->PAI->IsCurrentState<CRangeState>() ||
-        POwner->PAI->IsCurrentState<CMagicState>() ||
-        POwner->PAI->IsCurrentState<CWeaponSkillState>() ||
-        POwner->PAI->IsCurrentState<CMobSkillState>())
+    if (POwner->PAI->IsCurrentState<CAbilityState>() || POwner->PAI->IsCurrentState<CRangeState>() || POwner->PAI->IsCurrentState<CMagicState>() ||
+        POwner->PAI->IsCurrentState<CWeaponSkillState>() || POwner->PAI->IsCurrentState<CMobSkillState>())
     {
         return;
     }
 
     auto random_offset = static_cast<std::chrono::milliseconds>(tpzrand::GetRandomNumber(1000, 2500));
-    m_lastAction = tick + random_offset;
+    m_lastAction       = tick + random_offset;
 
-    auto controller = static_cast<CTrustController*>(POwner->PAI->GetController());
+    auto* controller = dynamic_cast<CTrustController*>(POwner->PAI->GetController());
 
     // Deal with TP skills before any gambits
     // TODO: Should this be its own special gambit?
@@ -74,10 +70,8 @@ void CGambitsContainer::Tick(time_point tick)
         return;
     }
 
-    auto runPredicate = [&](Predicate_t& predicate) -> bool
-    {
-        auto isValidMember = [&](CBattleEntity* PPartyTarget) -> bool
-        {
+    auto runPredicate = [&](Predicate_t& predicate) -> bool {
+        auto isValidMember = [&](CBattleEntity* PPartyTarget) -> bool {
             return PPartyTarget->isAlive() && POwner->loc.zone == PPartyTarget->loc.zone && distance(POwner->loc.p, PPartyTarget->loc.p) <= 15.0f;
         };
 
@@ -85,15 +79,14 @@ void CGambitsContainer::Tick(time_point tick)
         {
             return CheckTrigger(POwner, predicate);
         }
-        else if (predicate.target == G_TARGET::TARGET)
+        if (predicate.target == G_TARGET::TARGET)
         {
             return CheckTrigger(POwner->GetBattleTarget(), predicate);
         }
-        else if (predicate.target == G_TARGET::PARTY)
+        if (predicate.target == G_TARGET::PARTY)
         {
             auto result = false;
-            static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-            {
+            dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
                 if (isValidMember(PMember) && CheckTrigger(PMember, predicate))
                 {
                     result = true;
@@ -101,15 +94,14 @@ void CGambitsContainer::Tick(time_point tick)
             });
             return result;
         }
-        else if (predicate.target == G_TARGET::MASTER)
+        if (predicate.target == G_TARGET::MASTER)
         {
             return CheckTrigger(POwner->PMaster, predicate);
         }
-        else if (predicate.target == G_TARGET::TANK)
+        if (predicate.target == G_TARGET::TANK)
         {
             auto result = false;
-            static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-            {
+            dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
                 if (isValidMember(PMember) && CheckTrigger(PMember, predicate) && (PMember->GetMJob() == JOB_PLD || PMember->GetMJob() == JOB_RUN))
                 {
                     result = true;
@@ -117,11 +109,10 @@ void CGambitsContainer::Tick(time_point tick)
             });
             return result;
         }
-        else if (predicate.target == G_TARGET::MELEE)
+        if (predicate.target == G_TARGET::MELEE)
         {
             auto result = false;
-            static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-            {
+            dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
                 if (isValidMember(PMember) && CheckTrigger(PMember, predicate) && melee_jobs.find(PMember->GetMJob()) != melee_jobs.end())
                 {
                     result = true;
@@ -129,11 +120,10 @@ void CGambitsContainer::Tick(time_point tick)
             });
             return result;
         }
-        else if (predicate.target == G_TARGET::RANGED)
+        if (predicate.target == G_TARGET::RANGED)
         {
             auto result = false;
-            static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-            {
+            dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
                 if (isValidMember(PMember) && CheckTrigger(PMember, predicate) && (PMember->GetMJob() == JOB_RNG || PMember->GetMJob() == JOB_COR))
                 {
                     result = true;
@@ -141,11 +131,10 @@ void CGambitsContainer::Tick(time_point tick)
             });
             return result;
         }
-        else if (predicate.target == G_TARGET::CASTER)
+        if (predicate.target == G_TARGET::CASTER)
         {
             auto result = false;
-            static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-            {
+            dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
                 if (isValidMember(PMember) && CheckTrigger(PMember, predicate) && caster_jobs.find(PMember->GetMJob()) != caster_jobs.end())
                 {
                     result = true;
@@ -153,13 +142,12 @@ void CGambitsContainer::Tick(time_point tick)
             });
             return result;
         }
-        else if (predicate.target == G_TARGET::TOP_ENMITY)
+        if (predicate.target == G_TARGET::TOP_ENMITY)
         {
             auto result = false;
-            if (auto PMob = dynamic_cast<CMobEntity*>(POwner->GetBattleTarget()))
+            if (auto* PMob = dynamic_cast<CMobEntity*>(POwner->GetBattleTarget()))
             {
-                static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                {
+                dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
                     if (isValidMember(PMember) && CheckTrigger(PMember, predicate) && PMob->PEnmityContainer->GetHighestEnmity() == PMember)
                     {
                         result = true;
@@ -192,11 +180,14 @@ void CGambitsContainer::Tick(time_point tick)
                     all_predicates_true = false;
                 }
             }
-            if (!all_predicates_true) { break; }
-
-            auto isValidMember = [this](CBattleEntity* PSettableTarget, CBattleEntity* PPartyTarget)
+            if (!all_predicates_true)
             {
-                return !PSettableTarget && PPartyTarget->isAlive() && POwner->loc.zone == PPartyTarget->loc.zone && distance(POwner->loc.p, PPartyTarget->loc.p) <= 15.0f;
+                break;
+            }
+
+            auto isValidMember = [this](CBattleEntity* PSettableTarget, CBattleEntity* PPartyTarget) {
+                return !PSettableTarget && PPartyTarget->isAlive() && POwner->loc.zone == PPartyTarget->loc.zone &&
+                       distance(POwner->loc.p, PPartyTarget->loc.p) <= 15.0f;
             };
 
             // TODO: This whole section is messy and bonkers
@@ -208,13 +199,12 @@ void CGambitsContainer::Tick(time_point tick)
             }
             else if (gambit.predicates[0].target == G_TARGET::TARGET)
             {
-                auto mob = POwner->GetBattleTarget();
-                target = CheckTrigger(mob, gambit.predicates[0]) ? mob : nullptr;
+                auto* mob = POwner->GetBattleTarget();
+                target    = CheckTrigger(mob, gambit.predicates[0]) ? mob : nullptr;
             }
             else if (gambit.predicates[0].target == G_TARGET::PARTY)
             {
-                static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                {
+                dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
                     if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]))
                     {
                         target = PMember;
@@ -227,9 +217,9 @@ void CGambitsContainer::Tick(time_point tick)
             }
             else if (gambit.predicates[0].target == G_TARGET::TANK)
             {
-                static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                {
-                    if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) && (PMember->GetMJob() == JOB_PLD || PMember->GetMJob() == JOB_RUN))
+                dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
+                    if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) &&
+                        (PMember->GetMJob() == JOB_PLD || PMember->GetMJob() == JOB_RUN))
                     {
                         target = PMember;
                     }
@@ -237,9 +227,9 @@ void CGambitsContainer::Tick(time_point tick)
             }
             else if (gambit.predicates[0].target == G_TARGET::MELEE)
             {
-                static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                {
-                    if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) && melee_jobs.find(PMember->GetMJob()) != melee_jobs.end())
+                dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
+                    if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) &&
+                        melee_jobs.find(PMember->GetMJob()) != melee_jobs.end())
                     {
                         target = PMember;
                     }
@@ -247,9 +237,9 @@ void CGambitsContainer::Tick(time_point tick)
             }
             else if (gambit.predicates[0].target == G_TARGET::RANGED)
             {
-                static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                {
-                    if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) && (PMember->GetMJob() == JOB_RNG || PMember->GetMJob() == JOB_COR))
+                dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
+                    if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) &&
+                        (PMember->GetMJob() == JOB_RNG || PMember->GetMJob() == JOB_COR))
                     {
                         target = PMember;
                     }
@@ -257,9 +247,9 @@ void CGambitsContainer::Tick(time_point tick)
             }
             else if (gambit.predicates[0].target == G_TARGET::CASTER)
             {
-                static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                {
-                    if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) && caster_jobs.find(PMember->GetMJob()) != caster_jobs.end())
+                dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
+                    if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) &&
+                        caster_jobs.find(PMember->GetMJob()) != caster_jobs.end())
                     {
                         target = PMember;
                     }
@@ -267,11 +257,11 @@ void CGambitsContainer::Tick(time_point tick)
             }
             else if (gambit.predicates[0].target == G_TARGET::TOP_ENMITY)
             {
-                if (auto PMob = dynamic_cast<CMobEntity*>(POwner->GetBattleTarget()))
+                if (auto* PMob = dynamic_cast<CMobEntity*>(POwner->GetBattleTarget()))
                 {
-                    static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                    {
-                        if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) && PMob->PEnmityContainer->GetHighestEnmity() == PMember)
+                    dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
+                        if (isValidMember(target, PMember) && CheckTrigger(PMember, gambit.predicates[0]) &&
+                            PMob->PEnmityContainer->GetHighestEnmity() == PMember)
                         {
                             target = PMember;
                         }
@@ -309,8 +299,8 @@ void CGambitsContainer::Tick(time_point tick)
                 else if (action.select == G_SELECT::LOWEST)
                 {
                     // TODO
-                    //auto spell_id = POwner->SpellContainer->GetWorstAvailable(static_cast<SPELLFAMILY>(gambit.action.select_arg));
-                    //if (spell_id.has_value())
+                    // auto spell_id = POwner->SpellContainer->GetWorstAvailable(static_cast<SPELLFAMILY>(gambit.action.select_arg));
+                    // if (spell_id.has_value())
                     //{
                     //    controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
                     //}
@@ -325,7 +315,7 @@ void CGambitsContainer::Tick(time_point tick)
                 }
                 else if (action.select == G_SELECT::MB_ELEMENT)
                 {
-                    CStatusEffect* PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
+                    CStatusEffect*                PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
                     std::list<SKILLCHAIN_ELEMENT> resonanceProperties;
                     if (uint16 power = PSCEffect->GetPower())
                     {
@@ -341,9 +331,9 @@ void CGambitsContainer::Tick(time_point tick)
                         {
                             // TODO: SpellContianer->GetBestByElement(ELEMENT)
                             // NOTE: Iterating this list in reverse guarantees finding the best match
-                            for (size_t i = POwner->SpellContainer->m_damageList.size(); i > 0 ; --i)
+                            for (size_t i = POwner->SpellContainer->m_damageList.size(); i > 0; --i)
                             {
-                                auto spell = POwner->SpellContainer->m_damageList[i-1];
+                                auto spell         = POwner->SpellContainer->m_damageList[i - 1];
                                 auto spell_element = spell::GetSpell(spell)->getElement();
                                 if (spell_element == chain_element)
                                 {
@@ -381,7 +371,7 @@ void CGambitsContainer::Tick(time_point tick)
             {
                 if (action.select == G_SELECT::SPECIFIC)
                 {
-                    //trustutils::SendTrustMessage(POwner, action.select_arg);
+                    // trustutils::SendTrustMessage(POwner, action.select_arg);
                 }
             }
 
@@ -398,7 +388,7 @@ bool CGambitsContainer::CheckTrigger(CBattleEntity* trigger_target, Predicate_t&
 {
     TracyZoneScoped;
 
-    auto controller = static_cast<CTrustController*>(POwner->PAI->GetController());
+    auto* controller = dynamic_cast<CTrustController*>(POwner->PAI->GetController());
     switch (predicate.condition)
     {
         case G_CONDITION::ALWAYS:
@@ -458,19 +448,19 @@ bool CGambitsContainer::CheckTrigger(CBattleEntity* trigger_target, Predicate_t&
         }
         case G_CONDITION::SC_AVAILABLE:
         {
-            auto PSCEffect = trigger_target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+            auto* PSCEffect = trigger_target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
             return PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now() && PSCEffect->GetTier() == 0;
             break;
         }
         case G_CONDITION::NOT_SC_AVAILABLE:
         {
-            auto PSCEffect = trigger_target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+            auto* PSCEffect = trigger_target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
             return PSCEffect == nullptr;
             break;
         }
         case G_CONDITION::MB_AVAILABLE:
         {
-            auto PSCEffect = trigger_target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+            auto* PSCEffect = trigger_target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
             return PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now() && PSCEffect->GetTier() > 0;
             break;
         }
@@ -499,7 +489,11 @@ bool CGambitsContainer::CheckTrigger(CBattleEntity* trigger_target, Predicate_t&
             return tpzrand::GetRandomNumber<uint16>(100) < (int16)predicate.condition_arg;
             break;
         }
-        default: { return false;  break; }
+        default:
+        {
+            return false;
+            break;
+        }
     }
 }
 
@@ -507,63 +501,64 @@ bool CGambitsContainer::TryTrustSkill()
 {
     TracyZoneScoped;
 
-    auto target = POwner->GetBattleTarget();
+    auto* target = POwner->GetBattleTarget();
 
-    auto checkTPTrigger = [&]() -> bool
-    {
-        if (POwner->health.tp >= 3000) { return true; } // Go, go, go!
+    auto checkTPTrigger = [&]() -> bool {
+        if (POwner->health.tp >= 3000)
+        {
+            return true;
+        } // Go, go, go!
 
         switch (tp_trigger)
         {
-        case G_TP_TRIGGER::ASAP:
-        {
-            return true;
-            break;
-        }
-        case G_TP_TRIGGER::OPENER:
-        {
-            bool result = false;
-            static_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&result](CBattleEntity* PMember)
+            case G_TP_TRIGGER::ASAP:
             {
-                if (PMember->health.tp >= 1000)
-                {
-                    result = true;
-                }
-            });
-            return result;
-            break;
-        }
-        case G_TP_TRIGGER::CLOSER:
-        {
-            auto PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+                return true;
+                break;
+            }
+            case G_TP_TRIGGER::OPENER:
+            {
+                bool result = false;
+                dynamic_cast<CCharEntity*>(POwner->PMaster)->ForPartyWithTrusts([&result](CBattleEntity* PMember) {
+                    if (PMember->health.tp >= 1000)
+                    {
+                        result = true;
+                    }
+                });
+                return result;
+                break;
+            }
+            case G_TP_TRIGGER::CLOSER:
+            {
+                auto* PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
 
-            // TODO: ...and has a valid WS...
+                // TODO: ...and has a valid WS...
 
-            return PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now() && PSCEffect->GetTier() == 0;
-            break;
-        }
-        default:
-        {
-            return false;
-            break;
-        }
+                return PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now() && PSCEffect->GetTier() == 0;
+                break;
+            }
+            default:
+            {
+                return false;
+                break;
+            }
         }
     };
 
     std::optional<TrustSkill_t> chosen_skill;
-    SKILLCHAIN_ELEMENT chosen_skillchain = SC_NONE;
+    SKILLCHAIN_ELEMENT          chosen_skillchain = SC_NONE;
     if (checkTPTrigger() && !tp_skills.empty())
     {
         switch (tp_select)
         {
             case G_SELECT::RANDOM:
             {
-                chosen_skill = tpzrand::GetRandomElement(tp_skills);                
+                chosen_skill = tpzrand::GetRandomElement(tp_skills);
                 break;
             }
             case G_SELECT::HIGHEST: // Form the best possible skillchain
             {
-                auto PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
+                auto* PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
 
                 if (!PSCEffect) // Opener
                 {
@@ -588,11 +583,12 @@ bool CGambitsContainer::TryTrustSkill()
                     skillProperties.push_back((SKILLCHAIN_ELEMENT)skill.primary);
                     skillProperties.push_back((SKILLCHAIN_ELEMENT)skill.secondary);
                     skillProperties.push_back((SKILLCHAIN_ELEMENT)skill.tertiary);
-                    if (SKILLCHAIN_ELEMENT possible_skillchain = battleutils::FormSkillchain(resonanceProperties, skillProperties); possible_skillchain != SC_NONE)
+                    if (SKILLCHAIN_ELEMENT possible_skillchain = battleutils::FormSkillchain(resonanceProperties, skillProperties);
+                        possible_skillchain != SC_NONE)
                     {
                         if (possible_skillchain >= chosen_skillchain)
                         {
-                            chosen_skill = skill;
+                            chosen_skill      = skill;
                             chosen_skillchain = possible_skillchain;
                         }
                     }
@@ -601,9 +597,9 @@ bool CGambitsContainer::TryTrustSkill()
             }
             case G_SELECT::SPECIAL_AYAME:
             {
-                auto PMaster = static_cast<CCharEntity*>(POwner->PMaster);
-                auto PMasterController = static_cast<CPlayerController*>(PMaster->PAI->GetController());
-                auto PMasterLastWeaponSkill = PMasterController->getLastWeaponSkill();
+                auto* PMaster                = dynamic_cast<CCharEntity*>(POwner->PMaster);
+                auto* PMasterController      = dynamic_cast<CPlayerController*>(PMaster->PAI->GetController());
+                auto* PMasterLastWeaponSkill = PMasterController->getLastWeaponSkill();
 
                 if (PMasterLastWeaponSkill != nullptr)
                 {
@@ -618,11 +614,12 @@ bool CGambitsContainer::TryTrustSkill()
                         skillProperties.push_back((SKILLCHAIN_ELEMENT)skill.primary);
                         skillProperties.push_back((SKILLCHAIN_ELEMENT)skill.secondary);
                         skillProperties.push_back((SKILLCHAIN_ELEMENT)skill.tertiary);
-                        if (SKILLCHAIN_ELEMENT possible_skillchain = battleutils::FormSkillchain(resonanceProperties, skillProperties); possible_skillchain != SC_NONE)
+                        if (SKILLCHAIN_ELEMENT possible_skillchain = battleutils::FormSkillchain(resonanceProperties, skillProperties);
+                            possible_skillchain != SC_NONE)
                         {
                             if (possible_skillchain >= chosen_skillchain)
                             {
-                                chosen_skill = skill;
+                                chosen_skill      = skill;
                                 chosen_skillchain = possible_skillchain;
                             }
                         }
@@ -635,13 +632,16 @@ bool CGambitsContainer::TryTrustSkill()
 
                 break;
             }
-            default: { break; }
+            default:
+            {
+                break;
+            }
         }
     }
 
     if (chosen_skill)
     {
-        auto controller = static_cast<CTrustController*>(POwner->PAI->GetController());
+        auto* controller = dynamic_cast<CTrustController*>(POwner->PAI->GetController());
         if (chosen_skill->skill_type == G_REACTION::WS)
         {
             CWeaponSkill* PWeaponSkill = battleutils::GetWeaponSkill(chosen_skill->skill_id);

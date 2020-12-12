@@ -22,13 +22,12 @@
 #include "../../common/socket.h"
 #include "../../common/utils.h"
 
-#include <string.h>
+#include <cstring>
 
 #include "inventory_item.h"
 
 #include "../utils/itemutils.h"
 #include "../vana_time.h"
-
 
 CInventoryItemPacket::CInventoryItemPacket(CItem* PItem, uint8 LocationID, uint8 SlotID)
 {
@@ -43,32 +42,32 @@ CInventoryItemPacket::CInventoryItemPacket(CItem* PItem, uint8 LocationID, uint8
         ref<uint32>(0x04) = PItem->getQuantity();
         ref<uint32>(0x08) = PItem->getCharPrice();
         ref<uint16>(0x0C) = PItem->getID();
-        memcpy(data + 0x11 , PItem->m_extra, sizeof(PItem->m_extra));
+        memcpy(data + 0x11, PItem->m_extra, sizeof(PItem->m_extra));
 
         if (PItem->isSubType(ITEM_CHARGED))
         {
             ref<uint8>(0x11) = 0x01;
 
             uint8 flags = 0x80; // Tests showed high bit always set.
-            if (((CItemUsable*)PItem)->getCurrentCharges() < ((CItemUsable*)PItem)->getMaxCharges())
+            if ((dynamic_cast<CItemUsable*>(PItem))->getCurrentCharges() < (dynamic_cast<CItemUsable*>(PItem))->getMaxCharges())
             {
                 flags |= 0x10; // Partial charges mask
             }
 
-            if (((CItemUsable*)PItem)->getCurrentCharges() > 0)
+            if ((dynamic_cast<CItemUsable*>(PItem))->getCurrentCharges() > 0)
             {
-                if (((CItemUsable*)PItem)->getReuseTime() == 0)
+                if ((dynamic_cast<CItemUsable*>(PItem))->getReuseTime() == 0)
                 {
                     flags |= 0x40; // Ready to use
                 }
                 else
                 {
                     uint32 CurrentTime = CVanaTime::getInstance()->getVanaTime();
-                    ref<uint32>(0x15) = ((CItemUsable*)PItem)->getNextUseTime();
+                    ref<uint32>(0x15)  = (dynamic_cast<CItemUsable*>(PItem))->getNextUseTime();
 
                     // Not sent if the item is unequipped.
 
-                    ref<uint32>(0x19) = ((CItemUsable*)PItem)->getUseDelay() + CurrentTime;
+                    ref<uint32>(0x19) = (dynamic_cast<CItemUsable*>(PItem))->getUseDelay() + CurrentTime;
                 }
             }
             else
@@ -78,7 +77,7 @@ CInventoryItemPacket::CInventoryItemPacket(CItem* PItem, uint8 LocationID, uint8
             ref<uint8>(0x14) = flags;
         }
 
-        if (PItem->isType(ITEM_WEAPON) && ((CItemWeapon*)PItem)->isUnlockable())
+        if (PItem->isType(ITEM_WEAPON) && (dynamic_cast<CItemWeapon*>(PItem))->isUnlockable())
         {
             ref<uint16>(0x11) = 0;
         }
@@ -105,7 +104,7 @@ CInventoryItemPacket::CInventoryItemPacket(CItem* PItem, uint8 LocationID, uint8
 
         if (PItem->isType(ITEM_LINKSHELL))
         {
-            ref<uint8>(0x19) = ((CItemLinkshell*)PItem)->GetLSType();
+            ref<uint8>(0x19) = (dynamic_cast<CItemLinkshell*>(PItem))->GetLSType();
         }
     }
 }

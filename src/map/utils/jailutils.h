@@ -41,19 +41,19 @@ TODO: Common actions/procedures/needs include:
 */
 
 /************************************************************************
-*                                                                       *
-*                                                                       *
-*                                                                       *
-************************************************************************/
+ *                                                                       *
+ *                                                                       *
+ *                                                                       *
+ ************************************************************************/
 
 class CCharEntity;
 
 namespace jailutils
 {
-    bool InPrison(CCharEntity* PChar);
+bool InPrison(CCharEntity* PChar);
 
-    void Add(CCharEntity* PChar);
-    void Del(CCharEntity* PChar);
-};
+void Add(CCharEntity* PChar);
+void Del(CCharEntity* PChar);
+}; // namespace jailutils
 
 #endif
