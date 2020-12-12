@@ -102,16 +102,16 @@ void CTreasurePool::DelMember(CCharEntity* PChar)
     // if(m_TreasurePoolType != TREASUREPOOL_ZONE){
     // Zone drops e.g. Dynamis DO NOT remove previous lot info. Everything else does.
     // ^ TODO: verify what happens when a winner leaves zone
-    for (int i = 0; i < 10; i++)
+    for (auto& m_PoolItem : m_PoolItems)
     {
-        if (!m_PoolItems[i].Lotters.empty())
+        if (!m_PoolItem.Lotters.empty())
         {
-            for (size_t j = 0; j < m_PoolItems[i].Lotters.size(); j++)
+            for (size_t j = 0; j < m_PoolItem.Lotters.size(); j++)
             {
                 // remove their lot info
-                if (PChar->id == m_PoolItems[i].Lotters[j].member->id)
+                if (PChar->id == m_PoolItem.Lotters[j].member->id)
                 {
-                    m_PoolItems[i].Lotters.erase(m_PoolItems[i].Lotters.begin() + j);
+                    m_PoolItem.Lotters.erase(m_PoolItem.Lotters.begin() + j);
                 }
             }
         }

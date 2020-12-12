@@ -298,7 +298,7 @@ std::list<SearchEntity*> CDataLoader::GetPlayersList(search_req sr, int* count)
                     continue;
                     // mithra (female only)
                 }
-                else if (sr.race == 3 && PPlayer->race != 7)
+                if (sr.race == 3 && PPlayer->race != 7)
                 {
                     continue;
                     // galka (male only)

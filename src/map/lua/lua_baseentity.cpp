@@ -1901,8 +1901,7 @@ inline int32 CLuaBaseEntity::pathThrough(lua_State* L)
     }
 
     CBattleEntity* PBattle = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
-
-    if (PBattle->PAI->PathFind->PathThrough(std::move(points), flags))
+    if (PBattle && PBattle->PAI->PathFind->PathThrough(std::move(points), flags))
     {
         lua_pushboolean(L, true);
     }

@@ -131,16 +131,11 @@ bool CRegion::isPointInside(position_t pos) const
         // Get the distance between their Z coordinate and ours.
         float dZ = pos.z - z1;
 
-        float distance = sqrt((dX * dX) + (dZ * dZ));
+        float distance = std::sqrt((dX * dX) + (dZ * dZ));
 
         // Check if were within range of the target.
         // In this case of a circle, 'y' is the radius.
-        if (distance <= y1)
-        {
-            return true;
-        }
-
-        return false;
+        return distance <= y1;
     }
 
     return (x1 <= pos.x && y1 <= pos.y && z1 <= pos.z && x2 >= pos.x && y2 >= pos.y && z2 >= pos.z);

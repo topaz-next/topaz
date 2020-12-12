@@ -406,7 +406,7 @@ bool CStatusEffectContainer::CanGainStatusEffect(CStatusEffect* PStatusEffect)
             }
             return PStatusEffect->GetPower() >= existingEffect->GetPower();
         }
-        else if (overwrite == EFFECTOVERWRITE_HIGHER)
+        if (overwrite == EFFECTOVERWRITE_HIGHER)
         {
             if (PStatusEffect->GetTier() != 0 && existingEffect->GetTier() != 0)
             {

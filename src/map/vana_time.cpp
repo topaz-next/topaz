@@ -235,10 +235,8 @@ uint8 CVanaTime::getMoonDirection() const
     {
         return 1; // waning
     }
-    else
-    {
-        return 2; // waxing
-    }
+
+    return 2; // waxing
 }
 
 uint8 CVanaTime::getRSERace() const

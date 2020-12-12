@@ -71,8 +71,8 @@ struct Transport_Ship : Transport_Time
     location_t   dock;
 
     void setVisible(bool) const;
-    void animateSetup(uint8, uint32);
-    void spawn();
+    void animateSetup(uint8, uint32) const;
+    void spawn() const;
     // void Despawn();
     void setName(uint32) const;
 };

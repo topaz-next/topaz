@@ -55,13 +55,13 @@ void Transport_Ship::setVisible(bool visible) const
     }
 }
 
-void Transport_Ship::animateSetup(uint8 animationID, uint32 horizonTime)
+void Transport_Ship::animateSetup(uint8 animationID, uint32 horizonTime) const
 {
     this->npc->animation = animationID;
     this->setName(horizonTime);
 }
 
-void Transport_Ship::spawn()
+void Transport_Ship::spawn() const
 {
     this->npc->loc = this->dock;
     this->setVisible(true);
