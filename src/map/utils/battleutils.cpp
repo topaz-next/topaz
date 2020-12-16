@@ -901,11 +901,11 @@ namespace battleutils
         {
             if (PAttacker->objtype == TYPE_PC && PAttacker->PParty != nullptr)
             {
-                for (uint8 i = 0; i < PAttacker->PParty->members.size(); i++)
+                for (auto& member : PAttacker->PParty->members)
                 {
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, PAttacker->PParty->members[i]->id);
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, PAttacker->PParty->members[i]->id);
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, PAttacker->PParty->members[i]->id);
+                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, member->id);
+                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, member->id);
+                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, member->id);
                 }
             }
             else if (PAttacker->objtype == TYPE_TRUST && PAttacker->PMaster)
@@ -1062,13 +1062,12 @@ namespace battleutils
 
                 if (PAttacker->objtype == TYPE_PC && PAttacker->PParty != nullptr)
                 {
-                    for (uint8 i = 0; i < PAttacker->PParty->members.size(); i++)
+                    for (auto& member : PAttacker->PParty->members)
                     {
-                        if (attackerID == PAttacker->PParty->members[i]->id)
+                        if (attackerID == member->id)
                         {
                             power = PDefender->StatusEffectContainer->GetStatusEffect(daze)->GetPower();
                         }
-                        break;
                     }
                 }
                 else if (PAttacker->objtype == TYPE_TRUST && PAttacker->PMaster)
@@ -1080,7 +1079,7 @@ namespace battleutils
                         }
                     });
                 }
-                else
+                else if (PAttacker->PMaster == nullptr)
                 {
                     if (attackerID == PAttacker->id)
                     {
