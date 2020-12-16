@@ -882,6 +882,7 @@ namespace battleutils
 
         EFFECT previous_daze       = EFFECT_NONE;
         uint16 previous_daze_power = 0;
+
         if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_DRAIN_SAMBA))
         {
             previous_daze       = EFFECT_DRAIN_DAZE;
@@ -897,6 +898,7 @@ namespace battleutils
             previous_daze       = EFFECT_HASTE_DAZE;
             previous_daze_power = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_HASTE_SAMBA)->GetPower();
         }
+
         if (previous_daze != EFFECT_NONE)
         {
             if (PAttacker->objtype == TYPE_PC && PAttacker->PParty != nullptr)
@@ -910,7 +912,8 @@ namespace battleutils
             }
             else if (PAttacker->objtype == TYPE_TRUST && PAttacker->PMaster)
             {
-                static_cast<CCharEntity*>(PAttacker->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
+                static_cast<CCharEntity*>(PAttacker->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
+                {
                     PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, PMember->id);
                     PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, PMember->id);
                     PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, PMember->id);
@@ -939,11 +942,20 @@ namespace battleutils
         if (PAttacker->getMod(Mod::ENSPELL) > 0 &&
             (PAttacker->getMod(Mod::ENSPELL_CHANCE) == 0 || PAttacker->getMod(Mod::ENSPELL_CHANCE) > tpzrand::GetRandomNumber(100)))
         {
-            static SUBEFFECT enspell_subeffects[8] = {
-                SUBEFFECT_FIRE_DAMAGE,      SUBEFFECT_ICE_DAMAGE,   SUBEFFECT_WIND_DAMAGE,  SUBEFFECT_EARTH_DAMAGE,
-                SUBEFFECT_LIGHTNING_DAMAGE, SUBEFFECT_WATER_DAMAGE, SUBEFFECT_LIGHT_DAMAGE, SUBEFFECT_DARKNESS_DAMAGE,
+            static SUBEFFECT enspell_subeffects[8] =
+            {
+                SUBEFFECT_FIRE_DAMAGE,
+                SUBEFFECT_ICE_DAMAGE,
+                SUBEFFECT_WIND_DAMAGE,
+                SUBEFFECT_EARTH_DAMAGE,
+                SUBEFFECT_LIGHTNING_DAMAGE,
+                SUBEFFECT_WATER_DAMAGE,
+                SUBEFFECT_LIGHT_DAMAGE,
+                SUBEFFECT_DARKNESS_DAMAGE,
             };
+
             uint8 enspell = (uint8)PAttacker->getMod(Mod::ENSPELL);
+
             if (enspell == ENSPELL_BLOOD_WEAPON)
             {
                 Action->additionalEffect = SUBEFFECT_HP_DRAIN;
@@ -1021,8 +1033,7 @@ namespace battleutils
                  static_cast<CItemWeapon*>(static_cast<CCharEntity*>(PAttacker)->getEquip(SLOT_SUB))->getSkillType() == SKILL_NONE &&
                  battleutils::GetScaledItemModifier(PAttacker, static_cast<CCharEntity*>(PAttacker)->getEquip(SLOT_SUB), Mod::ADDITIONAL_EFFECT) > 0 &&
                  luautils::OnAdditionalEffect(PAttacker, PDefender, static_cast<CItemWeapon*>(static_cast<CCharEntity*>(PAttacker)->getEquip(SLOT_SUB)), Action,
-                                              finaldamage) == 0 &&
-                 Action->additionalEffect)
+                 finaldamage) == 0 && Action->additionalEffect)
         {
             if (Action->addEffectMessage == 163 && Action->addEffectParam < 0)
             {
@@ -1072,7 +1083,8 @@ namespace battleutils
                 }
                 else if (PAttacker->objtype == TYPE_TRUST && PAttacker->PMaster)
                 {
-                    static_cast<CCharEntity*>(PAttacker->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember) {
+                    static_cast<CCharEntity*>(PAttacker->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
+                    {
                         if (attackerID == PMember->id)
                         {
                             power = PDefender->StatusEffectContainer->GetStatusEffect(daze)->GetPower();
@@ -1122,6 +1134,7 @@ namespace battleutils
                     Action->addEffectParam   = Samba;
 
                     PAttacker->addHP(Samba); // does not do any additional drain to targets HP, only a portion of it
+
                     if (PChar != nullptr)
                     {
                         PChar->updatemask |= UPDATE_HP;
