@@ -8906,7 +8906,7 @@ INSERT INTO `mob_groups` VALUES (66,1707,135,'Goblin_Replica',0,128,3117,1000,10
 INSERT INTO `mob_groups` VALUES (67,2576,135,'Marquis_Nebiros',0,32,1629,12500,0,85,85,0);
 INSERT INTO `mob_groups` VALUES (68,2816,135,'Nebiross_Avatar',0,128,0,7500,0,85,85,0);
 INSERT INTO `mob_groups` VALUES (69,3472,135,'Satellite_Horns',600,0,3165,4000,0,77,79,0);
-INSERT INTO `mob_groups` VALUES (70,4145,135,'Vanguard_Dragon',600,0,2559,30000,0,81,82,0);
+INSERT INTO `mob_groups` VALUES (70,4145,135,'Vanguard_Dragon',300,0,2559,30000,0,81,82,0);
 INSERT INTO `mob_groups` VALUES (71,3470,135,'Satellite_Guns',600,0,3164,4000,0,77,79,0);
 INSERT INTO `mob_groups` VALUES (72,3941,135,'Tombstone_Prototype',0,128,0,1000,1000,80,80,0);
 INSERT INTO `mob_groups` VALUES (73,1178,135,'Effigy_Prototype',0,128,0,1000,1000,80,80,0);
