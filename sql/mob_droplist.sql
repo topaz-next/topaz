@@ -16665,22 +16665,22 @@ INSERT INTO `mob_droplist` VALUES (3149,0,0,1000,15146,10);
 INSERT INTO `mob_droplist` VALUES (3149,0,0,1000,16349,10);
 
 -- Dynamis - Xarcabard -> Satellite
-INSERT INTO `mob_droplist` VALUES (3151,0,0,1000,3364,20); -- Mystic goad on Satellite Knuckles
-INSERT INTO `mob_droplist` VALUES (3152,0,0,1000,3365,20); -- Ornate Goad on Satellite Daggers
-INSERT INTO `mob_droplist` VALUES (3153,0,0,1000,3366,20); -- Holy Goad on Satellite Longswords
-INSERT INTO `mob_droplist` VALUES (3154,0,0,1000,3367,20); -- Intricate Goad on Satellite Claymores
-INSERT INTO `mob_droplist` VALUES (3155,0,0,1000,3368,20); -- runaeic Goad on Satellite Tabars
-INSERT INTO `mob_droplist` VALUES (3156,0,0,1000,3369,20); -- Seraphic Goad on Satellite Great Axes
-INSERT INTO `mob_droplist` VALUES (3157,0,0,1000,3370,20); -- Tenebrous Goad on Satellite Scythes
-INSERT INTO `mob_droplist` VALUES (3158,0,0,1000,3371,20); -- Stellar Goad on Satellite Spears
-INSERT INTO `mob_droplist` VALUES (3159,0,0,1000,3372,20); -- Demoniac Goad on Satellite Kunai
-INSERT INTO `mob_droplist` VALUES (3160,0,0,1000,3373,20); -- Divine Goad on Satellite Tachi
-INSERT INTO `mob_droplist` VALUES (3161,0,0,1000,3374,20); -- Heavenly Goad on Satellite Hammers
-INSERT INTO `mob_droplist` VALUES (3162,0,0,1000,3375,20); -- Celestial goad on Satellite Staves
-INSERT INTO `mob_droplist` VALUES (3163,0,0,1000,3376,20); -- Snarled Goad on Satellite Longbows
-INSERT INTO `mob_droplist` VALUES (3164,0,0,1000,3377,20); -- Ethereal Goad on Satellite Guns
-INSERT INTO `mob_droplist` VALUES (3165,0,0,1000,3378,20); -- Mysterial Goad on Satellite Horns
-INSERT INTO `mob_droplist` VALUES (3166,0,0,1000,3379,20); -- Supernal Goad on Satellite Shield
+INSERT INTO `mob_droplist` VALUES (3151,0,0,1000,3364,200); -- Mystic goad on Satellite Knuckles
+INSERT INTO `mob_droplist` VALUES (3152,0,0,1000,3365,200); -- Ornate Goad on Satellite Daggers
+INSERT INTO `mob_droplist` VALUES (3153,0,0,1000,3366,200); -- Holy Goad on Satellite Longswords
+INSERT INTO `mob_droplist` VALUES (3154,0,0,1000,3367,200); -- Intricate Goad on Satellite Claymores
+INSERT INTO `mob_droplist` VALUES (3155,0,0,1000,3368,200); -- runaeic Goad on Satellite Tabars
+INSERT INTO `mob_droplist` VALUES (3156,0,0,1000,3369,200); -- Seraphic Goad on Satellite Great Axes
+INSERT INTO `mob_droplist` VALUES (3157,0,0,1000,3370,200); -- Tenebrous Goad on Satellite Scythes
+INSERT INTO `mob_droplist` VALUES (3158,0,0,1000,3371,200); -- Stellar Goad on Satellite Spears
+INSERT INTO `mob_droplist` VALUES (3159,0,0,1000,3372,200); -- Demoniac Goad on Satellite Kunai
+INSERT INTO `mob_droplist` VALUES (3160,0,0,1000,3373,200); -- Divine Goad on Satellite Tachi
+INSERT INTO `mob_droplist` VALUES (3161,0,0,1000,3374,200); -- Heavenly Goad on Satellite Hammers
+INSERT INTO `mob_droplist` VALUES (3162,0,0,1000,3375,200); -- Celestial goad on Satellite Staves
+INSERT INTO `mob_droplist` VALUES (3163,0,0,1000,3376,200); -- Snarled Goad on Satellite Longbows
+INSERT INTO `mob_droplist` VALUES (3164,0,0,1000,3377,200); -- Ethereal Goad on Satellite Guns
+INSERT INTO `mob_droplist` VALUES (3165,0,0,1000,3378,200); -- Mysterial Goad on Satellite Horns
+INSERT INTO `mob_droplist` VALUES (3166,0,0,1000,3379,200); -- Supernal Goad on Satellite Shield
 
 /*!40000 ALTER TABLE `mob_droplist` ENABLE KEYS */;
 UNLOCK TABLES;
