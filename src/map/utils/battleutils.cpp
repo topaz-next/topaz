@@ -932,9 +932,13 @@ namespace battleutils
             else
             {
                 if (previous_daze == EFFECT_DRAIN_DAZE && (PDefender->m_EcoSystem != ECOSYSTEM::UNDEAD))
+                {
                     PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_DRAIN_DAZE, 0, previous_daze_power, 0, 10, PAttacker->id), true);
+                }   
                 else
+                {
                     PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(previous_daze, 0, previous_daze_power, 0, 10, PAttacker->id), true);
+                }
             }
         }
 
@@ -1063,11 +1067,17 @@ namespace battleutils
                 uint16 power      = 0;
 
                 if (hasDrainDaze)
+                {
                     daze = EFFECT_DRAIN_DAZE;
+                }   
                 else if (hasAspirDaze)
+                {
                     daze = EFFECT_ASPIR_DAZE;
+                }
                 else if (hasHasteDaze)
+                {
                     daze = EFFECT_HASTE_DAZE;
+                }
 
                 attackerID = PDefender->StatusEffectContainer->GetStatusEffect(daze)->GetSubID();
 
