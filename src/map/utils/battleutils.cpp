@@ -931,7 +931,7 @@ namespace battleutils
             }
             else
             {
-                if (previous_daze == EFFECT_DRAIN_DAZE && (PDefender->m_EcoSystem != ECOSYSTEM::UNDEAD))
+                if (previous_daze == EFFECT_DRAIN_DAZE && PDefender->m_EcoSystem != ECOSYSTEM::UNDEAD)
                 {
                     PDefender->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_DRAIN_DAZE, 0, previous_daze_power, 0, 10, PAttacker->id), true);
                 }   
