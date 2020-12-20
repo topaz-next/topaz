@@ -202,7 +202,7 @@ namespace roeutils
                 uint8 args{ 0 };
 
                 CLuaBaseEntity LuaAllyEntity(PChar);
-                Lunar<CLuaBaseEntity>::push(L, &LuaAllyEntity);
+                //Lunar<CLuaBaseEntity>::push(L, &LuaAllyEntity);
                 args++;
 
                 // Record #
@@ -224,7 +224,7 @@ namespace roeutils
                         case RoeDatagramPayload::mob:
                         {
                             CLuaBaseEntity LuaMobEntity(datagram.data.mobEntity);
-                            Lunar<CLuaBaseEntity>::push(L, &LuaMobEntity);
+                            //Lunar<CLuaBaseEntity>::push(L, &LuaMobEntity);
                             break;
                         }
                         case RoeDatagramPayload::uinteger:

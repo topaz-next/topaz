@@ -156,19 +156,6 @@
 #include "../utils/trustutils.h"
 #include "../utils/zoneutils.h"
 
-CLuaBaseEntity::CLuaBaseEntity(lua_State* L)
-{
-    if (!lua_isnil(L, 1))
-    {
-        m_PBaseEntity = (CBaseEntity*)lua_touserdata(L, 1);
-        lua_pop(L, 1);
-    }
-    else
-    {
-        m_PBaseEntity = nullptr;
-    }
-}
-
 //======================================================//
 
 CLuaBaseEntity::CLuaBaseEntity(CBaseEntity* PEntity)
@@ -193,7 +180,7 @@ inline int32 CLuaBaseEntity::showText(lua_State* L)
 
     auto messageID = (uint16)lua_tointeger(L, 2);
 
-    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    CLuaBaseEntity* PLuaBaseEntity = nullptr; //Lunar<CLuaBaseEntity>::check(L, 1);
 
     if (PLuaBaseEntity != nullptr)
     {
@@ -253,8 +240,8 @@ inline int32 CLuaBaseEntity::messageText(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
 
-    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
-    CBaseEntity*    PTarget        = PLuaBaseEntity->m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity =  nullptr; //Lunar<CLuaBaseEntity>::check(L, 1);
+    CBaseEntity*    PTarget        = nullptr; // PLuaBaseEntity->m_PBaseEntity;
 
     auto messageID = (uint16)lua_tointeger(L, 2);
 
@@ -388,7 +375,7 @@ inline int32 CLuaBaseEntity::messageBasic(lua_State* L)
     }
     if (!lua_isnil(L, 4) && lua_isuserdata(L, 4))
     {
-        PTarget = Lunar<CLuaBaseEntity>::check(L, 4)->m_PBaseEntity;
+        PTarget = nullptr; // Lunar<CLuaBaseEntity>::check(L, 4)->m_PBaseEntity;
     }
 
     if (m_PBaseEntity->objtype == TYPE_PC)
@@ -416,8 +403,8 @@ inline int32 CLuaBaseEntity::messageName(lua_State* L)
 
     uint16 messageID = (uint16)lua_tointeger(L, 1);
 
-    CLuaBaseEntity* PLuaEntity  = Lunar<CLuaBaseEntity>::check(L, 2);
-    CBaseEntity*    PNameEntity = PLuaEntity ? PLuaEntity->m_PBaseEntity : nullptr;
+    CLuaBaseEntity* PLuaEntity  = nullptr; // Lunar<CLuaBaseEntity>::check(L, 2);
+    CBaseEntity*    PNameEntity = nullptr; // PLuaEntity ? PLuaEntity->m_PBaseEntity : nullptr;
 
     int32 param0 = 0;
     int32 param1 = 0;
@@ -478,7 +465,7 @@ inline int32 CLuaBaseEntity::messagePublic(lua_State* L)
     uint32 param0 = 0;
     uint32 param1 = 0;
 
-    CLuaBaseEntity* PEntity = Lunar<CLuaBaseEntity>::check(L, 2);
+    CLuaBaseEntity* PEntity = nullptr; // Lunar<CLuaBaseEntity>::check(L, 2);
 
     if (PEntity != nullptr)
     {
@@ -594,8 +581,8 @@ int32 CLuaBaseEntity::messageCombat(lua_State* L)
     CBaseEntity* PSpeaker;
     if (!lua_isnil(L, 1) && lua_isuserdata(L, 1))
     {
-        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
-        PSpeaker                       = PLuaBaseEntity->m_PBaseEntity;
+        CLuaBaseEntity* PLuaBaseEntity = nullptr; // Lunar<CLuaBaseEntity>::check(L, 1);
+        PSpeaker                       = nullptr; // PLuaBaseEntity->m_PBaseEntity;
     }
     else
     {
@@ -945,8 +932,8 @@ inline int32 CLuaBaseEntity::entityVisualPacket(lua_State* L)
     CBaseEntity* PNpc = nullptr;
     if (n == 2 && lua_isuserdata(L, 1))
     {
-        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
-        PNpc                           = PLuaBaseEntity->m_PBaseEntity;
+        CLuaBaseEntity* PLuaBaseEntity = nullptr; // Lunar<CLuaBaseEntity>::check(L, 1);
+        PNpc                           = nullptr; // PLuaBaseEntity->m_PBaseEntity;
     }
     ((CCharEntity*)m_PBaseEntity)->pushPacket(new CEntityVisualPacket(PNpc, command));
     return 0;
@@ -1345,7 +1332,7 @@ inline int32 CLuaBaseEntity::getEventTarget(lua_State* L)
     {
         ShowWarning(CL_YELLOW "EventTarget is empty: %s\n" CL_RESET, m_PBaseEntity->GetName());
     }
-    lua_getglobal(L, CLuaBaseEntity::className);
+    lua_getglobal(L, "CBaseEntity");
     lua_pushstring(L, "new");
     lua_gettable(L, -2);
     lua_insert(L, -2);
@@ -1495,7 +1482,7 @@ inline int32 CLuaBaseEntity::getCursorTarget(lua_State* L)
     }
     else
     {
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -1968,8 +1955,8 @@ inline int32 CLuaBaseEntity::checkDistance(lua_State* L)
 
     if (lua_isuserdata(L, 1))
     {
-        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
-        calcdistance                   = distance(m_PBaseEntity->loc.p, PLuaBaseEntity->GetBaseEntity()->loc.p);
+        //CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        //calcdistance                   = distance(m_PBaseEntity->loc.p, PLuaBaseEntity->GetBaseEntity()->loc.p);
     }
     else
     {
@@ -2470,7 +2457,7 @@ inline int32 CLuaBaseEntity::sendEmote(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
 
     auto* const PChar   = dynamic_cast<CCharEntity*>(m_PBaseEntity);
-    auto* const PTarget = Lunar<CLuaBaseEntity>::check(L, 1);
+    CCharEntity* const PTarget = nullptr; // Lunar<CLuaBaseEntity>::check(L, 1);
 
     if (PChar && PTarget)
     {
@@ -2497,7 +2484,7 @@ inline int32 CLuaBaseEntity::getWorldAngle(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
 
-    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    //CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
 
     TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
 
@@ -2537,7 +2524,7 @@ inline int32 CLuaBaseEntity::getFacingAngle(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
 
-    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    //CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
 
     TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
 
@@ -2648,7 +2635,7 @@ inline int32 CLuaBaseEntity::getZone(lua_State* L)
 
     if (m_PBaseEntity->loc.zone)
     {
-        lua_getglobal(L, CLuaZone::className);
+        lua_getglobal(L, "CZone");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -2659,7 +2646,7 @@ inline int32 CLuaBaseEntity::getZone(lua_State* L)
     {
         auto* PZone = zoneutils::GetZone(m_PBaseEntity->loc.destination);
 
-        lua_getglobal(L, CLuaZone::className);
+        lua_getglobal(L, "CZone");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -3638,7 +3625,7 @@ inline int32 CLuaBaseEntity::getEquippedItem(lua_State* L)
         auto* slotItem = PChar->getEquip((SLOTTYPE)SLOT);
         if (slotItem)
         {
-            lua_getglobal(L, CLuaItem::className);
+            lua_getglobal(L, "CItem");
             lua_pushstring(L, "new");
             lua_gettable(L, -2);
             lua_insert(L, -2);
@@ -4711,7 +4698,7 @@ inline int32 CLuaBaseEntity::getStorageItem(lua_State* L)
 
     if (PItem != nullptr)
     {
-        lua_getglobal(L, CLuaItem::className);
+        lua_getglobal(L, "CItem");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -9301,7 +9288,7 @@ inline int32 CLuaBaseEntity::getParty(lua_State* L)
     lua_createtable(L, size, 0);
     int i = 1;
     ((CBattleEntity*)m_PBaseEntity)->ForParty([&L, &i](CBattleEntity* member) {
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -9340,7 +9327,7 @@ inline int32 CLuaBaseEntity::getPartyWithTrusts(lua_State* L)
     lua_createtable(L, size, 0);
     int i = 1;
     ((CCharEntity*)m_PBaseEntity)->ForPartyWithTrusts([&L, &i](CBattleEntity* member) {
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -9462,7 +9449,7 @@ inline int32 CLuaBaseEntity::getPartyMember(lua_State* L)
 
     if (PTargetChar != nullptr)
     {
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -9493,7 +9480,7 @@ inline int32 CLuaBaseEntity::getPartyLeader(lua_State* L)
         CBattleEntity* PLeader = PChar->PParty->GetLeader();
         if (PLeader != nullptr)
         {
-            lua_getglobal(L, CLuaBaseEntity::className);
+            lua_getglobal(L, "CBaseEntity");
             lua_pushstring(L, "new");
             lua_gettable(L, -2);
             lua_insert(L, -2);
@@ -9527,9 +9514,10 @@ inline int32 CLuaBaseEntity::forMembersInRange(lua_State* L)
     target->ForParty([&target, &range, &function](CBattleEntity* member) {
         if (target->loc.zone == member->loc.zone && distanceSquared(target->loc.p, member->loc.p) < (range * range))
         {
-            luautils::pushFunc(function);
-            luautils::pushArg<CBattleEntity*>(member);
-            luautils::callFunc(1);
+            std::ignore = member;
+            //luautils::pushFunc(function);
+            //luautils::pushArg<CBattleEntity*>(member);
+            //luautils::callFunc(1);
         }
     });
 
@@ -9659,7 +9647,7 @@ inline int32 CLuaBaseEntity::getAlliance(lua_State* L)
     int i = 1;
 
     PChar->ForAlliance([&L, &i](CBattleEntity* PMember) {
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -9911,7 +9899,7 @@ inline int32 CLuaBaseEntity::getInstance(lua_State* L)
 
     if (m_PBaseEntity->PInstance)
     {
-        lua_getglobal(L, CLuaInstance::className);
+        lua_getglobal(L, "CInstance");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -10056,7 +10044,7 @@ inline int32 CLuaBaseEntity::getBattlefield(lua_State* L)
 
     if (PBattlefield)
     {
-        lua_getglobal(L, CLuaBattlefield::className);
+        lua_getglobal(L, "CBattlefield");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -10715,7 +10703,7 @@ int32 CLuaBaseEntity::getEntity(lua_State* L)
     auto* PEntity{ m_PBaseEntity->GetEntity((uint16)lua_tointeger(L, 1)) };
     if (PEntity)
     {
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -10761,7 +10749,7 @@ inline int32 CLuaBaseEntity::getNearbyEntities(lua_State* L)
     {
         for (auto&& entity : list)
         {
-            lua_getglobal(L, CLuaBaseEntity::className);
+            lua_getglobal(L, "CBaseEntity");
             lua_pushstring(L, "new");
             lua_gettable(L, -2);
             lua_insert(L, -2);
@@ -11302,7 +11290,7 @@ inline int32 CLuaBaseEntity::getNotorietyList(lua_State* L)
     int i = 1;
     for (auto* entry : *notorietyContainer)
     {
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -11440,7 +11428,7 @@ inline int32 CLuaBaseEntity::getStatusEffect(lua_State* L)
     else
     {
         lua_pop(L, 1);
-        lua_getglobal(L, CLuaStatusEffect::className);
+        lua_getglobal(L, "CStatusEffect");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -11469,7 +11457,7 @@ inline int32 CLuaBaseEntity::getStatusEffects(lua_State* L)
     int count = 0;
     lua_newtable(L);
     static_cast<CBattleEntity*>(m_PBaseEntity)->StatusEffectContainer->ForEachEffect([&](CStatusEffect* PEffect) {
-        lua_getglobal(L, CLuaStatusEffect::className);
+        lua_getglobal(L, "CStatusEffect");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -13359,7 +13347,7 @@ inline int32 CLuaBaseEntity::getPet(lua_State* L)
 
         CBattleEntity* PPet = ((CBattleEntity*)m_PBaseEntity)->PPet;
 
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -13430,7 +13418,7 @@ inline int32 CLuaBaseEntity::getMaster(lua_State* L)
     {
         CBaseEntity* PMaster = ((CBattleEntity*)m_PBaseEntity)->PMaster;
 
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -14746,7 +14734,7 @@ inline int32 CLuaBaseEntity::getTarget(lua_State* L)
     auto* PBattleTarget{ m_PBaseEntity->GetEntity(static_cast<CBattleEntity*>(m_PBaseEntity)->GetBattleTargetID()) };
     if (PBattleTarget)
     {
-        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_getglobal(L, "CBaseEntity");
         lua_pushstring(L, "new");
         lua_gettable(L, -2);
         lua_insert(L, -2);
@@ -14807,7 +14795,7 @@ inline int32 CLuaBaseEntity::getEnmityList(lua_State* L)
             {
                 lua_createtable(L, 0, 4);
                 // push entity
-                lua_getglobal(L, CLuaBaseEntity::className);
+                lua_getglobal(L, "CBaseEntity");
                 lua_pushstring(L, "new");
                 lua_gettable(L, -2);
                 lua_insert(L, -2);
@@ -14861,7 +14849,7 @@ inline int32 CLuaBaseEntity::getTrickAttackChar(lua_State* L)
         CBattleEntity* taTarget = battleutils::getAvailableTrickAttackChar((CBattleEntity*)m_PBaseEntity, PMob);
         if (taTarget)
         {
-            lua_getglobal(L, CLuaBaseEntity::className);
+            lua_getglobal(L, "CBaseEntity");
             lua_pushstring(L, "new");
             lua_gettable(L, -2);
             lua_insert(L, -2);
@@ -15337,6 +15325,7 @@ inline int32 CLuaBaseEntity::getTHlevel(lua_State* L)
     return 1;
 }
 
+/*
 //=======================================================//
 // clang-format off
 const char CLuaBaseEntity::className[] = "CBaseEntity";
@@ -16017,3 +16006,15 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     {nullptr,nullptr}
 };
 // clang-format on
+*/
+
+//==========================================================//
+
+void CLuaBaseEntity::Register(sol::state& lua)
+{
+    SOL_START(CBaseEntity, CLuaBaseEntity)
+    SOL_REGISTER(getID)
+    SOL_END()
+};
+
+//==========================================================//
