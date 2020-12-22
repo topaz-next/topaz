@@ -75,7 +75,7 @@ public:
 
     int32 getSignature(lua_State*);
 
-    static void Register(sol::state& lua);
+    static void Register();
 };
 
 #endif
