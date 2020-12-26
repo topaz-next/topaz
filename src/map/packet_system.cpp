@@ -1165,7 +1165,9 @@ void SmallPacket0x032(map_session_data_t* const PSession, CCharEntity* const PCh
     if ((PTarget != nullptr) && (PTarget->id == charid))
     {
         ShowDebug(CL_CYAN "%s initiated trade request with %s\n" CL_RESET, PChar->GetName(), PTarget->GetName());
-        if (jailutils::InPrison(PChar) || jailutils::InPrison(PTarget))
+
+        // If player is invisible or if either player is in prison don't allow the trade.
+        if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE)) || jailutils::InPrison(PChar) || jailutils::InPrison(PTarget))
         {
             // If either player is in prison don't allow the trade.
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
@@ -1443,7 +1445,6 @@ void SmallPacket0x036(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->TradeContainer->setItem(slotID, PItem->getID(), invSlotID, Quantity, PItem);
         }
 
-        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
         luautils::OnTrade(PChar, PNpc);
         PChar->TradeContainer->unreserveUnconfirmed();
     }
