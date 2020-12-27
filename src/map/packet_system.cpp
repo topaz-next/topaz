@@ -1166,10 +1166,18 @@ void SmallPacket0x032(map_session_data_t* const PSession, CCharEntity* const PCh
     {
         ShowDebug(CL_CYAN "%s initiated trade request with %s\n" CL_RESET, PChar->GetName(), PTarget->GetName());
 
-        // If player is invisible or if either player is in prison don't allow the trade.
-        if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INVISIBLE) || jailutils::InPrison(PChar) || jailutils::InPrison(PTarget))
+        // If PChar is invisible don't allow the trade, but you are able to initiate a trade TO an invisible player
+        if (PChar->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_INVISIBLE)) 
         {
-            // If either player is in prison don't allow the trade.
+            // 155 = "You cannot perform that action on the specified target."
+            PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 155));
+            return;
+        }
+        
+        // If either player is in prison don't allow the trade.
+        if (jailutils::InPrison(PChar) || jailutils::InPrison(PTarget))
+        {
+            // 316 = "That action cannot be used in this area."
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 316));
             return;
         }
