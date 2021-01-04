@@ -9,25 +9,25 @@ tpz = tpz or {}
 tpz.magian = tpz.magian or {}
 local checks = {} 
 
-checks.checkmobkill = function(reqs, params)
+checks.checkMobKill = function(reqs, params)
     return reqs.mobid and params.mob and reqs.mobid[params.mob:getID()] and 1 or 0
 end
 
-checks.checkwsonmobsystem = function(reqs, params)
+checks.checkWsOnMobsystem = function(reqs, params)
     return reqs.mobSystem and params.mob and reqs.wSkill and reqs.mobSystem[params.mob:getSystem()] and reqs.wSkill[params.wSkillId] and 1 or 0
 end
 
-checks.checkwskill = function(reqs, params)
+checks.checkWsKill = function(reqs, params)
     return reqs.mobSystem and params.mob and reqs.wSkill and reqs.mobSystem[params.mob:getSystem()] and reqs.wSkill[params.wSkillId] and params.mob:isDead() and 1 or 0
 end
 
 checks.checkTrials = function(self, player, params)
-    local ismobkill = checks.checkmobkill(self.reqs, params)
+    local ismobkill = checks.checkMobKill(self.reqs, params)
     if params.triggerWs then
         if self.reqs.killWithWs then
-            return checks.checkwskill(self.reqs, params)
+            return checks.checkWsKill(self.reqs, params)
         else
-            return checks.checkwsonmobsystem(self.reqs, params)
+            return checks.checkWsOnMobsystem(self.reqs, params)
         end
     else
         return ismobkill
