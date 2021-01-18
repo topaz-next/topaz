@@ -2959,6 +2959,34 @@ function getRoeRecords(triggers)
             reward = { sparks = 1000, xp = 5000 },
         },
 
+        [ 728] = { -- Subjugation: Genbu
+            trigger = triggers.mobKill,
+            reqs = { mobID = set{17309980} },
+            flags = set{"repeat"},
+            reward = { sparks = 300, xp = 1500 },
+        },
+
+        [ 729] = { -- Subjugation: Suzaku
+            trigger = triggers.mobKill,
+            reqs = { mobID = set{17309983} },
+            flags = set{"repeat"},
+            reward = { sparks = 300, xp = 1500 },
+        },
+
+        [ 730] = { -- Subjugation: Seiryu
+            trigger = triggers.mobKill,
+            reqs = { mobID = set{17309981} },
+            flags = set{"repeat"},
+            reward = { sparks = 300, xp = 1500 },
+        },
+
+        [ 731] = { -- Subjugation: Byakko
+            trigger = triggers.mobKill,
+            reqs = { mobID = set{17309982} },
+            flags = set{"repeat"},
+            reward = { sparks = 300, xp = 1500 },
+        },
+
       -----------------------------------
       -- Achievements - Job Levels 1             
       -----------------------------------
