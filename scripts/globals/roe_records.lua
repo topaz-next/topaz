@@ -3482,6 +3482,104 @@ function getRoeRecords(triggers)
             reward = { sparks = 200, xp = 500, item = { {6147, 12} } },
         },
 
+        [1274] = { -- Level 75 Dancer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.DNC, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {3208, 4} } },
+        },
+
+        [1275] = { -- Level 99 Dancer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.DNC, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4067, 2} } },
+        },
+
+        [1276] = { -- Level 30 Scholar
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.SCH, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6158, 12} } },
+        },
+
+        [1277] = { -- Level 50 Scholar
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.SCH, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6157, 12} } },
+        },
+
+        [1278] = { -- Level 75 Scholar
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.SCH, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {3209, 4} } },
+        },
+
+        [1279] = { -- Level 99 Scholar
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.SCH, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4068, 2} } },
+        },
+
+        [1280] = { -- Level 30 Geomancer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.GEO, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6178, 12} } },
+        },
+
+        [1281] = { -- Level 50 Geomancer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.GEO, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6179, 12} } },
+        },
+
+        [1282] = { -- Level 75 Geomancer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.GEO, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {6092, 1} } },
+        },
+
+        [1283] = { -- Level 99 Geomancer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.GEO, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4069, 1} } },
+        },
+
+        [1284] = { -- Level 30 Runefencer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.RUN, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6150, 12} } },
+        },
+
+        [1285] = { -- Level 50 Runefencer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.RUN, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6149, 12} } },
+        },
+
+        [1286] = { -- Level 75 Runefencer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.RUN, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {5103, 1} } },
+        },
+
+        [1287] = { -- Level 99 Runefencer
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.RUN, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4070, 1} } },
+        },
+
       ----------------------------------------
       -- Other - Daily Objectives           --
       ----------------------------------------
