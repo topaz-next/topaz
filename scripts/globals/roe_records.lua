@@ -2949,11 +2949,19 @@ function getRoeRecords(triggers)
       -----------------------------------
 
       -----------------------------------
-      -- Achievements - Job Levels I
+      -- Content (Other)                 
       -----------------------------------
-      ----------------------------------------
-      -- Achievements - Job Levels 1        --
-      ----------------------------------------
+
+        [ 727] = { -- Subjugation: Kirin
+            trigger = triggers.mobKill,
+            reqs = { mobID = set{17506670} },
+            flags = set{"repeat"},
+            reward = { sparks = 1000, xp = 5000 },
+        },
+
+      -----------------------------------
+      -- Achievements - Job Levels 1             
+      -----------------------------------
 
         [1200] = { -- Level 30 Warrior +
             trigger = triggers.levelUp,
@@ -3123,9 +3131,9 @@ function getRoeRecords(triggers)
             reward = { sparks = 400, xp = 500, item = { {4069, 2} } },
         },
 
-      ----------------------------------------
-      -- Achievements - Job Levels 2        --
-      ----------------------------------------
+      -----------------------------------
+      -- Achievements - Job Levels 2             
+      -----------------------------------
 
         [1224] = { -- Level 30 Paladin
             trigger = triggers.levelUp,
@@ -3295,9 +3303,9 @@ function getRoeRecords(triggers)
             reward = { sparks = 300, xp = 500, item = { {4065, 2} } },
         },
 
-      ----------------------------------------
-      -- Achievements - Job Levels 3        --
-      ----------------------------------------
+      -----------------------------------
+      -- Achievements - Job Levels 3             
+      -----------------------------------
 
         [1248] = { -- Level 30 Ninja
             trigger = triggers.levelUp,
@@ -3467,9 +3475,9 @@ function getRoeRecords(triggers)
             reward = { sparks = 400, xp = 500, item = { {4066, 2} } },
         },
 
-      ----------------------------------------
-      -- Achievements - Job Levels 4        --
-      ----------------------------------------
+      -----------------------------------
+      -- Achievements - Job Levels 4             
+      -----------------------------------
 
         [1272] = { -- Level 30 Dancer
             trigger = triggers.levelUp,
