@@ -2949,7 +2949,7 @@ function getRoeRecords(triggers)
       ----------------------------------------
 
       ----------------------------------------
-      -- Achievements - Job Levels I        --
+      -- Achievements - Job Levels 1        --
       ----------------------------------------
 
         [1200] = { -- Level 30 Warrior +
@@ -3119,6 +3119,186 @@ function getRoeRecords(triggers)
             flags = set{"retro"},
             reward = { sparks = 400, xp = 500, item = { {4069, 2} } },
         },
+
+      ----------------------------------------
+      -- Achievements - Job Levels 2        --
+      ----------------------------------------
+
+        [1224] = { -- Level 30 Paladin
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.PLD, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6149, 12} } },
+        },
+
+        [1225] = { -- Level 50 Paladin
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.PLD, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6164, 12} } },
+        },
+
+        [1226] = { -- Level 75 Paladin
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.PLD, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {3196, 4} } },
+        },
+
+        [1227] = { -- Level 99 Paladin
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.PLD, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4065, 2} } },
+        },
+
+        [1228] = { -- Level 30 Dark Knight
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.DRK, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6153, 12} } },
+        },
+
+        [1229] = { -- Level 50 Dark Knight
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.DRK, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6150, 12} } },
+        },
+
+        [1230] = { -- Level 75 Dark Knight
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.DRK, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {3197, 4} } },
+        },
+
+        [1231] = { -- Level 99 Dark Knight
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.DRK, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4066, 2} } },
+        },
+
+        [1232] = { -- Level 30 Beastmaster
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.BST, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6151, 12} } },
+        },
+
+        [1233] = { -- Level 50 Beastmaster
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.BST, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6153, 12} } },
+        },
+
+        [1234] = { -- Level 75 Beastmaster
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.BST, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {3198, 4} } },
+        },
+
+        [1235] = { -- Level 99 Beastmaster
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.BST, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4067, 2} } },
+        },
+
+        [1236] = { -- Level 30 Bard
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.BRD, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6172, 12} } },
+        },
+
+        [1237] = { -- Level 50 Bard
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.BRD, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6173, 12} } },
+        },
+
+        [1238] = { -- Level 75 Bard
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.BRD, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {3199, 4} } },
+        },
+
+        [1239] = { -- Level 99 Bard
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.BRD, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4068, 2} } },
+        },
+
+        [1240] = { -- Level 30 Ranger
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.RNG, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6159, 12} } },
+        },
+
+        [1241] = { -- Level 50 Ranger
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.RNG, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6160, 12} } },
+        },
+
+        [1242] = { -- Level 75 Ranger
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.RNG, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {3200, 4} } },
+        },
+
+        [1243] = { -- Level 99 Ranger
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.RNG, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 400, xp = 500, item = { {4064, 2} } },
+        },
+
+        [1244] = { -- Level 30 Samurai
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.SAM, 30 } },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500, item = { {6156, 12} } },
+        },
+
+        [1245] = { -- Level 50 Samurai
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.SAM, 50 } },
+            flags = set{"retro"},
+            reward = { sparks = 200, xp = 500, item = { {6154, 12} } },
+        },
+
+        [1246] = { -- Level 75 Samurai
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.SAM, 75 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {3201, 4} } },
+        },
+
+        [1247] = { -- Level 99 Samurai
+            trigger = triggers.levelUp,
+            reqs = { jobLvl = { tpz.job.SAM, 99 } },
+            flags = set{"retro"},
+            reward = { sparks = 300, xp = 500, item = { {4065, 2} } },
+        },
+
+      ----------------------------------------
+      -- Achievements - Job Levels 3        --
+      ----------------------------------------
+
+      ----------------------------------------
+      -- Achievements - Job Levels 4        --
+      ----------------------------------------
 
       ----------------------------------------
       -- Other - Daily Objectives           --
