@@ -15,7 +15,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:addMod(tpz.mod.REGEN, math.floor(mob:getMaxHP()*.004))
     mob:addMod(tpz.mod.BINDRES, 40)

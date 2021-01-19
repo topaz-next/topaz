@@ -9,7 +9,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
 end
 
 entity.onMobFight = function(mob, target)
@@ -59,7 +59,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
 end
 
 return entity

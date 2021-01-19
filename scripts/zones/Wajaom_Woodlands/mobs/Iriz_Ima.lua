@@ -11,12 +11,12 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setLocalVar("BreakChance", 5)
 end
 
-entity.onCriticalHit = function(mob, attacker)
+function onCriticalHit(mob, attacker)
     if math.random(100) <= mob:getLocalVar("BreakChance") then
         local animationSub = mob:getAnimationSub()
         if animationSub == 4 then

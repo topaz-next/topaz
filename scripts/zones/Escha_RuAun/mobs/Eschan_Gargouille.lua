@@ -4,13 +4,13 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:hideName(true)
     mob:untargetable(true)
     mob:setAnimationSub(6)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     mob:hideName(false)
     mob:untargetable(false)
     mob:setAnimationSub(0)

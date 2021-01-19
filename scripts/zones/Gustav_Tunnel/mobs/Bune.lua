@@ -7,7 +7,7 @@ local entity = {}
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
 
     -- Set Bune's spawnpoint and respawn time (21-24 hours)
     UpdateNMSpawnPoint(mob:getID())

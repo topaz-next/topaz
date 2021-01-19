@@ -8,13 +8,13 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.LINK_RADIUS, 50)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
+function onMobWeaponSkill(target, mob, skill)
 end
 
 entity.onMobFight = function(mob, target)

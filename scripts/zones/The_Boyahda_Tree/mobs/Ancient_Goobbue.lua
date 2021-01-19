@@ -10,7 +10,7 @@ entity.onMobInitialize = function(mob)
     mob:setMod(tpz.mod.CRITHITRATE, 25)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -23,7 +23,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
 end
 

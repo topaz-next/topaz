@@ -9,7 +9,7 @@ mixins = {
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("dynamis_currency", 1455)
 end
 

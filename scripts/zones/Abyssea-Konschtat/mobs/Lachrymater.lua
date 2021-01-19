@@ -4,7 +4,7 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob ,target)
+function onMobSpawn(mob ,target)
     local DayOfTheWeek = VanadielDayOfTheWeek()
 
     mob:setSpellList(188 + DayOfTheWeek)

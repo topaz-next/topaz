@@ -4,7 +4,7 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     --print(mob:getName())
 end
 

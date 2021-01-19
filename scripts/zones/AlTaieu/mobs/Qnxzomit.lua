@@ -11,7 +11,7 @@ local entity = {}
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     if (mob:getID() > ID.mob.JAILER_OF_LOVE) then
         local JoL = GetMobByID(ID.mob.JAILER_OF_LOVE)
         local xzomitsKilled = JoL:getLocalVar("JoL_Qn_xzomit_Killed")

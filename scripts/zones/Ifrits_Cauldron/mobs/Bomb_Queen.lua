@@ -15,7 +15,7 @@ entity.onMobInitialize = function(mob)
     mob:setMod(tpz.mod.STUNRES, 50)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("petCooldown", os.time() + 5) -- five seconds for first pet
 end
 

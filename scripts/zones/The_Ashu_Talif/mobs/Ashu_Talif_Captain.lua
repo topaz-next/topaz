@@ -7,7 +7,7 @@ require("scripts/globals/instance")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setUnkillable(true)
 end
 
@@ -64,7 +64,7 @@ entity.onMobRoam = function(mob)
 
 end
 
-entity.onMobDisengage = function(mob, target)
+function onMobDisengage(mob, target)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)

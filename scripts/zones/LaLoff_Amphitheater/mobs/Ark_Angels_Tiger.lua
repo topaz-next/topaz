@@ -8,7 +8,7 @@ local entity = {}
 
 -- TODO: Implement shared spawning and victory system with Ark Angel's Mandragora.
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local mobid = mob:getID()
 
     for member = mobid-2, mobid+5 do

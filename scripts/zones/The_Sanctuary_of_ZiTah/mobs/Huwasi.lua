@@ -10,7 +10,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 326)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
 end
 

@@ -20,11 +20,11 @@ local path =
     -532, 0, -466
 }
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     onMobRoam(mob)
 end
 
-entity.onMobRoamAction = function(mob)
+function onMobRoamAction(mob)
     tpz.path.patrol(mob, path, tpz.path.flag.REVERSE)
 end
 

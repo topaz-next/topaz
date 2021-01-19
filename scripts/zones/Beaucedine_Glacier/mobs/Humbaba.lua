@@ -15,11 +15,11 @@ entity.onMobInitialize = function(mob)
     mob:getStatusEffect(tpz.effect.ICE_SPIKES):setFlag(tpz.effectFlag.DEATH)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 25)
 end
 
-entity.onSpikesDamage = function(mob, target, damage)
+function onSpikesDamage(mob, target, damage)
     local INT_diff = mob:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
 
     if INT_diff > 20 then
@@ -46,7 +46,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 314)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
     mob:setRespawnTime(math.random(3600, 4200)) -- 60 to 70 minutes
 end

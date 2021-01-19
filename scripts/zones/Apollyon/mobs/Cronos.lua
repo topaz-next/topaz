@@ -7,7 +7,7 @@ local ID = require("scripts/zones/Apollyon/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMod(tpz.mod.UDMGPHYS, -100)
 end
 

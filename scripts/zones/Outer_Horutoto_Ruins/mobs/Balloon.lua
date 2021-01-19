@@ -10,7 +10,7 @@ local entity = {}
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     func.balloonOnDespawn(mob)
 end
 

@@ -48,7 +48,7 @@ local path =
     }
 }
 
-entity.onPath = function(mob)
+function onPath(mob)
     mob:setLocalVar("pause", os.time()+1)
 end
 

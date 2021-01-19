@@ -37,7 +37,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
+function onMobWeaponSkill(target, mob, skill)
     if mob:getLocalVar("spawnedMinions") == 0 then
         spawnMinions(mob, target)
     end

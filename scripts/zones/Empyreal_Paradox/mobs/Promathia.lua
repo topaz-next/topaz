@@ -14,7 +14,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(tpz.mod.UFASTCAST, 50)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local bcnmAllies = mob:getBattlefield():getAllies()
     for i, v in pairs(bcnmAllies) do
         if v:getName() == "Prishe" then
@@ -43,7 +43,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onSpellPrecast = function(mob, spell)
+function onSpellPrecast(mob, spell)
     if spell:getID() == 219 then
         spell:setMPCost(1)
     end

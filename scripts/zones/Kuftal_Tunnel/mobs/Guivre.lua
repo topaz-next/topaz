@@ -293,11 +293,11 @@ local pathNodes =
     107, 0, 3
 }
 
-entity.onPath = function(mob)
+function onPath(mob)
     tpz.path.patrol(mob, pathNodes)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     entity.onPath(mob)
 end
 
@@ -311,7 +311,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
     mob:setRespawnTime(math.random(64800, 86400)) -- 18 to 24 hours
 end

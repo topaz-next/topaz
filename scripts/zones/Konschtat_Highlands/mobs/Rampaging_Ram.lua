@@ -14,7 +14,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     tpz.tutorial.onMobDeath(player)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     tpz.mob.phOnDespawn(mob, ID.mob.STEELFLEECE_PH, 10, math.random(75600, 86400)) -- 21-24 hours
 end
 

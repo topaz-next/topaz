@@ -9,7 +9,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local mobId = mob:getID()
     for i = mobId + 1, mobId + 4 do
         if not GetMobByID(i):isSpawned() then
@@ -28,7 +28,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMonsterMagicPrepare = function(mob, target)
+function onMonsterMagicPrepare(mob, target)
     if mob:getHPP() <= 25 then
         return 244 -- Death
     else

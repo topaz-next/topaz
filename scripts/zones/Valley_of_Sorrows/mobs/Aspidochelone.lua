@@ -10,7 +10,7 @@ require("scripts/globals/titles")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     if LandKingSystem_NQ > 0 or LandKingSystem_HQ > 0 then
         GetNPCByID(ID.npc.ADAMANTOISE_QM):setStatus(tpz.status.DISAPPEAR)
     end
@@ -22,7 +22,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     player:addTitle(tpz.title.ASPIDOCHELONE_SINKER)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     -- Set Aspidochelone's Window Open Time
     if LandKingSystem_HQ ~= 1 then
         local wait = 72 * 3600

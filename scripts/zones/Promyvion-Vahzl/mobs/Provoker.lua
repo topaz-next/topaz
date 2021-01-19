@@ -38,7 +38,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onAdditionalEffect = function(mob, target, damage)
+function onAdditionalEffect(mob, target, damage)
     local element = mob:getLocalVar("element")
     if element > 0 then
         return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE + element - 1, {chance = 1000})

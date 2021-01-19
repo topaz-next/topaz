@@ -4,7 +4,7 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local instance = mob:getInstance()
     local mobID = mob:getID()
 
@@ -14,7 +14,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local instance = mob:getInstance()
     instance:setProgress(instance:getProgress() + 1)
 end

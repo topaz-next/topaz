@@ -104,6 +104,169 @@ function getRoeRecords(triggers)
             reward = { sparks = 100, xp = 300 },
         },
 
+        [ 502] = { -- Mog House Exit: Windurst
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.FLOWER_CHILD} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 503] = { -- Mog House Exit: Jeuno
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.JEUNO, tpz.quest.id.jeuno.PRETTY_LITTLE_THINGS} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 504] = { -- Mog House Exit: Aht Urhgan
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.AHT_URHGAN, tpz.quest.id.ahtUrhgan.KEEPING_NOTES} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        -- TODO: [505] Obtain a Support Job (Has two potential quest completes for objective)
+
+        [ 506] = { -- Obtain an Alter Ego: San d'Oria
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.TRUST_SANDORIA} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500 },
+        },
+
+        [ 507] = { -- Obtain an Alter Ego: Bastok
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.TRUST_BASTOK} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500 },
+        },
+
+        [ 508] = { -- Obtain an Alter Ego: Windurst
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.TRUST_WINDURST} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 500 },
+        },
+
+        [ 509] = { -- Obtain a Chocobo License
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.JEUNO, tpz.quest.id.jeuno.CHOCOBO_S_WOUNDS} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 600 },
+        },
+
+        [ 510] = { -- Obtain Job: Paladin
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.A_SQUIRE_S_TEST} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 511] = { -- Obtain Job: Dark Knight
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.BLADE_OF_DARKNESS} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 512] = { -- Obtain Job: Beastmaster
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.JEUNO, tpz.quest.id.jeuno.SAVE_MY_SON} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 513] = { -- Obtain Job: Bard
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.JEUNO, tpz.quest.id.jeuno.THE_OLD_MONUMENT} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 514] = { -- Obtain Job: Ranger
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.THE_FANGED_ONE} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 515] = { -- Obtain Job: Samurai
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.OUTLANDS, tpz.quest.id.outlands.FORGE_YOUR_DESTINY} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 516] = { -- Obtain Job: Ninja
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.AYAME_AND_KAEDE} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 517] = { -- Obtain Job: Dragoon
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.THE_HOLY_CREST} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 518] = { -- Obtain Job: Summoner
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.I_CAN_HEAR_A_RAINBOW} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 519] = { -- Obtain Job: Blue Mage
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.AHT_URHGAN, tpz.quest.id.ahtUrhgan.AN_EMPTY_VESSEL} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 520] = { -- Obtain Job: Corsair
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.AHT_URHGAN, tpz.quest.id.ahtUrhgan.LUCK_OF_THE_DRAW} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 521] = { -- Obtain Job: Puppetmaster
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.AHT_URHGAN, tpz.quest.id.ahtUrhgan.NO_STRINGS_ATTACHED} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 522] = { -- Obtain Job: Dancer
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.JEUNO, tpz.quest.id.jeuno.LAKESIDE_MINUET} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 523] = { -- Obtain Job: Scholar
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.CRYSTAL_WAR, tpz.quest.id.crystalWar.A_LITTLE_KNOWLEDGE} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 524] = { -- Obtain Job: Geomancer
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.ADOULIN, tpz.quest.id.adoulin.DANCES_WITH_LUOPANS} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 525] = { -- Obtain Job: Runefencer
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.ADOULIN, tpz.quest.id.adoulin.CHILDREN_OF_THE_RUNE} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
       -----------------------------------
       -- Tutorial -> Level Cap Increase
       -----------------------------------

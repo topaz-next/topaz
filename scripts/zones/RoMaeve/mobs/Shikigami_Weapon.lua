@@ -47,12 +47,12 @@ entity.onMobInitialize = function(mob)
     mob:setMod(tpz.mod.REGEN, 5) -- "Has a minor Auto Regen effect"
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setStatus(tpz.status.INVISIBLE)
     entity.onMobRoam(mob)
 end
 
-entity.onPath = function(mob)
+function onPath(mob)
     tpz.path.patrol(mob, path, tpz.path.flag.RUN)
 end
 
@@ -63,11 +63,11 @@ entity.onMobRoam = function(mob)
     end
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     mob:setStatus(tpz.status.UPDATE)
 end
 
-entity.onMobDisengage = function(mob)
+function onMobDisengage(mob)
     mob:setStatus(tpz.status.INVISIBLE)
 end
 

@@ -7,7 +7,7 @@ local ID = require("scripts/zones/Temenos/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     local mobID = mob:getID()
     if mobID == ID.mob.TEMENOS_C_MOB[2] then --Carbuncle (Central Temenos 2nd Floor)
         mob:setMod(tpz.mod.FIREDEF, 256)
@@ -21,7 +21,7 @@ entity.onMobSpawn = function(mob)
     end
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local mobID = mob:getID()
     if mobID == ID.mob.TEMENOS_C_MOB[2] then --Carbuncle (Central Temenos 2nd Floor)
         GetMobByID(ID.mob.TEMENOS_C_MOB[2]+2):updateEnmity(target)

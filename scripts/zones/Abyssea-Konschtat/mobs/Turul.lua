@@ -19,7 +19,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onSpellPrecast = function(mob, spell)
+function onSpellPrecast(mob, spell)
     --[[
     Todo:
     "Turul will often cast Thunder based spells on itself to recover HP."

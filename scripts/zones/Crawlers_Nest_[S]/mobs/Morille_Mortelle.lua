@@ -12,12 +12,12 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMod(tpz.mod.DOUBLE_ATTACK, 20)
     mob:setMod(tpz.mod.STORETP, 10)
 end
 
-entity.onAdditionalEffect = function(mob, target, damage)
+function onAdditionalEffect(mob, target, damage)
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.PLAGUE)
 end
 

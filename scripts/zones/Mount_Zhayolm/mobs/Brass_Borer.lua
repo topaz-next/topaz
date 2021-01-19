@@ -12,7 +12,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setLocalVar("formTime", os.time() + math.random(43, 47))
     mob:setLocalVar("defUp", math.random(25, 50))
@@ -56,7 +56,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onAdditionalEffect = function(mob, target, damage)
+function onAdditionalEffect(mob, target, damage)
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.ENFIRE)
 end
 

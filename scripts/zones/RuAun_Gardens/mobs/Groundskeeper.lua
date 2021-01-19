@@ -17,7 +17,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     if tpz.mob.phOnDespawn(mob, ID.mob.DESPOT_PH, 5, 7200, true) then -- 2 hours
         local phId = mob:getID()
         local nmId = ID.mob.DESPOT_PH[phId]

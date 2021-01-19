@@ -17,7 +17,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.HP_STANDBACK, -1)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.GA_CHANCE, 25)
     if GetMobByID(mob:getID() - 1):isDead() and GetMobByID(mob:getID() - 2):isDead() then
         mob:getBattlefield():setLocalVar("phaseChange", 0)

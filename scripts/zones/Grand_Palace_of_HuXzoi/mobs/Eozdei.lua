@@ -11,13 +11,13 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     -- Set AnimationSub to 0, put it in pot form
     mob:setAnimationSub(0)
     entity.onPath(mob)
 end
 
-entity.onPath = function(mob)
+function onPath(mob)
     local spawnPos = mob:getSpawnPos()
     mob:pathThrough({spawnPos.x, spawnPos.y, spawnPos.z})
     local pos = mob:getPos()

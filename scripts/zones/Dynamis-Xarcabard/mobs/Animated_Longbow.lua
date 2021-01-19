@@ -7,7 +7,7 @@ local ID = require("scripts/zones/Dynamis-Xarcabard/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
 
     if (mob:getAnimationSub() == 3) then
         SetDropRate(110, 1583, 1000)
@@ -30,7 +30,7 @@ entity.onMobFight = function(mob, target)
     -- TODO: add battle dialog
 end
 
-entity.onMobDisengage = function(mob)
+function onMobDisengage(mob)
     mob:showText(mob, ID.text.ANIMATED_LONGBOW_DIALOG+2)
 end
 

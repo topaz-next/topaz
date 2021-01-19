@@ -11,7 +11,7 @@ entity.onMobInitialize = function(mob)
     mob:setMod(tpz.mod.SLEEPRES, 50)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CHARMABLE, 1)
 end
 

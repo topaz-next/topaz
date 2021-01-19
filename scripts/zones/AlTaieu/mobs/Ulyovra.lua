@@ -7,21 +7,21 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:hideName(true)
     mob:untargetable(true)
     mob:setAnimationSub(5)
     mob:wait(2000)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     mob:hideName(false)
     mob:untargetable(false)
     mob:setAnimationSub(6)
     mob:wait(2000)
 end
 
-entity.onMobDisengage = function(mob)
+function onMobDisengage(mob)
     mob:hideName(true)
     mob:untargetable(true)
     mob:setAnimationSub(5)

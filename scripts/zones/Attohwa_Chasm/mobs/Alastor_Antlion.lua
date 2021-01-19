@@ -16,7 +16,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(tpz.mod.SILENCERES, 40)
 end
 
-entity.onAdditionalEffect = function(mob, target, damage)
+function onAdditionalEffect(mob, target, damage)
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.PETRIFY)
 end
 

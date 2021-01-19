@@ -8,7 +8,7 @@ require("scripts/globals/titles")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)

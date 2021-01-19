@@ -10,7 +10,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 255)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     mob:setRespawnTime(math.random(3600, 4200))
 end
 

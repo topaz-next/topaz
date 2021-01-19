@@ -12,7 +12,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(tpz.mod.REGAIN, 30)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
         -- Red Lotus Blade
         if skillID == 968 then
@@ -27,7 +27,7 @@ entity.onMobSpawn = function(mob)
     end)
 end
 
-entity.onMobDisengage = function(mob)
+function onMobDisengage(mob)
     mob:setLocalVar("wait", 0)
 end
 

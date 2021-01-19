@@ -8,11 +8,11 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     GetMobByID(ID.mob.CHANDELIER):setRespawnTime(0)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local ce = mob:getCE(target)
     local ve = mob:getVE(target)
     if (ce==0 and ve==0) then

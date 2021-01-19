@@ -12,7 +12,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:addMod(tpz.mod.SLEEPRES, 50)
     mob:addMod(tpz.mod.LULLABYRES, 50)
     mob:setLocalVar("everyonesRancorHPP", math.random(20, 30))
@@ -25,7 +25,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDisengage = function(mob, weather)
+function onMobDisengage(mob, weather)
     mob:setLocalVar("everyonesRancorUsed", 0)
 end
 

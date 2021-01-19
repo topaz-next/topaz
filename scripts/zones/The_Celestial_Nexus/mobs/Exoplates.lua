@@ -13,7 +13,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(tpz.mod.REGAIN, 50)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setAnimationSub(0)
     mob:SetAutoAttackEnabled(false)
     mob:setUnkillable(true)

@@ -8,7 +8,7 @@ local ID = require("scripts/zones/Temenos/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
 end
 
 entity.onMobDeath = function(mob, player, isKiller, noKiller)

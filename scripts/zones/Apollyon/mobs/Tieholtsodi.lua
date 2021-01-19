@@ -26,7 +26,7 @@ entity.onMobRoam = function(mob)
     end
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMod(tpz.mod.SLASHRES, 0)
     mob:setMod(tpz.mod.PIERCERES, 1500)
     tpz.mix.jobSpecial.config(mob, {

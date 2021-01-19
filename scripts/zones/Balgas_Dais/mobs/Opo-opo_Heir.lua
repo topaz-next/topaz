@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:SetAutoAttackEnabled(false)
     mob:SetMobAbilityEnabled(false)
 end

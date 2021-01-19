@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:SetMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
     mob:setAnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
 end
@@ -64,7 +64,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     player:addTitle(tpz.title.TIAMAT_TROUNCER)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     mob:setRespawnTime(math.random(259200, 432000)) -- 3 to 5 days
 end
 

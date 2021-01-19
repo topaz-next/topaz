@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
     -- "Draw in" should only trigger when target is beyond 20' (out of Radiant_Sacrament range)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1)
@@ -39,7 +39,7 @@ entity.onMobSpawn = function(mob)
     end)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     mob:showText(mob, ID.text.SHALL_BE_JUDGED)
 end
 
@@ -65,7 +65,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local instance = mob:getInstance()
     instance:setProgress(instance:getProgress() + 1)
 end

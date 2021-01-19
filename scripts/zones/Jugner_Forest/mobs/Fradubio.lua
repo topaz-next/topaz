@@ -7,7 +7,7 @@ local entity = {}
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
 end
 

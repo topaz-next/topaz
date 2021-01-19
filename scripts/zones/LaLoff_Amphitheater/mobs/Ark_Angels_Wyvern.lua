@@ -6,7 +6,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local mobid = mob:getID()
 
     for member = mobid-7, mobid do

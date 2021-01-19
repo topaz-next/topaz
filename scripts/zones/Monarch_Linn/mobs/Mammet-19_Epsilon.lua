@@ -6,7 +6,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:SetMagicCastingEnabled(false)
 end
 
@@ -25,7 +25,7 @@ entity.onMobFight = function(mob, target)
 
 end
 
-local function changeForm(mob)
+function changeForm(mob)
     local newform = math.random(0, 2)
     if (mob:getAnimationSub() == newform) then
         newform = 3

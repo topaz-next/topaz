@@ -12,20 +12,20 @@ entity.onMobInitialize = function(mob)
     -- mob:setMobMod(tpz.mobMod.AUTO_SPIKES, 1)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
         mob:showText(mob, ID.text.WHEEZE)
     end)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local naja = GetMobByID(ID.mob[58].NAJA, mob:getInstance())
     naja:setLocalVar("ready", 1)
     mob:showText(mob, ID.text.CANNOT_LET_YOU_PASS)
 end
 
 --[[
-entity.onSpikesDamage = function(mob, target, damage)
+function onSpikesDamage(mob, target, damage)
     -- Amnaf's Ice Spikes from blm spell will process first on retail.
     -- In battleutils.cpp the spike effect is checked before trying to process onSpikesDamage()
     -- thus no status effect = no proc, but 2 spike effects can't coexist..
@@ -44,7 +44,7 @@ entity.onSpikesDamage = function(mob, target, damage)
 end
 ]]
 
-entity.onSpellPrecast = function(mob, spell)
+function onSpellPrecast(mob, spell)
     mob:showText(mob, ID.text.PHSHOOO)
 end
 
@@ -54,7 +54,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local instance = mob:getInstance()
     instance:setProgress(instance:getProgress() + 2)
 end

@@ -6,7 +6,7 @@ require("scripts/globals/missions")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("maxBabies", 2)
 end
 

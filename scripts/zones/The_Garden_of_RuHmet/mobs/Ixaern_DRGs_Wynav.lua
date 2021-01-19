@@ -6,7 +6,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("hpTrigger", math.random(10, 75))
 end
 
@@ -18,7 +18,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMonsterMagicPrepare = function(mob, target)
+function onMonsterMagicPrepare(mob, target)
     local spellList =
     {
         [1] = 382,
@@ -41,7 +41,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     mob:setLocalVar("repop", mob:getBattleTime()) -- This get erased on respawn automatic.
 end
 

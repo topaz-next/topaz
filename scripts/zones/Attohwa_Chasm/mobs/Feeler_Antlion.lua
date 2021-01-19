@@ -11,7 +11,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(tpz.mod.REGEN, 30)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("SAND_BLAST", 1)
 end
 

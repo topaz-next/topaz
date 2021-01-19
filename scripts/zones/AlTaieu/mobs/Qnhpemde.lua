@@ -7,7 +7,7 @@ local ID = require("scripts/zones/AlTaieu/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setAnimationSub(6) -- Mouth Closed
 end
 
@@ -33,7 +33,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local JoL = GetMobByID(ID.mob.JAILER_OF_LOVE)
     local HPEMDES = JoL:getLocalVar("JoL_Qn_hpemde_Killed")
     JoL:setLocalVar("JoL_Qn_hpemde_Killed", HPEMDES+1)

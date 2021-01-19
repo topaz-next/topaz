@@ -460,9 +460,6 @@ namespace luautils
                 return cached_func;
             }
         }
-
-        // Didn't find it
-        return sol::nil;
     }
 
     // Assumes filename in the form "./scripts/folder0/folder1/folder2/mob_name.lua

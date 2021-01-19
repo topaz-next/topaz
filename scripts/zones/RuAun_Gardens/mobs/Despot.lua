@@ -4,7 +4,7 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     local ph = GetMobByID(mob:getLocalVar("ph"))
     if ph then
         local pos = ph:getPos()
@@ -19,7 +19,7 @@ entity.onMobSpawn = function(mob)
     end
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
+function onMobWeaponSkill(target, mob, skill)
     if skill:getID() == 536 then
         local panzerfaustCounter = mob:getLocalVar("panzerfaustCounter")
         local panzerfaustMax = mob:getLocalVar("panzerfaustMax")
@@ -44,7 +44,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     mob:removeListener("PH_VAR")
 end
 

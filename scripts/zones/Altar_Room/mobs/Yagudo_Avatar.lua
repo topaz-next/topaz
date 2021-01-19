@@ -7,7 +7,7 @@ require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
@@ -21,7 +21,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     for i = ID.mob.YAGUDO_AVATAR + 1, ID.mob.YAGUDO_AVATAR + 8 do
         DespawnMob(i)
     end

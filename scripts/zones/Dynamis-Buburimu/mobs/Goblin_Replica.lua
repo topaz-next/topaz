@@ -6,7 +6,7 @@ require("scripts/globals/dynamis")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     dynamis.refillStatueOnSpawn(mob)
 end
 

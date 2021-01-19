@@ -9,7 +9,7 @@ require("scripts/globals/titles")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     if mob:getID() >= ID.mob.SHADOW_LORD_STAGE_2_OFFSET then
         if GetMobByID(mob:getID() - 3):isDead() then
             local battlefield = mob:getBattlefield()
@@ -95,7 +95,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     mob:delStatusEffect(tpz.effect.PHYSICAL_SHIELD)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     -- reset everything on despawn
     mob:setAnimationSub(0)
     mob:SetAutoAttackEnabled(true)

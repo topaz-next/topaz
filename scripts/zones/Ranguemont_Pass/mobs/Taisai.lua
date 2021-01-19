@@ -6,18 +6,18 @@ local ID = require("scripts/zones/Ranguemont_Pass/IDs")
 -----------------------------------
 local entity = {}
 
-local function disturbMob(mob)
+function disturbMob(mob)
     local phIndex = mob:getLocalVar("phIndex")
     if (phIndex > 0) then
         mob:setLocalVar("timeToGrow", os.time() + math.random(86400, 259200)) -- 1 to 3 days
     end
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     disturbMob(mob)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     disturbMob(mob)
 end
 

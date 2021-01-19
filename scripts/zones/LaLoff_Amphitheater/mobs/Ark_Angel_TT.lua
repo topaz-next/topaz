@@ -11,7 +11,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(tpz.mod.UFASTCAST, 30)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
         between = 30,
         specials =
@@ -28,7 +28,7 @@ entity.onMobSpawn = function(mob)
     })
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local mobid = mob:getID()
 
     for member = mobid-5, mobid+2 do

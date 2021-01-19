@@ -6,7 +6,7 @@ local ID = require("scripts/zones/Riverne-Site_A01/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     SetServerVariable("Heliodromos_Despawn", 0)
 end
 
@@ -39,7 +39,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local allHeliodromosDead = true
 
     for i = ID.mob.HELIODROMOS_OFFSET, ID.mob.HELIODROMOS_OFFSET + 2 do

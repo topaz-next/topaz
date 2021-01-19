@@ -6,11 +6,11 @@ local ID = require("scripts/zones/Yuhtunga_Jungle/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("timeToGrow", os.time() + math.random(36000, 37800)) -- 10:00:00 to 10:30:00
 end
 
-entity.onMobDisengage = function(mob)
+function onMobDisengage(mob)
     mob:setLocalVar("timeToGrow", os.time() + math.random(36000, 37800)) -- 10:00:00 to 10:30:00
 end
 
@@ -28,7 +28,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     if os.time() < mob:getLocalVar("timeToGrow") then
         DisallowRespawn(ID.mob.ROSE_GARDEN, true)
         DisallowRespawn(ID.mob.ROSE_GARDEN_PH, false)

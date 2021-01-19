@@ -13,7 +13,7 @@ entity.onMobInitialize = function(mob)
     mob:setMod(tpz.mod.MDEF, 50);
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:addMod(tpz.mod.EVA, 50)
 end
 

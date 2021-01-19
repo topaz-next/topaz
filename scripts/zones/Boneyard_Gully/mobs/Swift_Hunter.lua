@@ -6,13 +6,13 @@ mixins = {require("scripts/mixins/families/antlion_ambush")}
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     -- Aggros via ambush, not superlinking
     mob:setMobMod(tpz.mobMod.SUPERLINK, 0)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
 end
 

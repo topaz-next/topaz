@@ -7,11 +7,11 @@ local ID = require("scripts/zones/Apollyon/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.SUPERLINK, mob:getShortID())
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local battlefield = mob:getBattlefield()
     if battlefield:getLocalVar("startTime") == 0 then
         battlefield:setLocalVar("startTime", battlefield:getRemainingTime())

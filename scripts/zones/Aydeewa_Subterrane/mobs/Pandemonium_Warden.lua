@@ -26,7 +26,7 @@ local skillID =    {  1000,    316,  1001,    316,  1002,    316,  1003,    316,
 local avatarAbilities = {  917,   918,   914,   913,   915,   916,   839,   919}
 local avatarSkins =     {   22,    23,    19,    18,    20,    21,    17,    16}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
 
     mob:setMod(tpz.mod.DEF, 450)
     mob:setMod(tpz.mod.MEVA, 380)
@@ -43,7 +43,7 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar("astralFlow", 1)
 end
 
-entity.onMobDisengage = function(mob)
+function onMobDisengage(mob)
     -- Make sure model is reset back to start
     mob:setModelId(1840)
     mob:setMobMod(tpz.mobMod.SKILL_LIST, 316)
@@ -66,7 +66,7 @@ entity.onMobDisengage = function(mob)
     end
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     -- pop pets
     for i = 1, 8 do
         local pet = GetMobByID(petIDs[1][i])
@@ -174,7 +174,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     -- Despawn pets
     for i = 0, 1 do
         for j = 1, 8 do
@@ -185,7 +185,7 @@ entity.onMobDespawn = function(mob)
     end
 end
 
-local function handlePet(mob, newPet, oldPet, target, modelId)
+function handlePet(mob, newPet, oldPet, target, modelId)
 
     if oldPet:isSpawned() then
         DespawnMob(oldPet:getID())

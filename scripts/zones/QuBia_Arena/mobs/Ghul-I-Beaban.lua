@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-local function reraiseGhul(mob, reraises, target)
+function reraiseGhul(mob, reraises, target)
     mob:setLocalVar("RERAISES", reraises)
     mob:setMod(tpz.mod.ATT, 25 * reraises)
     mob:setHP(mob:getMaxHP() * (1 - (0.10 * reraises)))

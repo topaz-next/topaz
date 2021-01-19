@@ -5,7 +5,7 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setUnkillable(true)
 end
 

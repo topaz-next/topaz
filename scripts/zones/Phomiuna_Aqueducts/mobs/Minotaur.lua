@@ -7,7 +7,7 @@ require("scripts/globals/missions")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("fomorHateAdj", -2)
 end
 

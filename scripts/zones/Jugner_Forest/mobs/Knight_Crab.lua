@@ -8,7 +8,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     -- If respawn and variable is not 0, then it respawned before someone killed all 10 crabs
     local KingArthro = GetMobByID(ID.mob.KING_ARTHRO)
 
@@ -23,7 +23,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local KingArthro = GetMobByID(ID.mob.KING_ARTHRO)
 
     KingArthro:setLocalVar("[POP]King_Arthro", KingArthro:getLocalVar("[POP]King_Arthro") + 1)

@@ -11,7 +11,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     player:addTitle(tpz.title.BYEBYE_TAISAI)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local phIndex = mob:getLocalVar("phIndex")
     local ph = GetMobByID(ID.mob.TAISAIJIN_PH[phIndex])
 

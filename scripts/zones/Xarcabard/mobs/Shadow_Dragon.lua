@@ -7,7 +7,7 @@ local entity = {}
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local B_ToD = GetServerVariable("[POP]Biast")
     local X = mob:getXPos()
     local Y = mob:getYPos()

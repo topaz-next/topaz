@@ -15,7 +15,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     local KingArthroID = mob:getID()
 
     -- Use King Arthro ID to determine Knight Crab Id's, then set their respawn to 0 so they don't spawn while KA is up
@@ -24,7 +24,7 @@ entity.onMobSpawn = function(mob)
     end
 end
 
-entity.onAdditionalEffect = function(mob, target, damage)
+function onAdditionalEffect(mob, target, damage)
     if mob:hasStatusEffect(tpz.effect.ENWATER) then
         return 0, 0, 0
     else
@@ -32,7 +32,7 @@ entity.onAdditionalEffect = function(mob, target, damage)
     end
 end
 
-entity.onMonsterMagicPrepare = function(mob, target)
+function onMonsterMagicPrepare(mob, target)
     -- Instant cast on spells - Waterga IV, Poisonga II, Drown, and Enwater
     local rnd = math.random()
 
@@ -50,7 +50,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local KingArthroID = mob:getID()
 
     GetMobByID(KingArthroID):setLocalVar("[POP]King_Arthro", 0)

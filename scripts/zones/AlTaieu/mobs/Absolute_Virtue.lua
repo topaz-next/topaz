@@ -9,7 +9,7 @@ require("scripts/globals/magic")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     -- setMod
     mob:setMod(tpz.mod.REGEN, 500)
 
@@ -23,7 +23,7 @@ entity.onMobSpawn = function(mob)
     end
 end
 
-entity.onSpellPrecast = function(mob, spell)
+function onSpellPrecast(mob, spell)
     if (spell:getID() == 218) then -- Meteor
         spell:setAoE(tpz.magic.aoe.RADIAL)
         spell:setFlag(tpz.magic.spellFlag.HIT_ALL)
@@ -33,7 +33,7 @@ entity.onSpellPrecast = function(mob, spell)
     end
 end
 
-entity.onMagicHit = function(caster, target, spell)
+function onMagicHit(caster, target, spell)
     local REGEN = target:getMod(tpz.mod.REGEN)
     local DAY = VanadielDayOfTheWeek()
     local ELEM = spell:getElement()

@@ -7,13 +7,13 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-local function replaceWithCrate(mob)
+function replaceWithCrate(mob)
     local crate = GetNPCByID(mob:getID() + 2)
     crate:teleport(mob:getPos(), mob:getRotPos())
     crate:setStatus(tpz.status.NORMAL)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local mobId = mob:getID()
     local small = GetMobByID(mobId - 1)
 

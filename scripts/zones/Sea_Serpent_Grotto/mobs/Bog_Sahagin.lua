@@ -15,7 +15,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     tpz.regime.checkRegime(player, mob, 808, 1, tpz.regime.type.GROUNDS)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     tpz.mob.phOnDespawn(mob, ID.mob.MOUU_THE_WAVERIDER_PH, 10, 7200) -- 2 hours
 end
 

@@ -24,7 +24,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
     mob:setHP(mob:getMaxHP()/2)
     mob:setUnkillable(true)
@@ -112,7 +112,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onCriticalHit = function(mob)
+function onCriticalHit(mob)
     local critNum = mob:getLocalVar("crits")
 
     if ((critNum+1) > mob:getLocalVar("CritToTheFace")) then  -- Lose a head
@@ -136,7 +136,7 @@ entity.onCriticalHit = function(mob)
     mob:setLocalVar("crits", critNum)
 end
 
-entity.onMobDrawIn = function(mob, target)
+function onMobDrawIn(mob, target)
     mob:addTP(3000) -- Uses a mobskill upon drawing in a player. Not necessarily on the person drawn in.
 end
 

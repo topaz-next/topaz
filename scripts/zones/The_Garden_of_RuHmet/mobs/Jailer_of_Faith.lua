@@ -7,7 +7,7 @@ mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     -- Change animation to open
     mob:setAnimationSub(2)
 end
@@ -31,7 +31,7 @@ end
 entity.onMobDeath = function(mob)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     -- Move QM to random location
     local pos = math.random(1, 5)
     GetNPCByID(ID.npc.JAILER_OF_FAITH_QM):setPos(ID.npc.JAILER_OF_FAITH_QM_POS[pos][1], ID.npc.JAILER_OF_FAITH_QM_POS[pos][2], ID.npc.JAILER_OF_FAITH_QM_POS[pos][3])

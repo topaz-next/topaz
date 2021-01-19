@@ -11,12 +11,12 @@ local entity = {}
 entity.onMobInitialize = function(mob)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.DRAW_IN, 1) -- has a bug during flight, like Tiamat
     mob:setTP(3000) -- opens fight with a skill
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     mob:setMod(tpz.mod.REGAIN, 100) -- very close to the capture by comparing stop watch measures
     mob:setMod(tpz.mod.REGEN, 100) -- might be higher: capture showed no change in HP with Poison II and Bio III procced
 end

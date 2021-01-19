@@ -4,7 +4,7 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMobMod(tpz.mobMod.CHARMABLE, 1)
 end
 

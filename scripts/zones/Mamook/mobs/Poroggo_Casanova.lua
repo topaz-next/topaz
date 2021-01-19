@@ -7,7 +7,7 @@ local ID = require("scripts/zones/Mamook/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
@@ -19,7 +19,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     for i = ID.mob.POROGGO_CASANOVA + 1, ID.mob.POROGGO_CASANOVA + 5 do
         DespawnMob(i)
     end

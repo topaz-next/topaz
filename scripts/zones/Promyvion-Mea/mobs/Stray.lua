@@ -6,7 +6,7 @@ require("scripts/globals/promyvion")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     tpz.promyvion.strayOnSpawn(mob)
 end
 

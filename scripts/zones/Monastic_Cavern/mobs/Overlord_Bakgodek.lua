@@ -9,7 +9,7 @@ require("scripts/globals/titles")
 -----------------------------------
 local entity = {}
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     mob:showText(mob, ID.text.ORC_KING_ENGAGE)
 end
 
@@ -20,7 +20,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     -- reset hqnm system back to the nm placeholder
     local nqId = mob:getID() - 1
     SetServerVariable("[POP]Overlord_Bakgodek", os.time() + 259200) -- 3 days

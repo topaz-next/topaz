@@ -14,7 +14,7 @@ entity.onMobInitialize = function(mob)
     mob:setMod(tpz.mod.MOVE, 25)
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -23,7 +23,7 @@ entity.onMobSpawn = function(mob)
     })
 end
 
-entity.onAdditionalEffect = function(mob, target, damage)
+function onAdditionalEffect(mob, target, damage)
     return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.SLOW)
 end
 

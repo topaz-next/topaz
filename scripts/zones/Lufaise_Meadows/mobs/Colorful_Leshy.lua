@@ -8,15 +8,15 @@ entity.onMobInitialize = function(mob)
     mob:setLocalVar("timeToGrow", os.time() + math.random(43200, 86400)) -- Colorful in 12 to 24 hours
 end
 
-local function disturbMob(mob)
+function disturbMob(mob)
     GetMobByID(mob:getID() + 1):setLocalVar("timeToGrow", os.time() + math.random(43200, 86400)) -- Defoliate in 12 to 24 hours
 end
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     disturbMob(mob)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     disturbMob(mob)
 end
 
@@ -44,7 +44,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local phIndex = mob:getLocalVar("phIndex")
     if (phIndex ~= 0) then
         mob:setLocalVar("phIndex", 0)

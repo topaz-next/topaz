@@ -25,7 +25,7 @@ local stage3Position =
     460, 0, -446,
 }
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:addListener("WEAPONSKILL_STATE_ENTER", "WS_START_MSG", function(mob, skillID)
         if (skillID == 165) then
             mob:showText(mob, ID.text.CHA_CHING)
@@ -37,7 +37,7 @@ entity.onMobSpawn = function(mob)
     end)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     -- localVar because we don't want it to repeat she engages a new target.
     if (mob:getLocalVar("started") == 0) then
         mob:showText(mob, ID.text.ALRRRIGHTY)
@@ -54,7 +54,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDisengage = function(mob, target)
+function onMobDisengaged(mob, target)
     local ready = mob:getLocalVar("ready")
 
     if (ready == 1) then
@@ -88,7 +88,7 @@ entity.onMobRoam = function(mob)
     end
 end
 
-entity.onCriticalHit = function(mob)
+function onCriticalHit(mob)
     mob:showText(mob, ID.text.OW)
 end
 

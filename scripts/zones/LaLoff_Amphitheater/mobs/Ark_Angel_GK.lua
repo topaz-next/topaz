@@ -9,7 +9,7 @@ local entity = {}
 
 -- TODO: Allegedly has a 12 hp/sec regen.  Determine if true, and add to onMobInitialize if so.
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
         specials =
         {
@@ -19,7 +19,7 @@ entity.onMobSpawn = function(mob)
     })
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     local mobid = mob:getID()
 
     for member = mobid-6, mobid+1 do

@@ -11,11 +11,11 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(tpz.mobMod.MAGIC_COOL, 50) -- just one spell to spam
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     mob:setMod(tpz.mod.REGAIN, 25)
 end
 
-entity.onMobDisengage = function(mob)
+function onMobDisengage(mob)
     mob:setMod(tpz.mod.REGAIN, 0)
 end
 
@@ -23,7 +23,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     tpz.hunts.checkHunt(mob, player, 260)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     UpdateNMSpawnPoint(mob:getID())
     mob:setRespawnTime(math.random(3600, 4200)) -- repop 60-70min
 end

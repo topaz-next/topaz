@@ -8,7 +8,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:setMod(tpz.mod.TRIPLE_ATTACK, 25)
     mob:addMod(tpz.mod.GRAVITYRES, 50)
 end

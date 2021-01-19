@@ -11,7 +11,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     tpz.mix.jobSpecial.config(mob, {
         chance = 75, -- "Is possible that she will not use Eagle Eye Shot at all." (guessing 75 percent)
         specials =
@@ -21,7 +21,7 @@ entity.onMobSpawn = function(mob)
     })
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     target:showText(mob, ID.text.MEDUSA_ENGAGE)
     for i = ID.mob.MEDUSA + 1, ID.mob.MEDUSA + 4 do
         SpawnMob(i):updateEnmity(target)
@@ -52,7 +52,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDisengage = function(mob)
+function onMobDisengage(mob)
     for i = 1, 4 do DespawnMob(ID.mob.MEDUSA + i) end
 end
 
@@ -62,7 +62,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     for i = 1, 4 do DespawnMob(ID.mob.MEDUSA + i) end
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     for i = 1, 4 do DespawnMob(ID.mob.MEDUSA + i) end
 end
 

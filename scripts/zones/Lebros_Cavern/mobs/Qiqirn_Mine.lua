@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     local instance = mob:getInstance()
     local players = instance:getChars()
     mob:setMobMod(tpz.mobMod.NO_MOVE, 1)
@@ -32,7 +32,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
+function onMobWeaponSkill(target, mob, skill)
     local pos = mob:getPos()
     local instance = mob:getInstance()
 

@@ -11,7 +11,7 @@ local ID = require("scripts/zones/Lufaise_Meadows/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     if mob:getID() == ID.mob.PADFOOT[GetServerVariable("realPadfoot")] then
         mob:setDropID(2911)
     else
@@ -22,7 +22,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local mobId = mob:getID()
 
     if mobId == ID.mob.PADFOOT[GetServerVariable("realPadfoot")] then

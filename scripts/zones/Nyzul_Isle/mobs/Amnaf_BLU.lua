@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     local instance = mob:getInstance()
 
     -- Stage 2 Adjustments
@@ -37,7 +37,7 @@ entity.onMobSpawn = function(mob)
     end)
 end
 
-entity.onMobEngaged = function(mob, target)
+function onMobEngaged(mob, target)
     -- Relax movement lock
     mob:setMobMod(tpz.mobMod.NO_MOVE, 0)
 
@@ -95,7 +95,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onSpellPrecast = function(mob, spell)
+function onSpellPrecast(mob, spell)
     -- Hysteric Barrage
     if (spell == 641) then
         mob:showText(mob, ID.text.AWAKEN)
@@ -108,7 +108,7 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     local instance = mob:getInstance()
     instance:setProgress(instance:getProgress() + 10)
 end

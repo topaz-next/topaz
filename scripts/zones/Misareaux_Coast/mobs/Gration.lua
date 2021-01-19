@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
+function onMobSpawn(mob)
     mob:addStatusEffect(tpz.effect.KILLER_INSTINCT, 40, 0, 0)
     mob:setLocalVar("fomorHateAdj", -2)
 end

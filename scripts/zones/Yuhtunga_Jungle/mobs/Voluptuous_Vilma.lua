@@ -9,7 +9,7 @@ local entity = {}
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDespawn(mob)
     DisallowRespawn(ID.mob.VOLUPTUOUS_VILMA, true)
     DisallowRespawn(ID.mob.ROSE_GARDEN_PH, false)
     GetMobByID(ID.mob.ROSE_GARDEN_PH):setRespawnTime(GetMobRespawnTime(ID.mob.ROSE_GARDEN_PH))
