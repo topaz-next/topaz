@@ -268,6 +268,199 @@ function getRoeRecords(triggers)
         },
 
       -----------------------------------
+      -- Tutorial -> Quests (Artifact 1)
+      -----------------------------------
+
+        [ 629] = { -- WAR Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.THE_DOORMAN} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 630] = { -- WAR Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.THE_TALEKEEPER_S_TRUTH} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 631] = { -- WAR Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.THE_TALEKEEPER_S_GIFT} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 632] = { -- MNK Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.GHOSTS_OF_THE_PAST} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 633] = { -- MNK Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.THE_FIRST_MEETING} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 634] = { -- MNK Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.TRUE_STRENGTH} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 635] = { -- WHM Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.MESSENGER_FROM_BEYOND} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 636] = { -- WHM Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.PRELUDE_OF_BLACK_AND_WHITE} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 637] = { -- WHM Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.PIEUJE_S_DECISION} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 638] = { -- BLM Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.THE_THREE_MAGI} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 639] = { -- BLM Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.RECOLLECTIONS} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 640] = { -- BLM Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.THE_ROOT_OF_THE_PROBLEM} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 641] = { -- RDM Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.THE_CRIMSON_TRIAL} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 642] = { -- RDM Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.ENVELOPED_IN_DARKNESS} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 643] = { -- RDM Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.PEACE_FOR_THE_SPIRIT} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 644] = { -- THF Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.THE_TENSHODO_SHOWDOWN} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 645] = { -- THF Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 646] = { -- THF Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.WINDURST, tpz.quest.id.windurst.HITTING_THE_MARQUISATE} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 647] = { -- PLD Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.SHARPENING_THE_SWORD} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 648] = { -- PLD Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.A_BOY_S_DREAM} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 649] = { -- PLD Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.SANDORIA, tpz.quest.id.sandoria.UNDER_OATH} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 650] = { -- DRK Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.DARK_LEGACY} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 651] = { -- DRK Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.DARK_PUPPET} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 652] = { -- DRK Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.BASTOK, tpz.quest.id.bastok.BLADE_OF_EVIL} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 653] = { -- BST Artifact Quest I
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.JEUNO, tpz.quest.id.jeuno.WINGS_OF_GOLD} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 654] = { -- BST Artifact Quest II
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.JEUNO, tpz.quest.id.jeuno.SCATTERED_INTO_SHADOW} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+        [ 655] = { -- BST Artifact Quest III
+            trigger = triggers.questComplete,
+            reqs = { questComplete = {tpz.quest.log_id.JEUNO, tpz.quest.id.jeuno.A_NEW_DAWN} },
+            flags = set{"retro"},
+            reward = { sparks = 100, xp = 300 },
+        },
+
+      -----------------------------------
       -- Tutorial -> Level Cap Increase
       -----------------------------------
 
