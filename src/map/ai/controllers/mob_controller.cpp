@@ -51,6 +51,8 @@ void CMobController::Tick(time_point tick)
 
     if (PMob->isAlive())
     {
+        ResolveClaim();
+
         if (PMob->PAI->IsEngaged())
         {
             DoCombatTick(tick);
@@ -60,6 +62,30 @@ void CMobController::Tick(time_point tick)
             DoRoamTick(tick);
         }
     }
+}
+
+void CMobController::ResolveClaim()
+{
+    auto& list = PMob->m_EntitiesTryingToClaim;
+    if (list.empty())
+    {
+        return;
+    }
+
+    // Sort the list, earliest first
+    std::sort(list.begin(), list.end(), [](CBattleEntity* a, CBattleEntity* b)
+    {    
+        return a->lastActionTime < b->lastActionTime;
+    });
+
+    // Try the claims in the order they arrived
+    for (auto* entity : list)
+    {
+        battleutils::ClaimMobFinal(PMob, entity);
+    }
+
+    // Empty the list
+    list.clear();
 }
 
 bool CMobController::TryDeaggro()

@@ -48,9 +48,11 @@ using uint64 = std::uint64_t;
 #include <chrono>
 
 using namespace std::literals::chrono_literals;
-using server_clock = std::chrono::system_clock;
-using time_point   = server_clock::time_point;
-using duration     = server_clock::duration;
+using server_clock  = std::chrono::system_clock;
+using highres_clock = std::chrono::high_resolution_clock;
+using time_point    = server_clock::time_point;
+using duration      = server_clock::duration;
+using hr_time_point = highres_clock::time_point;
 
 #include "tracy.h"
 

@@ -198,6 +198,7 @@ namespace battleutils
     uint8 getStoreTPbonusFromMerit(CBattleEntity* PEntity);
 
     void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing = false);
+    void ClaimMobFinal(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing = false);
     void DirtyExp(CBattleEntity* PDefender, CBattleEntity* PAttacker);
     void RelinquishClaim(CCharEntity* PDefender);
 

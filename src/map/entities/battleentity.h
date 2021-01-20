@@ -674,6 +674,9 @@ public:
     virtual void Tick(time_point) override;
     virtual void PostTick() override;
 
+    // High resolution timestamp of the last action time
+    hr_time_point lastActionTime{ hr_time_point::max() };
+
     health_t health;         // hp,mp,tp
     stats_t  stats;          // атрибуты STR,DEX,VIT,AGI,INT,MND,CHR
     skills_t WorkingSkills;  // структура всех доступных сущности умений, ограниченных уровнем
