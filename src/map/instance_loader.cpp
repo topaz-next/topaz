@@ -32,11 +32,19 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "lua/luautils.h"
 #include "mob_modifier.h"
 #include "mob_spell_list.h"
+#include "utils/instanceutils.h"
 #include "utils/mobutils.h"
+#include "utils/zoneutils.h"
 
-CInstanceLoader::CInstanceLoader(uint8 instanceid, CZone* PZone, CCharEntity* PRequester)
+CInstanceLoader::CInstanceLoader(uint8 instanceid, CCharEntity* PRequester)
 {
-    TPZ_DEBUG_BREAK_IF(PZone->GetType() != ZONE_TYPE::DUNGEON_INSTANCED);
+    CZone* PZone = zoneutils::GetZone(instanceutils::GetInstanceData(instanceid).instance_zone);
+
+    if (!PZone || PZone->GetType() != ZONE_TYPE::DUNGEON_INSTANCED)
+    {
+        ShowError("Invalid zone for instanceid: %d", instanceid);
+        return;
+    }
 
     requester           = PRequester;
     zone                = PZone;

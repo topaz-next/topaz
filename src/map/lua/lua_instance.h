@@ -40,6 +40,7 @@ public:
     }
 
     uint8  getID();
+    auto   getName() -> std::string;
     auto   getAllies() -> sol::table;
     auto   getChars() -> sol::table;
     auto   getMobs() -> sol::table;

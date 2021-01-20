@@ -43,6 +43,11 @@ uint8 CLuaInstance::getID()
     return m_PLuaInstance->GetID();
 }
 
+std::string CLuaInstance::getName()
+{
+    return (const char*)m_PLuaInstance->GetName();
+}
+
 sol::table CLuaInstance::getAllies()
 {
     auto table = luautils::lua.create_table();
@@ -221,6 +226,7 @@ void CLuaInstance::Register()
 {
     SOL_USERTYPE("CInstance", CLuaInstance);
     SOL_REGISTER("getID", CLuaInstance::getID);
+    SOL_REGISTER("getName", CLuaInstance::getName);
     SOL_REGISTER("setLevelCap", CLuaInstance::setLevelCap);
     SOL_REGISTER("getAllies", CLuaInstance::getAllies);
     SOL_REGISTER("getChars", CLuaInstance::getChars);
