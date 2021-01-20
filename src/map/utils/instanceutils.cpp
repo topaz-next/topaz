@@ -100,12 +100,11 @@ namespace instanceutils
         }
     }
 
-    void LoadInstance(uint8 instanceid, uint16 zoneid, CCharEntity* PRequester)
+    void LoadInstance(uint8 instanceid, CCharEntity* PRequester)
     {
-        CZone* PZone = zoneutils::GetZone(zoneid);
-        if (!Loader && PZone)
+        if (!Loader)
         {
-            Loader = std::make_unique<CInstanceLoader>(instanceid, PZone, PRequester);
+            Loader = std::make_unique<CInstanceLoader>(instanceid, PRequester);
         }
         else
         {

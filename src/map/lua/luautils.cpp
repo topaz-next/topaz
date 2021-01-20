@@ -79,6 +79,7 @@
 #include "../transport.h"
 #include "../utils/battleutils.h"
 #include "../utils/charutils.h"
+#include "../utils/instanceutils.h"
 #include "../utils/itemutils.h"
 #include "../utils/zoneutils.h"
 #include "../vana_time.h"
@@ -3476,11 +3477,13 @@ namespace luautils
     {
         TracyZoneScoped;
 
+        auto instanceData = instanceutils::GetInstanceData(PInstance->GetID());
+
         auto onInstanceCreated = GetCacheEntryFromFilename(PChar->m_event.Script)["onInstanceCreated"];
         if (!onInstanceCreated.valid())
         {
-            // If you can't load from PChar->m_event.Script, try from the zone
-            auto filename     = fmt::format("./scripts/zones/{}/Zone.lua", PChar->loc.zone->GetName());
+            // If you can't load from PChar->m_event.Script, try from the entrance zone
+            auto filename     = fmt::format("./scripts/zones/{}/Zone.lua", instanceData.entrance_zone_name);
             onInstanceCreated = GetCacheEntryFromFilename(filename)["onInstanceCreated"];
             if (!onInstanceCreated.valid())
             {
