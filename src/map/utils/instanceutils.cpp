@@ -77,7 +77,7 @@ namespace instanceutils
                 // Meta data
                 data.instance_zone_name = reinterpret_cast<const char*>(zoneutils::GetZone(data.instance_zone)->GetName());
                 data.entrance_zone_name = reinterpret_cast<const char*>(zoneutils::GetZone(data.entrance_zone)->GetName());
-                data.filename           = fmt::format("./scripts/zones/{}/instances/{}.lua", data.instance_zone, data.instance_name);
+                data.filename           = fmt::format("./scripts/zones/{}/instances/{}.lua", data.instance_zone_name, data.instance_name);
 
                 // Add to data cache
                 InstanceData[data.id] = data;
@@ -108,7 +108,7 @@ namespace instanceutils
         }
         else
         {
-            luautils::OnInstanceCreated(PRequester, nullptr);
+            luautils::OnInstanceCreatedCallback(PRequester, nullptr);
         }
     }
 

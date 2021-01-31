@@ -14,11 +14,19 @@ end
 zone_object.onInstanceZoneIn = function(player, instance)
     local cs = -1
 
+    print(instance:getName())
+
+    -- If you're here for the wrong reasons, eject
+    if not instance then
+        player:setPos(0, 0, 0, 0, 72)
+    end
+
     local pos = player:getPos()
     if (pos.x == 0 and pos.y == 0 and pos.z == 0) then
         local entrypos = instance:getEntryPos()
         player:setPos(entrypos.x, entrypos.y, entrypos.z, entrypos.rot)
     end
+
     if (player:getCurrentMission(TOAU) == tpz.mission.id.toau.PATH_OF_DARKNESS) then
         cs = 51
     end

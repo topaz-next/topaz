@@ -1,5 +1,5 @@
 -----------------------------------
--- TOAU-42: Path of Darkness
+-- TOAU-42: Path of Darkness (Instance 58)
 -----------------------------------
 local ID = require("scripts/zones/Nyzul_Isle/IDs")
 require("scripts/globals/instance")
@@ -7,21 +7,35 @@ require("scripts/globals/keyitems")
 -----------------------------------
 local instance_object = {}
 
-instance_object.afterInstanceRegister = function(player)
-    local instance = player:getInstance()
-    player:messageSpecial(ID.text.TIME_TO_COMPLETE, instance:getTimeLimit())
-end
-
+-- Called on the instance, once it is created and ready
 instance_object.onInstanceCreated = function(instance)
+    print("onInstanceCreated")
     SpawnMob(ID.mob[58].AMNAF_BLU, instance)
     SpawnMob(ID.mob[58].NAJA, instance)
 end
 
+-- Once the instance is ready, inform the requester that it's ready (teleport them)
+instance_object.onInstanceCreatedCallback = function(player, instance)
+    print("onInstanceCreatedCallback")
+
+    -- Send
+    player:setInstance(instance)
+    player:setPos(0, 0, 0, 0, instance:getZone():getID())
+end
+
+instance_object.afterInstanceRegister = function(player)
+    print("afterInstanceRegister")
+    local instance = player:getInstance()
+    player:messageSpecial(ID.text.TIME_TO_COMPLETE, instance:getTimeLimit())
+end
+
 instance_object.onInstanceTimeUpdate = function(instance, elapsed)
+    print("onInstanceTimeUpdate")
     updateInstanceTime(instance, elapsed, ID.text)
 end
 
 instance_object.onInstanceFailure = function(instance)
+    print("onInstanceFailure")
     local chars = instance:getChars()
 
     for i, v in pairs(chars) do
@@ -31,6 +45,7 @@ instance_object.onInstanceFailure = function(instance)
 end
 
 instance_object.onInstanceProgressUpdate = function(instance, progress)
+    print("onInstanceProgressUpdate")
     if(progress >= 10 and progress < 20) then
         DespawnMob(ID.mob[58].AMNAF_BLU, instance)
     elseif(progress == 24) then
@@ -61,6 +76,7 @@ instance_object.onInstanceProgressUpdate = function(instance, progress)
 end
 
 instance_object.onInstanceComplete = function(instance)
+    print("onInstanceComplete")
 
     local chars = instance:getChars()
 
@@ -74,9 +90,14 @@ instance_object.onInstanceComplete = function(instance)
 end
 
 instance_object.onEventUpdate = function(player, csid, option)
+    print("onEventUpdate")
 end
 
 instance_object.onEventFinish = function(player, csid, option)
+    print("onEventFinish")
+    if csid == 1 then
+        player:setPos(0, 0, 0, 0, 72)
+    end
 end
 
 return instance_object

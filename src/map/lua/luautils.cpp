@@ -3473,36 +3473,30 @@ namespace luautils
      *                                                                       *
      ************************************************************************/
 
-    int32 OnInstanceCreated(CCharEntity* PChar, CInstance* PInstance)
+    int32 OnInstanceCreatedCallback(CCharEntity* PChar, CInstance* PInstance)
     {
         TracyZoneScoped;
 
+        if (PInstance == nullptr)
+        {
+            ShowError("luautils::OnInstanceCreatedCallback failed to load for %s\n", PChar->GetName());
+            return -1;
+        }
+
         auto instanceData = instanceutils::GetInstanceData(PInstance->GetID());
 
-        auto onInstanceCreated = GetCacheEntryFromFilename(PChar->m_event.Script)["onInstanceCreated"];
-        if (!onInstanceCreated.valid())
+        auto onInstanceCreatedCallback = GetCacheEntryFromFilename(instanceData.filename)["onInstanceCreatedCallback"];
+        if (!onInstanceCreatedCallback.valid())
         {
-            // If you can't load from PChar->m_event.Script, try from the entrance zone
-            auto filename     = fmt::format("./scripts/zones/{}/Zone.lua", instanceData.entrance_zone_name);
-            onInstanceCreated = GetCacheEntryFromFilename(filename)["onInstanceCreated"];
-            if (!onInstanceCreated.valid())
-            {
-                ShowError("luautils::onInstanceCreated: undefined procedure onInstanceCreated\n");
-                return -1;
-            }
+            ShowError("luautils::OnInstanceCreatedCallback: undefined procedure onInstanceCreatedCallback\n");
+            return -1;
         }
 
-        std::optional<CLuaInstance> optLuaInstance = std::nullopt;
-        if (PInstance)
-        {
-            optLuaInstance = CLuaInstance(PInstance);
-        }
-
-        auto result = onInstanceCreated(CLuaBaseEntity(PChar), CLuaBaseEntity(PChar->m_event.Target), optLuaInstance);
+        auto result = onInstanceCreatedCallback(CLuaBaseEntity(PChar), CLuaInstance(PInstance));
         if (!result.valid())
         {
             sol::error err = result;
-            ShowError("luautils::onInstanceCreated %s\n", err.what());
+            ShowError("luautils::OnInstanceCreatedCallback %s\n", err.what());
             return -1;
         }
 
