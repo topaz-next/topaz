@@ -4,7 +4,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Mamool_Ja_Training_Grounds/IDs")
 require("scripts/globals/missions")
-require("scripts/globals/utils/appraisal")
+require("scripts/globals/appraisal")
 -----------------------------------
 
 function onTrigger(player,npc)

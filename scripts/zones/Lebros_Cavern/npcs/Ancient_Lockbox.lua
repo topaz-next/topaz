@@ -6,7 +6,7 @@ local ID = require("scripts/zones/Lebros_Cavern/IDs")
 require("scripts/globals/items")
 require("scripts/globals/missions")
 require("scripts/globals/status")
-require("scripts/globals/utils/appraisal")
+require("scripts/globals/appraisal")
 -----------------------------------
 
 function onTrigger(player,npc)
@@ -61,7 +61,7 @@ function onTrigger(player,npc)
                 {itemid = 0, droprate = dsp.frequency.SUPER_COMMON},
             },
             {
-                {itemid = dsp.items.HI_POTION_TANK, droprate = dsp.frequency.RARE}, 
+                {itemid = dsp.items.HI_POTION_TANK, droprate = dsp.frequency.RARE},
                 {itemid = 0, droprate = dsp.frequency.SUPER_COMMON},
             },
         },
