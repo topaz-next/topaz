@@ -194,7 +194,7 @@ void CTrustController::DoRoamTick(time_point tick)
     auto* PMaster              = static_cast<CCharEntity*>(POwner->PMaster);
     auto  masterLastAttackTime = static_cast<CPlayerController*>(PMaster->PAI->GetController())->getLastAttackTime();
     bool  masterMeleeSwing     = masterLastAttackTime > server_clock::now() - 1s;
-    bool  trustEngageCondition = PMaster->GetBattleTarget();
+    bool  trustEngageCondition = PMaster->GetBattleTarget() && masterMeleeSwing;
 
     if (PMaster->PAI->IsEngaged() && trustEngageCondition)
     {
