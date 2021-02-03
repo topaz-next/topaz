@@ -2,162 +2,92 @@
 -- Area: Lebros_Cavern
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/missions")
 -----------------------------------
 
 zones = zones or {}
 
-zones[tpz.zone.LEBROS_CAVERN] =
+zones[dsp.zone.LEBROS_CAVERN] =
 {
-    text = {
-        ITEM_CANNOT_BE_OBTAINED    = 6383, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        FULL_INVENTORY_AFTER_TRADE = 6387, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
-        ITEM_OBTAINED              = 6389, -- Obtained: <item>.
-        GIL_OBTAINED               = 6390, -- Obtained <number> gil.
-        KEYITEM_OBTAINED           = 6392, -- Obtained key item: <keyitem>.
-        KEYITEM_LOST               = 6393, -- Lost key item: <keyitem>.
-        NOT_HAVE_ENOUGH_GIL        = 6394, -- You do not have enough gil.
-        ITEMS_OBTAINED             = 6398, -- You obtain <number> <item>!
-        MINE_COUNTDOWN             = 6981, -- <number>...
-        CARRIED_OVER_POINTS        = 7000, -- You have carried over <number> login point[/s].
-        LOGIN_CAMPAIGN_UNDERWAY    = 7001, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
-        LOGIN_NUMBER               = 7002, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
-        TEMP_ITEM                  = 7211, -- Obtained temporary item: <item>!
-        ASSAULT_21_START           = 7368, -- Commencing <assault>! Objective: Remove the obstructions
-        ASSAULT_22_START           = 7369, -- Commencing <assault>! Objective: Deliver the provisions
-        ASSAULT_23_START           = 7370, -- Commencing <assault>! Objective: Destroy the Troll fugitives
-        ASSAULT_24_START           = 7371, -- Commencing <assault>! Objective: Discover alternate route
-        ASSAULT_25_START           = 7372, -- Commencing <assault>! Objective: Assassinate Borgerlur
-        ASSAULT_26_START           = 7373, -- Commencing <assault>! Objective: Match the Apkallu
-        ASSAULT_27_START           = 7374, -- Commencing <assault>! Objective: Remove the threat
-        ASSAULT_28_START           = 7375, -- Commencing <assault>! Objective: Drive out the hunters
-        ASSAULT_29_START           = 7376, -- Commencing <assault>! Objective: Rescue Princess Kadjaya
-        ASSAULT_30_START           = 7377, -- Commencing <assault>! Objective: Defeat Black Shuck
-        TIME_TO_COMPLETE           = 7408, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
-        MISSION_FAILED             = 7409, -- The mission has failed. Leaving area.
-        RUNE_UNLOCKED              = 7410, -- ission objective completed. Unlocking Rune of Release ([A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z]-#).
-        ASSAULT_POINTS_OBTAINED    = 7412, -- You gain <number> [Assault point/Assault points]!
-        TIME_REMAINING_MINUTES     = 7413, -- ime remaining: <number> [minute/minutes] (Earth time).
-        TIME_REMAINING_SECONDS     = 7414, -- ime remaining: <number> [second/seconds] (Earth time).
-        PARTY_FALLEN               = 7416, -- ll party members have fallen in battle. Mission failure in <number> [minute/minutes].
+    text = 
+    {
+        ITEM_CANNOT_BE_OBTAINED    = 6382, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        FULL_INVENTORY_AFTER_TRADE = 6386, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
+        ITEM_OBTAINED              = 6388, -- Obtained: <item>.
+        GIL_OBTAINED               = 6389, -- Obtained <number> gil.
+        KEYITEM_OBTAINED           = 6391, -- Obtained key item: <keyitem>.
+        KEYITEM_LOST               = 6392, -- Lost key item: <keyitem>.
+        NOT_HAVE_ENOUGH_GIL        = 6393, -- You do not have enough gil.
+        ITEMS_OBTAINED             = 6397, -- You obtain <number> <item>!
+        MINE_COUNTDOWN             = 6980, -- <number>...
+        TEMP_ITEM                  = 7210, -- Obtained temporary item: <item>!
+        PLAYER_OBTAINS_ITEM        = 7211, -- <player> obtains a <item>!
+        ASSAULT_START_OFFSET       = 7346, -- Max MP Down removed for <player>
+        TIME_TO_COMPLETE           = 7407, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
+        MISSION_FAILED             = 7408, -- The mission has failed. Leaving area.
+        RUNE_UNLOCKED_POS          = 7409, -- ission objective completed. Unlocking Rune of Release ([A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z]-#).
+        ASSAULT_POINTS_OBTAINED    = 7411, -- You gain <number> [Assault point/Assault points]!
+        TIME_REMAINING_MINUTES     = 7412, -- ime remaining: <number> [minute/minutes] (Earth time).
+        TIME_REMAINING_SECONDS     = 7413, -- ime remaining: <number> [second/seconds] (Earth time).
+        PARTY_FALLEN               = 7415, -- ll party members have fallen in battle. Mission failure in <number> [minute/minutes].
+        STILL_HUNGRY_FED           = 7424,
+        FULL_FED                   = 7425,
+        STILL_HUNGRY_TRIGGER       = 7426,
+        FULL_HUNGRY                = 7427,
+        HAVE_RATIONS               = 7428, -- Why don't you deliver the rations you already have.
+        DEPENDING_ON               = 7429, -- the advance unit is depending on... 
+        STEWPOT_TALK               = 7430, -- This should keep a whole unit filled
+        RATIONS                    = 7431, -- there are still soldiers out there
+
     },
 
-    mob = {
-        -- Escavation Duty
-        [21] =
+    mob = 
+    {
+        [EXCAVATION_DUTY] =
         {
-            VOLCANIC_BOMB1   = 17035265,
-            VOLCANIC_BOMB2   = 17035266,
-            VOLCANIC_BOMB3   = 17035267,
-            QIQIRN_CERAMIST1 = 17035268,
-            QIQIRN_VOLCANIS1 = 17035269,
-            VOLCANIC_BOMB4   = 17035270,
-            VOLCANIC_BOMB5   = 17035271,
-            VOLCANIC_BOMB6   = 17035272,
-            QIQIRN_CERAMIST2 = 17035273,
-            QIQIRN_VOLCANIS2 = 17035274,
-            QIQIRN_VOLCANIS3 = 17035275,
-            QIQIRN_CERAMIST3 = 17035276,
-            QIQIRN_CERAMIST4 = 17035277,
-            QIQIRN_CERAMIST5 = 17035278,
-            QIQIRN_VOLCANIS4 = 17035279,
-            VOLCANIC_BOMB7   = 17035280,
-            VOLCANIC_BOMB8   = 17035281,
-            BRITTLE_ROCK1    = 17035282,
-            BRITTLE_ROCK2    = 17035284,
-            BRITTLE_ROCK3    = 17035286,
-            BRITTLE_ROCK4    = 17035288,
-            BRITTLE_ROCK5    = 17035290,
+            MOBS_START =
+            {
+                17035265, 17035266, 17035267, 17035268, 17035269, 17035270, 17035271, 17035272, 17035273,
+                17035274, 17035275, 17035276, 17035277, 17035278, 17035279, 17035280, 17035281,
+                BRITTLE_ROCK1 = 17035283, BRITTLE_ROCK2 = 17035285, BRITTLE_ROCK3 = 17035287, BRITTLE_ROCK4 = 17035289, BRITTLE_ROCK5 = 17035291,
+            },
         },
-        -- Lebros Suplies
-        [22] =
+        [LEBROS_SUPPLIES] =
         {
+            MOBS_START =
+            {
+                17035292, 17035293, 17035294, 17035295, 17035296, 17035297, 17035298, 17035299, 17035300, 17035301,
+                17035302, 17035303, 17035304, 17035305, 17035306, 17035307, 17035308, 17035309,
+            }
         },
-        -- Troll Figitives
-        [23] =
+        [TROLL_FUGITIVES] = 
         {
-            TROLL_FUGITIVE1  = 17035310,
-            TROLL_FUGITIVE2  = 17035311,
-            TROLL_FUGITIVE3  = 17035312,
-            TROLL_FUGITIVE4  = 17035313,
-            TROLL_FUGITIVE5  = 17035314,
-            TROLL_FUGITIVE6  = 17035315,
-            TROLL_FUGITIVE7  = 17035316,
-            TROLL_FUGITIVE8  = 17035317,
-            TROLL_FUGITIVE9  = 17035318,
-            TROLL_FUGITIVE10 = 17035319,
-            TROLL_FUGITIVE11 = 17035320,
-            TROLL_FUGITIVE12 = 17035321,
-            TROLL_FUGITIVE13 = 17035322,
-            TROLL_FUGITIVE14 = 17035323,
-            TROLL_FUGITIVE15 = 17035324,
-
+            MOBS_START =
+            {
+                17035310, 17035311, 17035312, 17035313, 17035314, 17035315, 17035316, 17035317,
+                17035318, 17035319, 17035320, 17035321, 17035322, 17035323, 17035324,
+            },
         },
-        -- Evade and Escape
-        [24] =
+        [WAMOURA_FARM_RAID] =
         {
-        },
-        -- Siegemaster Assassination
-        [25] =
-        {
-        },
-        -- Apkallu Breeding
-        [26] =
-        {
-        },
-        -- Wamoura Farm Raid Assault
-        [27] =
-        {
-            RANCH_WAMOURA1  = 17035359,
-            RANCH_WAMOURA2  = 17035360,
-            RANCH_WAMOURA3  = 17035361,
-            RANCH_WAMOURA4  = 17035362,
-            RANCH_WAMOURA5  = 17035363,
-            RANCH_WAMOURA6  = 17035365,
-            RANCH_WAMOURA7  = 17035367,
-            RANCH_WAMOURA8  = 17035368,
-            RANCH_WAMOURA9  = 17035369,
-            RANCH_WAMOURA10 = 17035370,
-            RANCH_WAMOURA11 = 17035371,
-            RANCH_WAMOURA12 = 17035372,
-            RANCH_WAMOURA13 = 17035376,
-            RANCH_WAMOURA14 = 17035377,
-            RANCH_WAMOURA15 = 17035378,
-        },
-        -- Egg Conservation
-        [28] =
-        {
-        },
-        -- Operation Black Pearl
-        [29] =
-        {
-        },
-        -- Better Than One
-        [30] =
-        {
+            MOBS_START =
+            {
+                17035359, 17035360, 17035361, 17035362, 17035363, 17035364, 17035365, 17035366, 17035367, 17035368,
+                17035369, 17035370, 17035371, 17035372, 17035373, 17035374, 17035375, 17035376, 17035377, 17035378,
+            },
         }
     },
 
-    npc =
+    npc = 
     {
         ANCIENT_LOCKBOX = 17035478,
         RUNE_OF_RELEASE = 17035479,
-        _1r8            = 17035512,
-        _1rd            = 17035517,
-        _1rg            = 17035520,
-        _1rm            = 17035526,
-        _1rn            = 17035527,
         _1rx            = 17035537,
         _1ry            = 17035538,
         _1rz            = 17035539,
-        _ir0            = 17035540,
-        _ir1            = 17035541,
-        _irc            = 17035552,
-        _ire            = 17035554,
-        QIQIRN_MINE1    = 17037312,
-        QIQIRN_MINE2    = 17037313,
-        QIQIRN_MINE3    = 17037314,
-        QIQIRN_MINE4    = 17037315,
+        _jr0            = 17035540,
+        _jr1            = 17035541,
     }
 }
 
-return zones[tpz.zone.LEBROS_CAVERN]
+return zones[dsp.zone.LEBROS_CAVERN]

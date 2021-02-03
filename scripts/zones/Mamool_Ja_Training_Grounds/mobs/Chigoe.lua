@@ -1,12 +1,11 @@
 -----------------------------------
--- Area: Mamool Ja Training Grounds
---  Mob: Chigoe
+-- Area:
+--  MOB: Chigoe
 -----------------------------------
-mixins = {require("scripts/mixins/families/chigoe")}
+
+--require("scripts/globals/titles");
+mixins = { require("scripts/mixins/families/chigoe") }
 -----------------------------------
-local entity = {}
 
-entity.onMobDeath = function(mob, player, isKiller)
-end
-
-return entity
+function onMobDeath(mob, player, isKiller)
+end;

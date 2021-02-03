@@ -1,15 +1,11 @@
 -----------------------------------
 -- Area: Periqia (Requiem)
---  Mob: Putrid Immortal Guard
+--  MOB: Putrid Immortal Guard
 -----------------------------------
-local entity = {}
 
-entity.onMobDeath = function(mob, player, isKiller)
+function onMobDeath(mob, player, isKiller, firstCall)
+    if firstCall then
+        local instance = mob:getInstance()
+        instance:setProgress(instance:getProgress() + 1)
+    end
 end
-
-entity.onMobDespawn = function(mob)
-    local instance = mob:getInstance()
-    instance:setProgress(instance:getProgress() + 1)
-end
-
-return entity

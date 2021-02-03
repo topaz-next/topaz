@@ -1,15 +1,17 @@
 -----------------------------------
 -- Area: Periqia (Requiem)
---  Mob: Darkling Draugar
+--  MOB: Darkling Draugar (DRK)
 -----------------------------------
-local entity = {}
+require("scripts/globals/status")
+-----------------------------------
 
-entity.onMobDeath = function(mob, player, isKiller)
+function onMobSpawn(mob)
+    mob:setMod(dsp.mod.SLEEPEVA_DARK, 9999)
 end
 
-entity.onMobDespawn = function(mob)
-    local instance = mob:getInstance()
-    instance:setProgress(instance:getProgress() + 1)
+function onMobDeath(mob, player, isKiller, firstCall)
+    if firstCall then
+        local instance = mob:getInstance()
+        instance:setProgress(instance:getProgress() + 1)
+    end
 end
-
-return entity

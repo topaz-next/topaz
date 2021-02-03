@@ -3,40 +3,46 @@
 -- Zone: Lebros_Cavern
 --
 -----------------------------------
-require("scripts/zones/Lebros_Cavern/IDs")
+local ID = require("scripts/zones/Lebros_Cavern/IDs")
+require("scripts/globals/status")
+require("scripts/globals/zone")
 -----------------------------------
-local zone_object = {}
 
-zone_object.onInitialize = function(zone)
+function onInitialize(zone)
 end
 
-zone_object.onInstanceZoneIn = function(player, instance)
+function onInstanceZoneIn(player,instance)
     local cs = -1
-
     local pos = player:getPos()
+    
     if (pos.x == 0 and pos.y == 0 and pos.z == 0) then
         local entrypos = instance:getEntryPos()
         player:setPos(entrypos.x, entrypos.y, entrypos.z, entrypos.rot)
     end
-    player:addTempItem(5345)
+    if player:getInstance() ~= nil then
+        player:setVar("assaultEntered", 3)
+    end
 
     return cs
 end
 
-zone_object.onRegionEnter = function(player, region)
+function onRegionEnter(player,region)
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+function onEventUpdate(player,csid,option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
-    if (csid == 102) then
-        player:setPos(0, 0, 0, 0, 61)
+function onEventFinish(player,csid,option)
+    local instance = player:getInstance()
+    local chars = instance:getChars()
+
+    if csid == 102 then
+        for _,v in pairs(chars) do
+            v:setPos(0,0,0,0,dsp.zone.MOUNT_ZHAYOLM)
+        end
     end
 end
 
-zone_object.onInstanceLoadFailed = function()
+function onInstanceLoadFailed()
     return 61
 end
-
-return zone_object

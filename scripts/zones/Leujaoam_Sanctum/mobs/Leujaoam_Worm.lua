@@ -1,15 +1,23 @@
 -----------------------------------
 -- Area: Leujaoam Sanctum (Leujaoam Cleansing)
---  Mob: Leujaoam Worm
+--  MOB: Leujaoam Worm
+-- Immune to Charm, strong to Magical Attacks
 -----------------------------------
-local entity = {}
+require("scripts/globals/status")
+-----------------------------------
 
-entity.onMobDeath = function(mob, player, isKiller)
+function onMobSpawn(mob)
+    mob:setMod(dsp.mod.UDMGMAGIC, -50)
+    mob:addMod(dsp.mod.DEF, 100)
+    mob:setMobMod(dsp.mobMod.MAGIC_STANDBACK, 1) -- Only will cast when out of combat range
+    mob:setMobMod(dsp.mobMod.STANDBACK_COOL, 15) -- Doesnt work
 end
 
-entity.onMobDespawn = function(mob)
+function onMobDeath(mob, player, isKiller)
     local instance = mob:getInstance()
-    instance:setProgress(instance:getProgress() + 1)
+    
+    if mob:getLocalVar("Killed") == 0 then
+        instance:setProgress(instance:getProgress() + 1)
+        mob:setLocalVar("Killed", 1)
+    end
 end
-
-return entity

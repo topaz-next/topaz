@@ -1,10 +1,7 @@
 -----------------------------------
 -- Area: Mamool Ja Training Grounds (Preemptive Strike)
---  Mob: Puk Executioner
+--  MOB: Puk Executioner
 -----------------------------------
-local entity = {}
 
-entity.onMobDeath = function(mob, player, isKiller)
+function onMobDeath(mob, player, isKiller)
 end
-
-return entity

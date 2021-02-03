@@ -1,22 +1,22 @@
 -----------------------------------
 -- Area: Periqia (Requiem)
---  Mob: Draconic Draugar
+--  MOB: Draconic Draugar (DRG)
 -----------------------------------
-local entity = {}
+mixins =
+{
+    require("scripts/mixins/master_instanced"),
+    require("scripts/mixins/job_special"),
+}
+require("scripts/globals/status")
+-----------------------------------
 
-entity.onMobEngaged = function(mob, target)
-    local instance = mob:getInstance()
-    local mobID = mob:getID()
-
-    SpawnMob(mobID +1, instance):updateEnmity(target)
+function onMobSpawn(mob)
+    mob:setMod(dsp.mod.SLEEPEVA_DARK, 9999)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+function onMobDeath(mob, player, isKiller, firstCall)
+    if firstCall then
+        local instance = mob:getInstance()
+        instance:setProgress(instance:getProgress() + 1)
+    end
 end
-
-entity.onMobDespawn = function(mob)
-    local instance = mob:getInstance()
-    instance:setProgress(instance:getProgress() + 1)
-end
-
-return entity

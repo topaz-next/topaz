@@ -1,95 +1,124 @@
 -----------------------------------
 -- Area: Aht Urhgan Whitegate
 --  NPC: Rytaal
--- Type: Standard NPC
+-- Type: Assault Missions NPC
 -- !pos 112.002 -1.338 -45.038 50
 -----------------------------------
 local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
-require("scripts/globals/besieged")
 require("scripts/globals/npc_util")
+require("scripts/globals/utils/assault")
 -----------------------------------
-local entity = {}
+local assaultOrders =
+    {
+        [1] = {KI = dsp.ki.LEUJAOAM_ASSAULT_ORDERS, points = "LEUJAOAM_ASSAULT_POINT"},
+        [2] = {KI = dsp.ki.MAMOOL_JA_ASSAULT_ORDERS, points = "MAMOOL_ASSAULT_POINT"},
+        [3] = {KI = dsp.ki.LEBROS_ASSAULT_ORDERS, points = "LEBROS_ASSAULT_POINT"},
+        [4] = {KI = dsp.ki.PERIQIA_ASSAULT_ORDERS, points = "PERIQIA_ASSAULT_POINT"},
+        [5] = {KI = dsp.ki.ILRUSI_ASSAULT_ORDERS, points = "ILRUSI_ASSAULT_POINT"},
+        [6] = {KI = dsp.ki.NYZUL_ISLE_ASSAULT_ORDERS, points = "NYZUL_ISLE_ASSAULT_POINT"},
+    }
 
-entity.onTrade = function(player, npc, trade)
+function onTrade(player, npc, trade)
 end
 
-entity.onTrigger = function(player, npc)
-
-    local lastIDtag = player:getCharVar("LAST_IMPERIAL_TAG")
-    local tagCount = player:getCurrency("id_tags")
-    local diffday = math.floor((os.time() - lastIDtag) / (60 * 60 * 24))
+function onTrigger(player, npc)
     local currentAssault = player:getCurrentAssault()
-    local haveimperialIDtag
 
-    if player:getCurrentMission(TOAU) == tpz.mission.id.toau.PRESIDENT_SALAHEEM and player:getCharVar("AhtUrganStatus") == 0 then
-        player:startEvent(269, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    elseif player:getCurrentMission(TOAU) <= tpz.mission.id.toau.IMMORTAL_SENTRIES or player:getMainLvl() <= 49 then
+    if player:getCurrentMission(TOAU) == PRESIDENT_SALAHEEM and player:getVar("AhtUrganStatus") == 0 then
+        player:startEvent(269,0,0,0,0,0,0,0,0,0)
+    elseif player:getCurrentMission(TOAU) <= IMMORTAL_SENTRIES or player:getMainLvl() <= 49 then
         player:startEvent(270)
-    elseif currentAssault ~= 0 and tpz.besieged.hasAssaultOrders(player) == 0 then
-        if player:getCharVar("AssaultComplete") == 1 then
-            player:messageText(player, ID.text.RYTAAL_MISSION_COMPLETE)
+    elseif currentAssault ~= 0 and player:getVar("assaultEntered") ~= 0 then
+        if player:getVar("AssaultComplete") == 1 then
+            player:messageText(player, ID.text.ASSAULT_COMPLETE)
             player:completeAssault(currentAssault)
+        elseif currentAssault == 51 then
+            player:messageText(player, ID.text.NYZUL_FAIL)
+            player:delAssault(currentAssault)
         else
-            player:messageText(player, ID.text.RYTAAL_MISSION_FAILED)
-            player:addAssault(0)
+            local assaultPoint = assaultOrders[player:getVar("assaultEntered")].points
+            player:addCurrency(assaultPoint, 100)
+            player:messageText(player, ID.text.ASSAULT_FAILED)
+            player:delAssault(currentAssault)
         end
-        player:setCharVar("AssaultComplete", 0)
-    elseif player:getCurrentMission(TOAU) > tpz.mission.id.toau.PRESIDENT_SALAHEEM or (player:getCurrentMission(TOAU) == tpz.mission.id.toau.PRESIDENT_SALAHEEM and player:getCharVar("AhtUrganStatus") >= 1) then
-        if lastIDtag == 0 then -- first time you get the tag
-            tagCount = 1
-            player:setCurrency("id_tags", tagCount)
-            player:setCharVar("LAST_IMPERIAL_TAG", os.time())
-        elseif diffday > 0 then
-            tagCount = tagCount + diffday
-            if tagCount > 3 then -- store 3 TAG max
-                tagCount = 3
+        player:setVar("AssaultComplete", 0)
+        player:setVar("assaultEntered", 0)
+        player:setVar("Assault_Armband", 0)
+        for _, v in pairs(assaultOrders) do
+            if player:hasKeyItem(v.KI) then
+                player:delKeyItem(v.KI)
             end
-            player:setCurrency("id_tags", tagCount)
-            player:setCharVar("LAST_IMPERIAL_TAG", os.time())
+        end
+    elseif player:getCurrentMission(TOAU) > PRESIDENT_SALAHEEM or (player:getCurrentMission(TOAU) == PRESIDENT_SALAHEEM and player:getVar("AhtUrganStatus") >= 1) then
+        local currentTime = os.time()
+        local refreshTime = player:getVar("lastTagTime")
+        local diffday =  math.floor((currentTime - refreshTime)/86400)
+        local tagStock = player:getCurrency("id_tags")
+        local allTagsTimeCS = (refreshTime - 1009897200) + (diffday * 86400)
+        local haveimperialIDtag = 0
+        local tagsAvail = 0
+
+        while currentTime >= refreshTime and tagStock < 3 do
+            refreshTime = refreshTime + 86400
+            tagStock = tagStock + 1
+        end
+        
+        player:setCurrency("id_tags", tagStock)
+        player:setVar("lastTagTime", refreshTime)
+
+        if player:hasKeyItem(dsp.ki.IMPERIAL_ARMY_ID_TAG) then
+            haveimperialIDtag = 1
+        end
+        
+        if tagStock > 0 then
+            tagsAvail = 1
         end
 
-        if player:hasKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG) then
-            haveimperialIDtag = 1
-        else
-            haveimperialIDtag = 0
+        player:startEvent(268,2,tagStock,currentAssault,haveimperialIDtag,allTagsTimeCS,tagsAvail)
+    else
+        -- Something went worng, clear all data
+        player:setVar("AssaultComplete", 0)
+        player:setVar("assaultEntered", 0)
+        player:setVar("Assault_Armband", 0)
+        player:delAssault(currentAssault)
+        for _, v in pairs(assaultOrders) do
+            if player:hasKeyItem(v.KI) then
+                player:delKeyItem(v.KI)
+            end
         end
-        player:startEvent(268, tpz.ki.IMPERIAL_ARMY_ID_TAG, tagCount, currentAssault, haveimperialIDtag)
     end
 end
 
-entity.onEventUpdate = function(player, csid, option)
+function onEventUpdate(player, csid, option)
 end
 
-entity.onEventFinish = function(player, csid, option)
-
-    local tagCount = player:getCurrency("id_tags")
-    local currentAssault = player:getCurrentAssault()
+function onEventFinish(player, csid, option)
+    local tagStock = player:getCurrency("id_tags")
 
     if csid == 269 then
-        player:setCharVar("AhtUrganStatus", 1)
-    elseif csid == 268 and option == 1 and player:hasKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG) == false and tagCount > 0 then
-        npcUtil.giveKeyItem(player, tpz.ki.IMPERIAL_ARMY_ID_TAG)
-        player:setCurrency("id_tags", tagCount - 1)
-    elseif csid == 268 and option == 2 and player:hasKeyItem(tpz.ki.IMPERIAL_ARMY_ID_TAG) == false and tpz.besieged.hasAssaultOrders(player) ~= 0 then
-        if player:hasKeyItem(tpz.ki.LEUJAOAM_ASSAULT_ORDERS) then
-            player:delKeyItem(tpz.ki.LEUJAOAM_ASSAULT_ORDERS)
-        elseif player:hasKeyItem(tpz.ki.MAMOOL_JA_ASSAULT_ORDERS) then
-            player:delKeyItem(tpz.ki.MAMOOL_JA_ASSAULT_ORDERS)
-        elseif player:hasKeyItem(tpz.ki.LEBROS_ASSAULT_ORDERS) then
-            player:delKeyItem(tpz.ki.LEBROS_ASSAULT_ORDERS)
-        elseif player:hasKeyItem(tpz.ki.PERIQIA_ASSAULT_ORDERS) then
-            player:delKeyItem(tpz.ki.PERIQIA_ASSAULT_ORDERS)
-        elseif player:hasKeyItem(tpz.ki.ILRUSI_ASSAULT_ORDERS ) then
-            player:delKeyItem(tpz.ki.ILRUSI_ASSAULT_ORDERS)
-        elseif player:hasKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS) then
-            player:delKeyItem(tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+        player:setVar("AhtUrganStatus",1)
+    elseif csid == 268 and option == 1 and not player:hasKeyItem(dsp.ki.IMPERIAL_ARMY_ID_TAG) and tagStock > 0 then
+        if player:getCurrentAssault() ~= 0 then
+            player:messageSpecial(ID.text.CANNOT_ISSUE_TAG, dsp.ki.IMPERIAL_ARMY_ID_TAG)
+            return
         end
-        npcUtil.giveKeyItem(player, tpz.ki.IMPERIAL_ARMY_ID_TAG)
+        npcUtil.giveKeyItem(player, dsp.ki.IMPERIAL_ARMY_ID_TAG)
+
+        if tagStock >= 3 then
+            player:setVar("lastTagTime", os.time() + 86400)
+        end
+        player:setCurrency("id_tags", tagStock - 1)
+    elseif csid == 268 and option == 2 and assaultUtil.hasOrders(player) and not player:hasKeyItem(dsp.ki.IMPERIAL_ARMY_ID_TAG) then
+        local currentAssault = player:getCurrentAssault()
+        
+        for _, v in pairs(assaultOrders) do
+            if player:hasKeyItem(v.KI) then
+                player:delKeyItem(v.KI)
+            end
+        end
+        npcUtil.giveKeyItem(player, dsp.ki.IMPERIAL_ARMY_ID_TAG)
         player:delAssault(currentAssault)
     end
-
 end
-
-return entity

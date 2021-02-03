@@ -1,12 +1,9 @@
 -----------------------------------
 -- Area: Leujaoam Sanctum
---  Mob: Imp
+--  MOB: Imp
 -----------------------------------
 mixins = {require("scripts/mixins/families/imp")}
 -----------------------------------
-local entity = {}
 
-entity.onMobDeath = function(mob, player, isKiller)
+function onMobDeath(mob, player, isKiller)
 end
-
-return entity

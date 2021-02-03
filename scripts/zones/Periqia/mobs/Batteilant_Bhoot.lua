@@ -1,15 +1,17 @@
 -----------------------------------
 -- Area: Periqia (Requiem)
---  Mob: Batteilant Bhoot
+--  MOB: Batteilant Bhoot
 -----------------------------------
-local entity = {}
+require("scripts/globals/status")
+-----------------------------------
 
-entity.onMobDeath = function(mob, player, isKiller)
+function onMobSpawn(mob)
+    mob:addMod(dsp.mod.FASTCAST, 50)
 end
 
-entity.onMobDespawn = function(mob)
-    local instance = mob:getInstance()
-    instance:setProgress(instance:getProgress() + 1)
+function onMobDeath(mob, player, isKiller, firstCall)
+    if firstCall then
+        local instance = mob:getInstance()
+        instance:setProgress(instance:getProgress() + 1)
+    end
 end
-
-return entity

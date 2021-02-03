@@ -1,16 +1,16 @@
 -----------------------------------
 -- Area: Ilrusi Atoll (Extermination)
---  Mob: Undead Crab
+--  MOB: Undead Crab
 -----------------------------------
-local entity = {}
-
-entity.onMobDeath = function(mob, player, isKiller)
+require("scripts/globals/utils/assault")
+-----------------------------------
+function onMobSpawn(mob)
+    assaultUtil.adjustMobLevel(mob, mob:getID())
 end
 
-entity.onMobDespawn = function(mob)
-    local instance = mob:getInstance()
-
-    instance:setProgress(instance:getProgress() + 1)
+function onMobDeath(mob, player, isKiller, firstCall)
+    if firstCall then
+        local instance = mob:getInstance()
+        instance:setProgress(instance:getProgress() + 1)
+    end
 end
-
-return entity

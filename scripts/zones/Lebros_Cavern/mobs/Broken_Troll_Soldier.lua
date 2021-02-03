@@ -1,24 +1,26 @@
 -----------------------------------
 -- Area: Lebros Cavern (Troll Fugitives)
---  Mob: Broken Troll Soldier
--- Todo: make them spawn at 25-75% hp and stay
+--  MOB: Troll Fugitive
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/status")
 -----------------------------------
-local entity = {}
 
-entity.onMobEngaged = function(mob, target)
+function onMobInitialize(mob)
+    mob:addStatusEffect(dsp.effect.NO_REST,1,0,0);
+end
+
+function onMobSpawn(mob)
     local MaxHP = mob:getHP()
-    local bonus = math.random(2, 6)
+    local bonus = math.random(2,6)
+    
     mob:setHP(MaxHP / (8/(bonus)))
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
-end
-
-entity.onMobDespawn = function(mob)
+function onMobDeath(mob, player, isKiller, firstCall)
     local instance = mob:getInstance()
-    instance:setProgress(instance:getProgress() + 1)
+    
+    if firstCall then
+        instance:setProgress(instance:getProgress() + 1)
+    end
 end
-
-return entity
