@@ -201,3 +201,4 @@ cmake_install.cmake
 
 # Tracy download
 ext/tracy/
+src/map/ai/controllers/trust_controller.cpp
