@@ -1,7 +1,5 @@
 -----------------------------------------
--- ID: 4743
--- Indi-Slow
--- Teaches Indi-Slow
+-- Teaches Watera II
 -----------------------------------------
 
 function onItemCheck(target)

@@ -1,7 +1,6 @@
 -----------------------------------------
--- ID: 4743
--- Indi-Slow
--- Teaches Indi-Slow
+-- Stonera II
+-- Teaches Stonera
 -----------------------------------------
 
 function onItemCheck(target)

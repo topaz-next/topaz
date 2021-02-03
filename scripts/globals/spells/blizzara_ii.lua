@@ -1,5 +1,5 @@
 -----------------------------------------
--- Spell: Blizzaja
+-- Spell: Blizzara II
 -- Deals ice damage to enemies within area of effect.
 -- Successive use enhances spell potency.
 -----------------------------------------

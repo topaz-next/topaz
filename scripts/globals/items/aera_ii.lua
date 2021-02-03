@@ -1,7 +1,6 @@
 -----------------------------------------
--- ID: 4743
--- Indi-Slow
--- Teaches Indi-Slow
+-- Aera
+-- Teaches Aera II
 -----------------------------------------
 
 function onItemCheck(target)

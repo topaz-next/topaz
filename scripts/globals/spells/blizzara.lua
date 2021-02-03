@@ -1,5 +1,5 @@
 -----------------------------------------
--- Spell: Blizzaga III
+-- Spell: Blizzara
 -- Deals ice damage to enemies within area of effect.
 -----------------------------------------
 require("scripts/globals/status")
