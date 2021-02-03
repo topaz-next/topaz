@@ -2,7 +2,6 @@
 -- Appraisal Utilities
 -- desc: Common functionality for Appraisals
 -----------------------------------
-require("scripts/globals/items")
 require("scripts/globals/missions")
 require("scripts/globals/npc_util")
 require("scripts/globals/status")
@@ -523,7 +522,7 @@ appraisalUtil.appraisalItems =
         {
             items =
             {
-                {100, dsp.items.STORM_GAGES},
+                {100, 14937}, -- Storm Gages
             },
         },
         [SEAGULL_GROUNDED] =
@@ -832,11 +831,11 @@ appraisalUtil.appraisalItems =
         {
             items =
             {
-                {30, 13600}, -- dhmamal mantle +1
-                {25, 13601}, -- cotton cape +1
-                {25, 13608}, -- lizard mantle +1
-                { 5, dsp.items.STORM_CAPE},
-                {15, dsp.items.ENHANCING_MANTLE},
+                {30, 13600}, -- Dhamel Mantle +1
+                {25, 13601}, -- Cotton Cape +1
+                {25, 13608}, -- Lizard Mantle +1
+                { 5, 15489}, -- Storm Cape
+                {15, 13624}, -- Enhancing Mantle
             },
         },
         [appraisalUtil.Origin.NYZUL_OLD_TWO_WINGS] =
@@ -925,10 +924,10 @@ appraisalUtil.appraisalItems =
         {
             items =
             {
-                {55, dsp.items.FEATHER_COLLAR},
-                {30, dsp.items.GORGET_1},
-                {10, dsp.items.JAGD_GORGET},
-                { 5, dsp.items.STORM_MUFFLER},
+                {55, 13075}, -- Feather Collar
+                {30, 13065}, -- Gorget +1
+                {10, 13165}, -- Jagd Gorget
+                { 5, 15519}, -- Storm Muffler
             },
         },
         [PREEMPTIVE_STRIKE] =
@@ -1041,17 +1040,17 @@ appraisalUtil.appraisalItems =
         {
             items =
             {
-                {10, dsp.items.EGGPLANT},
-                { 9, dsp.items.GARDENIA_SEED},
-                {10, dsp.items.ICE_CRYSTAL},
-                { 7, dsp.items.KABURA_QUIVER},
-                {13, dsp.items.LINEN_CLOTH},
-                { 8, dsp.items.MERROW_SCALE},
-                { 5, dsp.items.PHALAENOPSIS},
-                {10, dsp.items.POROGGO_HAT},
-                { 6, dsp.items.SOULFLAYER_HAT},
-                {15, dsp.items.TSURARA},
-                { 7, dsp.items.WHITE_ROCK},
+                {10, 4388}, -- Eggplant
+                { 9, 1472}, -- Gardenia Seed
+                {10, 4097}, -- Ice Crystal
+                { 7, 5332}, -- Kabura Quiver
+                {13,  826}, -- Linen Cloth
+                { 8, 2146}, -- Merrow Scale
+                { 5, 1411}, -- Phalaenopsis
+                {10, 2334}, -- Poroggo Hat
+                { 6, 1724}, -- Soulflayer Robe
+                {15, 1164}, -- Tsurara
+                { 7,  776}, -- White Rock
             },
         },
         [IMPERIAL_AGENT_RESCUE] =
@@ -1078,12 +1077,12 @@ appraisalUtil.appraisalItems =
         {
             items =
             {
-                {20, dsp.items.SULFUR},
-                {20, dsp.items.FLAN_MEAT},
-                { 5, dsp.items.BULLET_POUCH},
-                {20, dsp.items.TROLL_PAULDRON},
-                {10, dsp.items.SPARTAN_BULLET},
-                {25, dsp.items.HOLY_BASIL},
+                {20,  1108}, -- Sulfur
+                {20,  2175}, -- Flan Meat
+                { 5,  5363}, -- Bullet Pouch
+                {20,  2160}, -- Troll Pauldron
+                {10, 18160}, -- Spartan Bullet
+                {25,  1590}, -- Holy Basil
             },
         },
         [PREEMPTIVE_STRIKE] =
@@ -1346,7 +1345,7 @@ function appraisalUtil.assaultChestTrigger(player, npc, qItemTable, regItemTable
             npc:entityAnimationPacket("open")
             npc:setLocalVar("open", 1)
             npc:timer(15000, function(npc) npc:entityAnimationPacket("kesu") end)
-            npc:timer(16000, function(npc) npc:setStatus(dsp.status.DISAPPEAR) end)
+            npc:timer(16000, function(npc) npc:setStatus(tpz.status.DISAPPEAR) end)
             if appraisalUtil.canGetQuestionMarkItem(player, instance, area) then
                 for i = 1, #qItemTable, 1 do
                     local lootGroup = qItemTable[i]
