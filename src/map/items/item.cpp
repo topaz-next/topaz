@@ -347,3 +347,13 @@ bool CItem::isSent() const
 {
     return m_sent;
 }
+
+uint8 CItem::getAppraisalID()
+{
+    return m_extra[0x16];
+}
+
+void CItem::setAppraisalID(uint8 appID)
+{
+    m_extra[0x16] = appID;
+}

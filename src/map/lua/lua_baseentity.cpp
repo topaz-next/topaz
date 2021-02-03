@@ -2945,6 +2945,13 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
                         }
                     }
                 }
+
+                sol::object appraisalObj = table["appraisal"];
+                if (appraisalObj.get_type() == sol::type::number)
+                {
+                    PItem->setAppraisalID(appraisalObj.as<uint8>());
+                }
+
                 SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silent);
                 if (SlotID == ERROR_SLOTID)
                 {
