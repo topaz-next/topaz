@@ -13,8 +13,8 @@ require("scripts/globals/zone")
 assaultUtil = {}
 -----------------------------------
 function assaultUtil.hasOrders(player)
-    local orders = {dsp.ki.LEUJAOAM_ASSAULT_ORDERS, dsp.ki.MAMOOL_JA_ASSAULT_ORDERS, dsp.ki.LEBROS_ASSAULT_ORDERS,
-    dsp.ki.PERIQIA_ASSAULT_ORDERS, dsp.ki.ILRUSI_ASSAULT_ORDERS, dsp.ki.NYZUL_ISLE_ASSAULT_ORDERS}
+    local orders = {tpz.ki.LEUJAOAM_ASSAULT_ORDERS, tpz.ki.MAMOOL_JA_ASSAULT_ORDERS, tpz.ki.LEBROS_ASSAULT_ORDERS,
+    tpz.ki.PERIQIA_ASSAULT_ORDERS, tpz.ki.ILRUSI_ASSAULT_ORDERS, tpz.ki.NYZUL_ISLE_ASSAULT_ORDERS}
 
     for _, v in pairs(orders) do
         if player:hasKeyItem(v) then
@@ -30,7 +30,7 @@ function assaultUtil.onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4
 
     -- IMMORTAL SENTRIES
     if toauMission == IMMORTAL_SENTRIES then
-        if player:hasKeyItem(dsp.ki.SUPPLIES_PACKAGE) then
+        if player:hasKeyItem(tpz.ki.SUPPLIES_PACKAGE) then
             player:startEvent(csid1)
         elseif player:getVar("AhtUrganStatus") == 1 then
             player:startEvent(csid2)
@@ -47,7 +47,7 @@ function assaultUtil.onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4
     -- ASSAULT
     elseif toauMission >= PRESIDENT_SALAHEEM then
         local IPpoint = player:getCurrency("imperial_standing")
-        if player:getVar("assaultEntered") == 0 and player:hasKeyItem(ORDERS) and not player:hasKeyItem(dsp.ki.ASSAULT_ARMBAND) then
+        if player:getVar("assaultEntered") == 0 and player:hasKeyItem(ORDERS) and not player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
             player:startEvent(csid5,50,IPpoint)
         else
             player:startEvent(csid6)
@@ -62,7 +62,7 @@ end
 function assaultUtil.onEventFinishArmbandNPC(player, csid, option, csid1, csid2, csid3, beginningsKI)
     -- IMMORTAL SENTRIES
     if csid == csid1 and option == 1 then
-        player:delKeyItem(dsp.ki.SUPPLIES_PACKAGE)
+        player:delKeyItem(tpz.ki.SUPPLIES_PACKAGE)
         player:setVar("AhtUrganStatus",1)
 
     -- BEGINNINGS
@@ -71,7 +71,7 @@ function assaultUtil.onEventFinishArmbandNPC(player, csid, option, csid1, csid2,
 
     -- ASSAULT
     elseif csid == csid3 and option == 1 then
-        npcUtil.giveKeyItem(player, dsp.ki.ASSAULT_ARMBAND)
+        npcUtil.giveKeyItem(player, tpz.ki.ASSAULT_ARMBAND)
         player:delCurrency("imperial_standing", 50)
     end
 end
@@ -82,7 +82,7 @@ function assaultUtil.onAssaultTrigger(player, npc, CSID, ORDERS, indexID)
         local level = assaultUtil.missionInfo[assaultID].suggestedLevel
         local armband = 0
 
-        if player:hasKeyItem(dsp.ki.ASSAULT_ARMBAND) then
+        if player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
             armband = 1
         end
         player:startEvent(CSID, assaultID, -4, 0, level, indexID, armband)
@@ -143,7 +143,7 @@ function assaultUtil.onAssaultonInstanceCreated(player, target, instance, endCS,
         player:instanceEntry(target,4)
         player:setVar("AssaultCap", 0)
         player:setVar("Assault_Armband", 1)
-        player:delKeyItem(dsp.ki.ASSAULT_ARMBAND)
+        player:delKeyItem(tpz.ki.ASSAULT_ARMBAND)
         player:setLocalVar("Area", destinationID)
 
         local party = player:getParty()
@@ -175,7 +175,7 @@ function assaultUtil.afterInstanceRegister(player, fireFlies, textTable, mobTabl
     player:messageSpecial(textTable.TIME_TO_COMPLETE, instance:getTimeLimit())
     player:addTempItem(fireFlies)
     if cap ~= 0 then
-        player:addStatusEffect(dsp.effect.LEVEL_RESTRICTION, cap, 0, 0)
+        player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, cap, 0, 0)
     end
     if player:getVar("Assault_Armband") == 1 then
         if cap ~= 0 then
@@ -187,7 +187,7 @@ function assaultUtil.afterInstanceRegister(player, fireFlies, textTable, mobTabl
                 elseif cap == 50 then
                     cap = 25
                 end
-                instance:getEntity(bit.band(v, 0xFFF), dsp.objType.MOB):setMobLevel(instance:getEntity(bit.band(v, 0xFFF), dsp.objType.MOB):getMainLvl() - cap)
+                instance:getEntity(bit.band(v, 0xFFF), tpz.objType.MOB):setMobLevel(instance:getEntity(bit.band(v, 0xFFF), tpz.objType.MOB):getMainLvl() - cap)
             end
         end
     end
@@ -215,8 +215,8 @@ function assaultUtil.onInstanceComplete(player, instance, X, Z, textTable, npcTa
         v:messageSpecial(textTable.RUNE_UNLOCKED_POS, X, Z)
     end
 
-    instance:getEntity(bit.band(npcTable.RUNE_OF_RELEASE, 0xFFF), dsp.objType.NPC):setStatus(dsp.status.NORMAL)
-    instance:getEntity(bit.band(npcTable.ANCIENT_LOCKBOX, 0xFFF), dsp.objType.NPC):setStatus(dsp.status.NORMAL)
+    instance:getEntity(bit.band(npcTable.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setStatus(tpz.status.NORMAL)
+    instance:getEntity(bit.band(npcTable.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setStatus(tpz.status.NORMAL)
 end
 
 function assaultUtil.instanceOnEventFinish(player, csid, endCS, ZONE)
@@ -279,7 +279,7 @@ function assaultUtil.adjustMobLevel(mob, mobID)
     elseif cap == 50 then
         cap = 25
     end
-    instance:getEntity(bit.band(mobID, 0xFFF), dsp.objType.MOB):setMobLevel(instance:getEntity(bit.band(mobID, 0xFFF), dsp.objType.MOB):getMainLvl() - cap)
+    instance:getEntity(bit.band(mobID, 0xFFF), tpz.objType.MOB):setMobLevel(instance:getEntity(bit.band(mobID, 0xFFF), tpz.objType.MOB):getMainLvl() - cap)
 end
 
 assaultUtil.missionInfo =
