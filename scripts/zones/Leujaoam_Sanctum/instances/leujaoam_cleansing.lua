@@ -1,45 +1,48 @@
 -----------------------------------
 -- Assault: Leujaoam Cleansing
--- General Afkaam is to inspect Leujaoam Sanctum. Destroy all creatures in the area that may pose a threat to the general.
+-- General Afkaam is to inspect Leujaoam Sanctum.
+-- Destroy all creatures in the area that may pose a threat to the general.
 -----------------------------------
 local ID = require("scripts/zones/Leujaoam_Sanctum/IDs")
 require("scripts/globals/instance")
-require("scripts/globals/items")
 require("scripts/globals/missions")
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 require("scripts/globals/zone")
 -----------------------------------
+local instance_object = {}
 
-function afterInstanceRegister(player)
-    assaultUtil.afterInstanceRegister(player, dsp.items.CAGE_OF_AZOUPH_FIREFLIES, ID.text, ID.mob)
+instance_object.afterInstanceRegister = function(player)
+    assaultUtil.afterInstanceRegister(player, 5343, ID.text, ID.mob) -- Azouph Fireflies
 end
 
-function onInstanceCreated(instance)
-    instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), dsp.objType.NPC):setPos(476.000, 8.479, 40.000, 49)
-    instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), dsp.objType.NPC):setPos(476.000, 8.479, 39.000, 49)
+instance_object.onInstanceCreated = function(instance)
+    instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(476.000, 8.479, 40.000, 49)
+    instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(476.000, 8.479, 39.000, 49)
 end
 
-function onInstanceTimeUpdate(instance, elapsed)
+instance_object.onInstanceTimeUpdate = function(instance, elapsed)
     updateInstanceTime(instance, elapsed, ID.text)
 end
 
-function onInstanceFailure(instance)
+instance_object.onInstanceFailure = function(instance)
     assaultUtil.onInstanceFailure(instance, 102, ID.text)
 end
 
-function onInstanceProgressUpdate(instance, progress)
+instance_object.onInstanceProgressUpdate = function(instance, progress)
     if progress >= 15 then
         instance:complete()
     end
 end
 
-function onInstanceComplete(instance)
+instance_object.onInstanceComplete = function(instance)
     assaultUtil.onInstanceComplete(player, instance, 8, 8, ID.text, ID.npc)
 end
 
-function onEventUpdate(player, csid, option)
+instance_object.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player, csid, option)
-    assaultUtil.instanceOnEventFinish(player, 102, dsp.zone.CAEDARVA_MIRE)
+instance_object.onEventFinish = function(player, csid, option)
+    assaultUtil.instanceOnEventFinish(player, 102, tpz.zone.CAEDARVA_MIRE)
 end
+
+return instance_object

@@ -1,14 +1,17 @@
 -----------------------------------
 -- Area: Leujaoam Sanctum (Orichalcum Survey)
---  MOB: Mineral Eater
+--  Mob: Mineral Eater
 -- Immune to Charm
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+local entity = {}
 
-function onMobSpawn(mob)
+entity.onMobSpawn = function(mob)
     assaultUtil.adjustMobLevel(mob, mob:getID())
 end
 
-function onMobDeath(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, isKiller)
 end
+
+return entity

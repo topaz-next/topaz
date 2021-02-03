@@ -3,29 +3,29 @@
 -- Ancient Lockbox
 -----------------------------------
 local ID = require("scripts/zones/Leujaoam_Sanctum/IDs")
-require("scripts/globals/items")
 require("scripts/globals/missions")
 require("scripts/globals/appraisal")
 -----------------------------------
+local entity = {}
 
-function onTrigger(player,npc)
+entity.onTrigger = function(player, npc)
     local qItem =
     {
         [LEUJAOAM_CLEANSING] =
         {
             {
-                {itemid = dsp.items.APPRAISAL_RING, droprate = 600},
-                {itemid = dsp.items.APPRAISAL_BOX, droprate = 300},
-                {itemid = 0, droprate = 100}, -- Nothing
+                {itemid = 2278, droprate = 600}, -- Appraisal (???) Ring
+                {itemid = 2286, droprate = 300}, -- Appraisal (???) Box
+                {itemid = 0,    droprate = 100}, -- Nothing
             },
         },
         [ORICHALCUM_SURVEY] =
         {
             {
-                {itemid = dsp.items.APPRAISAL_NECKLACE, droprate = 300},
-                {itemid = dsp.items.APPRAISAL_BOX, droprate = 550},
-                {itemid = dsp.items.APPRAISAL_GLOVES, droprate = 50},
-                {itemid = 0, droprate = 100}, -- Nothing
+                {itemid = 2282, droprate = 300}, -- Appraisal (???) Necklace
+                {itemid = 2286, droprate = 550}, -- Appraisal (???) Box
+                {itemid = 2195, droprate = 50 }, -- Appraisal (???) Gloves
+                {itemid = 0,    droprate = 100}, -- Nothing
             },
         },
     }
@@ -34,25 +34,25 @@ function onTrigger(player,npc)
         [LEUJAOAM_CLEANSING] =
         {
             {
-                {itemid = dsp.items.HI_POTION_III, droprate = 1000},
+                {itemid = 4119, droprate = 1000}, -- Hi-Potion III
             },
             {
-                {itemid = dsp.items.HI_POTION_III, droprate = 100},
-                {itemid = 0, droprate = 900},
+                {itemid = 4119, droprate = 100}, -- Hi-Potion III
+                {itemid = 0,    droprate = 900}, -- Nothing
             },
             {
-                {itemid = dsp.items.REMEDY, droprate = 530}, -- Remedy
-                {itemid = 0, droprate = 470},
+                {itemid = 4155, droprate = 530}, -- Remedy
+                {itemid = 0,    droprate = 470}, -- Nothing
             },
         },
         [ORICHALCUM_SURVEY] =
         {
             {
-                {itemid = dsp.items.HI_POTION_III, droprate = 1000},
+                {itemid = 4119, droprate = 1000}, -- Hi-Potion III
             },
             {
-                {itemid = dsp.items.REMEDY, droprate = 530},
-                {itemid = 0, droprate = 470},
+                {itemid = 4155, droprate = 530}, -- Remedy
+                {itemid = 0,    droprate = 470}, -- Nothing
             },
         },
     }
@@ -60,8 +60,10 @@ function onTrigger(player,npc)
     appraisalUtil.assaultChestTrigger(player, npc, qItem[area], regItem[area], ID.text)
 end
 
-function onEventUpdate(player,csid,option)
+entity.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+entity.onEventFinish = function(player, csid, option)
 end
+
+return entity

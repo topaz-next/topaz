@@ -1,5 +1,5 @@
 -----------------------------------
--- Area: Leujaoam_Sanctum
+-- Area: Leujaoam Sanctum
 -----------------------------------
 require("scripts/globals/missions")
 require("scripts/globals/zone")
@@ -7,7 +7,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.LEUJAOAM_SANCTUM] =
+zones[tpz.zone.LEUJAOAM_SANCTUM] =
 {
     text =
     {
@@ -19,17 +19,20 @@ zones[dsp.zone.LEUJAOAM_SANCTUM] =
         KEYITEM_LOST               = 6393, -- Lost key item: <keyitem>.
         NOT_HAVE_ENOUGH_GIL        = 6394, -- You do not have enough gil.
         ITEMS_OBTAINED             = 6398, -- You obtain <number> <item>!
+        CARRIED_OVER_POINTS        = 7000, -- You have carried over <number> login point[/s].
+        LOGIN_CAMPAIGN_UNDERWAY    = 7001, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!<space>
+        LOGIN_NUMBER               = 7002, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         OBTAINED_TEMP_ITEM         = 7311, -- Obtained temporary item: <item>!
-        PLAYER_OBTAINS_ITEM        = 7312, -- <name> obtains <item>!
-        ASSAULT_START_OFFSET       = 7447, -- Max MP Down removed for <name>.
+        PLAYER_OBTAINS_ITEM        = 7312, -- <name> obtains <item>!    
+        ASSAULT_START_OFFSET       = 7447, -- Max MP Down removed for <player>
         TIME_TO_COMPLETE           = 7508, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
         MISSION_FAILED             = 7509, -- The mission has failed. Leaving area.
-        RUNE_UNLOCKED_POS          = 7510, -- ission objective completed. Unlocking Rune of Release ([A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z]-#).
-        RUNE_UNLOCKED              = 7511, -- ission objective completed. Unlocking Rune of Release.
+        RUNE_UNLOCKED_POS          = 7510, -- Mission objective completed. Unlocking Rune of Release ([A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z]-#).
+        RUNE_UNLOCKED              = 7511, -- Mission objective completed. Unlocking Rune of Release.
         ASSAULT_POINTS_OBTAINED    = 7512, -- You gain <number> [Assault point/Assault points]!
-        TIME_REMAINING_MINUTES     = 7513, -- ime remaining: <number> [minute/minutes] (Earth time).
-        TIME_REMAINING_SECONDS     = 7514, -- ime remaining: <number> [second/seconds] (Earth time).
-        PARTY_FALLEN               = 7516, -- ll party members have fallen in battle. Mission failure in <number> [minute/minutes].
+        TIME_REMAINING_MINUTES     = 7513, -- Time remaining: <number> [minute/minutes] (Earth time).
+        TIME_REMAINING_SECONDS     = 7514, -- Time remaining: <number> [second/seconds] (Earth time).
+        PARTY_FALLEN               = 7516, -- All party members have fallen in battle. Mission failure in <number> [minute/minutes].
         MINE_FAIL                  = 7525, -- You find nothing.
         MINE_SUCCESS               = 7526, -- <name> finds <item>!
         OBTAINS_TEMP_ITEM          = 7527, -- <name> obtains the temporary item: <item>!
@@ -72,4 +75,4 @@ zones[dsp.zone.LEUJAOAM_SANCTUM] =
     }
 }
 
-return zones[dsp.zone.LEUJAOAM_SANCTUM]
+return zones[tpz.zone.LEUJAOAM_SANCTUM]

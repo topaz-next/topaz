@@ -1,22 +1,22 @@
 -----------------------------------
 -- Area: Leujaoam Sanctum
--- MOB: Qiqirn Miner
+-- Mob: Qiqirn Miner
 -- Assault: Orichalcum Survey
 -----------------------------------
 local ID = require("scripts/zones/Leujaoam_Sanctum/IDs")
-require("scripts/globals/items")
 require("scripts/globals/status")
 -----------------------------------
+local entity = {}
 
-function onMobSpawn(mob)
-	mob:setStatus(dsp.status.NPC)
+entity.onMobSpawn = function(mob)
+	mob:setStatus(tpz.status.NPC)
 end
 
-function onMobRoam(mob)
+entity.onMobRoam = function(mob)
 	instance = mob:getInstance()
 
 	if instance:getStage() == 1 and mob:getLocalVar("Stage") == 0 then
-		mob:setStatus(dsp.status.MOB)
+		mob:setStatus(tpz.status.MOB)
 		mob:setAnimation(1)
 		mob:speed(100)
 		mob:setAggressive(1)
@@ -24,8 +24,10 @@ function onMobRoam(mob)
 	end
 end
 
-function onTrigger(player, npc)
+entity.onTrigger = function(player, npc)
 end
 
-function onMobDeath(mob, player)
+entity.onMobDeath = function(mob, player)
 end
+
+return entity
