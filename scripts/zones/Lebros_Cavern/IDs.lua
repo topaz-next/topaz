@@ -9,39 +9,38 @@ zones = zones or {}
 
 zones[dsp.zone.LEBROS_CAVERN] =
 {
-    text = 
+    text =
     {
-        ITEM_CANNOT_BE_OBTAINED    = 6382, -- You cannot obtain the <item>. Come back after sorting your inventory.
-        FULL_INVENTORY_AFTER_TRADE = 6386, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
-        ITEM_OBTAINED              = 6388, -- Obtained: <item>.
-        GIL_OBTAINED               = 6389, -- Obtained <number> gil.
-        KEYITEM_OBTAINED           = 6391, -- Obtained key item: <keyitem>.
-        KEYITEM_LOST               = 6392, -- Lost key item: <keyitem>.
-        NOT_HAVE_ENOUGH_GIL        = 6393, -- You do not have enough gil.
-        ITEMS_OBTAINED             = 6397, -- You obtain <number> <item>!
-        MINE_COUNTDOWN             = 6980, -- <number>...
-        TEMP_ITEM                  = 7210, -- Obtained temporary item: <item>!
-        PLAYER_OBTAINS_ITEM        = 7211, -- <player> obtains a <item>!
-        ASSAULT_START_OFFSET       = 7346, -- Max MP Down removed for <player>
-        TIME_TO_COMPLETE           = 7407, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
-        MISSION_FAILED             = 7408, -- The mission has failed. Leaving area.
-        RUNE_UNLOCKED_POS          = 7409, -- ission objective completed. Unlocking Rune of Release ([A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z]-#).
-        ASSAULT_POINTS_OBTAINED    = 7411, -- You gain <number> [Assault point/Assault points]!
-        TIME_REMAINING_MINUTES     = 7412, -- ime remaining: <number> [minute/minutes] (Earth time).
-        TIME_REMAINING_SECONDS     = 7413, -- ime remaining: <number> [second/seconds] (Earth time).
-        PARTY_FALLEN               = 7415, -- ll party members have fallen in battle. Mission failure in <number> [minute/minutes].
-        STILL_HUNGRY_FED           = 7424,
-        FULL_FED                   = 7425,
-        STILL_HUNGRY_TRIGGER       = 7426,
-        FULL_HUNGRY                = 7427,
-        HAVE_RATIONS               = 7428, -- Why don't you deliver the rations you already have.
-        DEPENDING_ON               = 7429, -- the advance unit is depending on... 
-        STEWPOT_TALK               = 7430, -- This should keep a whole unit filled
-        RATIONS                    = 7431, -- there are still soldiers out there
-
+        ITEM_CANNOT_BE_OBTAINED    = 6383, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        FULL_INVENTORY_AFTER_TRADE = 6387, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
+        ITEM_OBTAINED              = 6389, -- Obtained: <item>.
+        GIL_OBTAINED               = 6390, -- Obtained <number> gil.
+        KEYITEM_OBTAINED           = 6392, -- Obtained key item: <keyitem>.
+        KEYITEM_LOST               = 6393, -- Lost key item: <keyitem>.
+        NOT_HAVE_ENOUGH_GIL        = 6394, -- You do not have enough gil.
+        ITEMS_OBTAINED             = 6398, -- You obtain <number> <item>!
+        MINE_COUNTDOWN             = 6981, -- <number>...
+        TEMP_ITEM                  = 7211, -- Obtained temporary item: <item>!
+        PLAYER_OBTAINS_ITEM        = 7212, -- <name> obtains <item>!
+        ASSAULT_START_OFFSET       = 7347, -- Max MP Down removed for <name>.
+        TIME_TO_COMPLETE           = 7408, -- You have <number> [minute/minutes] (Earth time) to complete this mission.
+        MISSION_FAILED             = 7409, -- The mission has failed. Leaving area.
+        RUNE_UNLOCKED_POS          = 7410, -- ission objective completed. Unlocking Rune of Release ([A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z]-#).
+        ASSAULT_POINTS_OBTAINED    = 7412, -- You gain <number> [Assault point/Assault points]!
+        TIME_REMAINING_MINUTES     = 7413, -- ime remaining: <number> [minute/minutes] (Earth time).
+        TIME_REMAINING_SECONDS     = 7414, -- ime remaining: <number> [second/seconds] (Earth time).
+        PARTY_FALLEN               = 7416, -- ll party members have fallen in battle. Mission failure in <number> [minute/minutes].
+        STILL_HUNGRY_FED           = 7425, -- Thank Zahak you're here. I was about to start eating my boots!
+        FULL_FED                   = 7426, -- You brought more supplies? Well, you can never have too much...
+        STILL_HUNGRY_TRIGGER       = 7427, -- The provisions... Have you brought the provisions?
+        FULL_HUNGRY                = 7428, -- There's nothing like a full belly to put the power back in your sword swing. I pity the next monster that crosses my path!
+        HAVE_RATIONS               = 7429, -- Why don't you deliver the rations I already gave you?
+        DEPENDING_ON               = 7430, -- The advance unit is depending on these provisions. Don't let them down!
+        STEWPOT_TALK               = 7431, -- This should keep a whole unit filled up for a while.
+        RATIONS                    = 7432, -- There are still brave soldiers starving out there! Quickly, those rations must be delivered!
     },
 
-    mob = 
+    mob =
     {
         [EXCAVATION_DUTY] =
         {
@@ -60,7 +59,7 @@ zones[dsp.zone.LEBROS_CAVERN] =
                 17035302, 17035303, 17035304, 17035305, 17035306, 17035307, 17035308, 17035309,
             }
         },
-        [TROLL_FUGITIVES] = 
+        [TROLL_FUGITIVES] =
         {
             MOBS_START =
             {
@@ -78,7 +77,7 @@ zones[dsp.zone.LEBROS_CAVERN] =
         }
     },
 
-    npc = 
+    npc =
     {
         ANCIENT_LOCKBOX = 17035478,
         RUNE_OF_RELEASE = 17035479,
