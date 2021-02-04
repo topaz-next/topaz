@@ -11,7 +11,11 @@ end
 
 function onSpellCast(caster, target, spell)
     local effect = target:getStatusEffect(tpz.effect.COPY_IMAGE)
+<<<<<<< HEAD
     target:delStatusEffect(67) -- Third Eye and Utsusemi don't stack.  Utsusemi removes Third Eye.
+=======
+    and target:delStatusEffect(67) -- Third Eye and Utsusemi don't stack.  Utsusemi removes Third Eye.
+>>>>>>> f99628915e1240c0d081120fe4aa33ac6e8daf45
     
 	-- Get extras shadows
     local numShadows = 3 + target:getMod(tpz.mod.UTSUSEMI_BONUS)
@@ -29,3 +33,4 @@ function onSpellCast(caster, target, spell)
 
     return tpz.effect.COPY_IMAGE
 end
+
