@@ -5,13 +5,13 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------------
 
-function onMagicCastingCheck(caster,target,spell)
+function onMagicCastingCheck(caster, target, spell)
     return 0
 end
 
 function onSpellCast(caster, target, spell)
     local effect = target:getStatusEffect(tpz.effect.COPY_IMAGE)
-	target:delStatusEffect(67) -- Third Eye and Utsusemi don't stack.  Utsusemi removes Third Eye.
+    target:delStatusEffect(67) -- Third Eye and Utsusemi don't stack.  Utsusemi removes Third Eye.
     
 	-- Get extras shadows
     local numShadows = 3 + target:getMod(tpz.mod.UTSUSEMI_BONUS)
