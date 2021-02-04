@@ -32,7 +32,7 @@ function assaultUtil.onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4
     if toauMission == IMMORTAL_SENTRIES then
         if player:hasKeyItem(tpz.ki.SUPPLIES_PACKAGE) then
             player:startEvent(csid1)
-        elseif player:getVar("AhtUrganStatus") == 1 then
+        elseif player:getCharVar("AhtUrganStatus") == 1 then
             player:startEvent(csid2)
         end
 
@@ -47,7 +47,7 @@ function assaultUtil.onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4
     -- ASSAULT
     elseif toauMission >= PRESIDENT_SALAHEEM then
         local IPpoint = player:getCurrency("imperial_standing")
-        if player:getVar("assaultEntered") == 0 and player:hasKeyItem(ORDERS) and not player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
+        if player:getCharVar("assaultEntered") == 0 and player:hasKeyItem(ORDERS) and not player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
             player:startEvent(csid5,50,IPpoint)
         else
             player:startEvent(csid6)
@@ -63,7 +63,7 @@ function assaultUtil.onEventFinishArmbandNPC(player, csid, option, csid1, csid2,
     -- IMMORTAL SENTRIES
     if csid == csid1 and option == 1 then
         player:delKeyItem(tpz.ki.SUPPLIES_PACKAGE)
-        player:setVar("AhtUrganStatus",1)
+        player:setCharVar("AhtUrganStatus",1)
 
     -- BEGINNINGS
     elseif csid == csid2 then
@@ -77,7 +77,7 @@ function assaultUtil.onEventFinishArmbandNPC(player, csid, option, csid1, csid2,
 end
 
 function assaultUtil.onAssaultTrigger(player, npc, CSID, ORDERS, indexID)
-    if player:hasKeyItem(ORDERS) and player:getVar("assaultEntered") == 0 then
+    if player:hasKeyItem(ORDERS) and player:getCharVar("assaultEntered") == 0 then
         local assaultID = player:getCurrentAssault()
         local level = assaultUtil.missionInfo[assaultID].suggestedLevel
         local armband = 0
@@ -105,7 +105,7 @@ function assaultUtil.onAssaultUpdate(player, csid, option, target, ORDERS, zoneI
         cap = 50
     end
 
-    player:setVar("AssaultCap", cap)
+    player:setCharVar("AssaultCap", cap)
 
     if player:getGMLevel() == 0 and player:getPartySize() < 3 and not IsTestServer() then
         player:messageSpecial(zones[player:getZoneID()].text.PARTY_MIN_REQS, 3)
@@ -121,7 +121,7 @@ function assaultUtil.onAssaultUpdate(player, csid, option, target, ORDERS, zoneI
 
     if party ~= nil then
         for _,v in ipairs(party) do
-            if not v:hasKeyItem(ORDERS) or v:getCurrentAssault() ~= assaultID or v:getVar("assaultEntered") ~= 0 or v:getMainLvl() < 50 then
+            if not v:hasKeyItem(ORDERS) or v:getCurrentAssault() ~= assaultID or v:getCharVar("assaultEntered") ~= 0 or v:getMainLvl() < 50 then
                 player:messageText(player, zones[player:getZoneID()].text.MEMBER_NO_REQS, false)
                 player:instanceEntry(target,1)
                 return
@@ -138,11 +138,11 @@ end
 
 function assaultUtil.onAssaultonInstanceCreated(player, target, instance, endCS, destinationID)
     if instance then
-        instance:setLevelCap(player:getVar("AssaultCap"))
+        instance:setLevelCap(player:getCharVar("AssaultCap"))
         player:setInstance(instance)
         player:instanceEntry(target,4)
-        player:setVar("AssaultCap", 0)
-        player:setVar("Assault_Armband", 1)
+        player:setCharVar("AssaultCap", 0)
+        player:setCharVar("Assault_Armband", 1)
         player:delKeyItem(tpz.ki.ASSAULT_ARMBAND)
         player:setLocalVar("Area", destinationID)
 
@@ -177,7 +177,7 @@ function assaultUtil.afterInstanceRegister(player, fireFlies, textTable, mobTabl
     if cap ~= 0 then
         player:addStatusEffect(tpz.effect.LEVEL_RESTRICTION, cap, 0, 0)
     end
-    if player:getVar("Assault_Armband") == 1 then
+    if player:getCharVar("Assault_Armband") == 1 then
         if cap ~= 0 then
             for _, v in pairs(mobTable[assaultID].MOBS_START) do
                 if cap == 70 then
@@ -248,21 +248,21 @@ function assaultUtil.runeReleaseFinish(player, ASSAULT_POINT, textTable)
 
             local pointModifier = assaultUtil.missionInfo[assaultID].minimumPoints
             points = pointModifier - (pointModifier * playerpoints)
-            if v:getVar("Assault_Armband") == 1 then
+            if v:getCharVar("Assault_Armband") == 1 then
                 points = points*(1.1)
             end
             if v:hasCompletedAssault(v:getCurrentAssault()) then
                 points = math.floor(points)
-                v:setVar("AssaultPromotion", v:getVar("AssaultPromotion") +1)
+                v:setCharVar("AssaultPromotion", v:getCharVar("AssaultPromotion") +1)
                 v:addAssaultPoint(ASSAULT_POINT, points)
                 v:messageSpecial(textTable.ASSAULT_POINTS_OBTAINED, points)
             else
                 points = math.floor(points*(1.5))
-                v:setVar("AssaultPromotion", v:getVar("AssaultPromotion") +5)
+                v:setCharVar("AssaultPromotion", v:getCharVar("AssaultPromotion") +5)
                 v:addAssaultPoint(ASSAULT_POINT, points)
                 v:messageSpecial(textTable.ASSAULT_POINTS_OBTAINED, points)
             end
-            v:setVar("AssaultComplete",1)
+            v:setCharVar("AssaultComplete",1)
             v:startEvent(102)
         end
     end

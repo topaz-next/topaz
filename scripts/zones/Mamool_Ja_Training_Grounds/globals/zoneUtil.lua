@@ -5,18 +5,17 @@
 local ID = require("scripts/zones/Mamool_Ja_Training_Grounds/IDs")
 require("scripts/globals/status")
 -----------------------------------
-zoneUtil = {}
------------------------------------
+local zoneUtil = {}
 
-function zoneUtil.ImperialAgent_PotHatch(player, npc, posX, posZ, posR)    
+function zoneUtil.ImperialAgent_PotHatch(player, npc, posX, posZ, posR)
     local instance = npc:getInstance()
-    
+
     npc:setAnimation(8)
- 
+
     if npc:getID() == instance:getProgress() then
         local BRUJEEL = instance:getEntity(bit.band(ID.npc.BRUJEEL, 0xFFF), dsp.objType.NPC)
         local chars = instance:getChars()
-        
+
         instance:setProgress(0)
         for _,v in pairs(chars) do
             npc:timer(2000, function(npc) BRUJEEL:setPos(posX, -1, posZ, posR)
@@ -36,3 +35,5 @@ function zoneUtil.ImperialAgent_PotHatch(player, npc, posX, posZ, posR)
         end
     end
 end
+
+return zoneUtil

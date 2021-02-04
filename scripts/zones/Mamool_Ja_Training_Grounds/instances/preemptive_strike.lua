@@ -6,7 +6,7 @@
 local ID = require("scripts/zones/Mamool_Ja_Training_Grounds/IDs")
 require("scripts/globals/instance")
 require("scripts/globals/missions")
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 require("scripts/globals/zone")
 -----------------------------------
 

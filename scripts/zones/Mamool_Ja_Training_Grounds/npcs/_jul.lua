@@ -4,8 +4,8 @@
 -- !pos 183 0 -581
 -----------------------------------
 local ID = require("scripts/zones/Mamool_Ja_Training_Grounds/IDs")
+local zoneUtil = require("scripts/zones/Mamool_Ja_Training_Grounds/globals/zoneUtil")
 require("scripts/globals/status")
-require("scripts/zones/Mamool_Ja_Training_Grounds/globals/zoneUtil")
 -----------------------------------
 
 function onTrade(player,npc,trade)
