@@ -21,7 +21,7 @@ zone_object.onInstanceZoneIn = function(player, instance)
     end
 
     if player:getInstance() ~= nil then
-        player:setVar("assaultEntered", 4)
+        player:setCharVar("assaultEntered", 4)
     end
 
     return cs
