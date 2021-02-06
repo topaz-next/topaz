@@ -1,16 +1,20 @@
 -----------------------------------
 -- Area: Ilrusi Atoll (Extermination)
---  MOB: Undead Toad
+--  Mob: Undead Toad
 -----------------------------------
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 -----------------------------------
-function onMobSpawn(mob)
+local entity = {}
+
+entity.onMobSpawn = function(mob)
     assaultUtil.adjustMobLevel(mob, mob:getID())
 end
 
-function onMobDeath(mob, player, isKiller, firstCall)
+entity.onMobDeath = function(mob, player, isKiller, firstCall)
     if firstCall then
         local instance = mob:getInstance()
         instance:setProgress(instance:getProgress() + 1)
     end
 end
+
+return entity

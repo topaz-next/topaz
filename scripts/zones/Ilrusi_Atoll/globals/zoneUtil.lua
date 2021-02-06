@@ -1,10 +1,11 @@
 -----------------------------------
--- Zone Globals use
+-- Zone Global
 -----------------------------------
 local ID = require("scripts/zones/Ilrusi_Atoll/IDs")
 -----------------------------------
+local zoneUtil = {}
 
-function exterminationRandomSpawn(mob, ID)
+zoneUtil.exterminationRandomSpawn = function(mob, ID)
     local spawnPoints =
         {
             [1]  = {189.410,  -3.663, 102.417, 145},
@@ -15,7 +16,7 @@ function exterminationRandomSpawn(mob, ID)
 
     local sPoint = math.random(1, #spawnPoints)
     local instance = mob:getInstance()
-    local NM = instance:getEntity(bit.band(ID, 0xFFF), dsp.objType.MOB)
+    local NM = instance:getEntity(bit.band(ID, 0xFFF), tpz.objType.MOB)
     local spawnNM = math.random(100)
 
     if spawnNM <= 20 and NM:getLocalVar("NMSpawned") == 0 then
@@ -25,3 +26,5 @@ function exterminationRandomSpawn(mob, ID)
         instance:setProgress(instance:getProgress() - 1)
     end
 end
+
+return zoneUtil

@@ -1,19 +1,21 @@
 -----------------------------------
 -- Assault: Golden Salvage
--- Rumor has it that the golden figurehead from the Black Coffin, the ship of Luzaf the pirate, can be found somewhere within Ilrusi Atoll.
+-- Rumor has it that the golden figurehead from the Black Coffin,
+-- the ship of Luzaf the pirate, can be found somewhere within Ilrusi Atoll.
 -----------------------------------
 local ID = require("scripts/zones/Ilrusi_Atoll/IDs")
 require("scripts/globals/instance")
 require("scripts/globals/missions")
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 require("scripts/globals/zone")
 -----------------------------------
+local instance_object = {}
 
-function afterInstanceRegister(player)
+instance_object.afterInstanceRegister = function(player)
     assaultUtil.afterInstanceRegister(player, 5347, ID.text, ID.mob)
 end
 
-function onInstanceCreated(instance)
+instance_object.onInstanceCreated = function(instance)
     instance:setProgress(math.random(ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET, ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET + 11))
     local spawnPoints =
         {
@@ -37,36 +39,38 @@ function onInstanceCreated(instance)
 
     for i = ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET, ID.mob[GOLDEN_SALVAGE].ILRUSI_CURSED_CHEST_OFFSET + 7 do
         local sPoint = math.random(1,#spawnPoints) -- Randoms the 1st 7 points for chests, last 4 are static on boats
-        instance:getEntity(bit.band(i, 0xFFF), dsp.objType.MOB):setSpawn(spawnPoints[sPoint])
+        instance:getEntity(bit.band(i, 0xFFF), tpz.objType.MOB):setSpawn(spawnPoints[sPoint])
         SpawnMob(i, instance)
         table.remove(spawnPoints,sPoint)
     end
 
-    instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), dsp.objType.NPC):setPos(380.000,-7.894,64.999,0)
-    instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), dsp.objType.NPC):setPos(380.000,-7.756,61.999,0)
+    instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(380.000,-7.894,64.999,0)
+    instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(380.000,-7.756,61.999,0)
 end
 
-function onInstanceTimeUpdate(instance, elapsed)
+instance_object.onInstanceTimeUpdate = function(instance, elapsed)
     updateInstanceTime(instance, elapsed, ID.text)
 end
 
-function onInstanceFailure(instance)
+instance_object.onInstanceFailure = function(instance)
     assaultUtil.onInstanceFailure(instance, 102, ID.text)
 end
 
-function onInstanceProgressUpdate(instance, progress)
+instance_object.onInstanceProgressUpdate = function(instance, progress)
     if progress == 1 then
         instance:complete()
     end
 end
 
-function onInstanceComplete(instance)
+instance_object.onInstanceComplete = function(instance)
     assaultUtil.onInstanceComplete(player, instance, 8, 7, ID.text, ID.npc)
 end
 
-function onEventUpdate(player, csid, option)
+instance_object.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player, csid, option)
-    assaultUtil.instanceOnEventFinish(player, 102, dsp.zone.ARRAPAGO_REEF)
+instance_object.onEventFinish = function(player, csid, option)
+    assaultUtil.instanceOnEventFinish(player, 102, tpz.zone.ARRAPAGO_REEF)
 end
+
+return instance_object

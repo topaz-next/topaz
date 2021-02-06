@@ -1,33 +1,34 @@
 -----------------------------------
 -- Area: Illrusi Atoll
---  MOB: Cursed Chest
+--  Mob: Cursed Chest
 -----------------------------------
 local ID = require("scripts/zones/Ilrusi_Atoll/IDs")
 require("scripts/globals/status")
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 -----------------------------------
+local entity = {}
 
-function onMobSpawn(mob)
+entity.onMobSpawn = function(mob)
     local instance = mob:getInstance()
     local figureheadChest = instance:getProgress()
-    
+
     if mob:getID() ~= figureheadChest then
-        mob:setMobMod(dsp.mobMod.SOUND_RANGE, 2)
+        mob:setMobMod(tpz.mobMod.SOUND_RANGE, 2)
     else
-        mob:setMobMod(dsp.mobMod.SOUND_RANGE, 0)
-        mob:setMobMod(dsp.mobMod.NO_AGGRO, 1)
+        mob:setMobMod(tpz.mobMod.SOUND_RANGE, 0)
+        mob:setMobMod(tpz.mobMod.NO_AGGRO, 1)
     end
     mob:setLocalVar("despawn", 0)
-    mob:setStatus(dsp.status.NORMAL)
+    mob:setStatus(tpz.status.NORMAL)
     mob:hideName(false)
 end
 
-function onTrigger(player, mob)
+entity.onTrigger = function(player, mob)
     if player:checkDistance(mob) >= 2 then
         player:messageSpecial(ID.text.CHEST_GET_CLOSER)
         return
     end
-    
+
     if mob:getLocalVar("Complete") == 0 then
         player:messageSpecial(ID.text.CHEST)
         local mobID = mob:getID()
@@ -41,7 +42,7 @@ function onTrigger(player, mob)
             instance:setProgress(1)
             mob:timer(1000, function(mob) mob:entityAnimationPacket("open") end)
             mob:timer(15000, function(mob) mob:entityAnimationPacket("kesu") end)
-            mob:timer(16000, function(mob) mob:setStatus(dsp.status.DISAPPEAR) end)
+            mob:timer(16000, function(mob) mob:setStatus(tpz.status.DISAPPEAR) end)
         else
             mob:setStatus(1)
             mob:updateClaim(player)
@@ -49,29 +50,31 @@ function onTrigger(player, mob)
     end
 end
 
-function onMobEngaged(mob, target)
+entity.onMobEngaged = function(mob, target)
     mob:setStatus(1)
     mob:hideName(false)
     mob:setModelId(258)
     mob:AnimationSub(0)
 end
 
-function onMobFight(mob, target)
+entity.onMobFight = function(mob, target)
     if mob:AnimationSub() ~= 1 then
         mob:AnimationSub(1)
     end
+
     if mob:checkDistance(target) < 21.6 then
-        mob:setMobMod(dsp.mobMod.DRAW_IN, 3)
+        mob:setMobMod(tpz.mobMod.DRAW_IN, 3)
         mob:setLocalVar("despawn", 0)
     else
-        mob:setMobMod(dsp.mobMod.DRAW_IN, 0)
+        mob:setMobMod(tpz.mobMod.DRAW_IN, 0)
         if mob:getLocalVar("despawn") == 0 then
             mob:setLocalVar("despawn", os.time() + 30)
         end
     end
+
     if mob:getLocalVar("despawn") ~= 0 then
         if mob:getLocalVar("despawn") < os.time() then
-            mob:setStatus(dsp.status.NORMAL)
+            mob:setStatus(tpz.status.NORMAL)
             mob:disengage()
             mob:AnimationSub(0)
             mob:setHP(mob:getMaxHP())
@@ -81,8 +84,10 @@ function onMobFight(mob, target)
     end
 end
 
-function onMobDespawn(mob)
+entity.onMobDespawn = function(mob)
 end
 
-function onMobDeath(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, isKiller)
 end
+
+return entity

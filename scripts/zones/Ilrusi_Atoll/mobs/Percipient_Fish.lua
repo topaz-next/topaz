@@ -1,13 +1,16 @@
 -----------------------------------
 -- Area: Ilrusi Atoll
---  MOB: Imp
+--  Mob: Imp
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+local entity = {}
 
-function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.SOUND_RANGE, 4)
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 4)
 end
 
-function onMobDeath(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, isKiller)
 end
+
+return entity
