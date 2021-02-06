@@ -7,7 +7,7 @@ require("scripts/globals/missions")
 
 zones = zones or {}
 
-zones[dsp.zone.LEBROS_CAVERN] =
+zones[tpz.zone.LEBROS_CAVERN] =
 {
     text =
     {
@@ -89,4 +89,4 @@ zones[dsp.zone.LEBROS_CAVERN] =
     }
 }
 
-return zones[dsp.zone.LEBROS_CAVERN]
+return zones[tpz.zone.LEBROS_CAVERN]

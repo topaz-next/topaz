@@ -15,8 +15,8 @@ function afterInstanceRegister(player)
 end
 
 function onInstanceCreated(instance)
-    instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), dsp.objType.NPC):setPos(-489.999,-9.695,-328.999,0)
-    instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), dsp.objType.NPC):setPos(-490.000,-9.985,-326.000,0)
+    instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(-489.999,-9.695,-328.999,0)
+    instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(-490.000,-9.985,-326.000,0)
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
@@ -41,5 +41,5 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    assaultUtil.instanceOnEventFinish(player, 102, dsp.zone.CAEDARVA_MIRE)
+    assaultUtil.instanceOnEventFinish(player, 102, tpz.zone.CAEDARVA_MIRE)
 end

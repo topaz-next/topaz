@@ -1,17 +1,20 @@
 -----------------------------------
 -- Area: Lebros Cavern
---  MOB: Crimson Eruca
+--  Mob: Crimson Eruca
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+local entity = {}
 
-function onMobSpawn(mob)
-	mob:addResist({ dsp.resist.ENFEEBLING_LIGHTSLEEP, 25, 0 })
-    mob:addResist({ dsp.resist.ENFEEBLING_DARKSLEEP, 25, 0 })
-    mob:addResist({ dsp.resist.ENFEEBLING_GRAVITY, 25, 0 })
-    mob:addResist({ dsp.resist.ENFEEBLING_BIND, 25, 0 })
+entity.onMobSpawn = function(mob)
+    -- TODO: Handle resists
+	-- mob:addResist({ tpz.resist.ENFEEBLING_LIGHTSLEEP, 25, 0 })
+    -- mob:addResist({ tpz.resist.ENFEEBLING_DARKSLEEP, 25, 0 })
+    -- mob:addResist({ tpz.resist.ENFEEBLING_GRAVITY, 25, 0 })
+    -- mob:addResist({ tpz.resist.ENFEEBLING_BIND, 25, 0 })
 end
 
-
-function onMobDeath(mob, player, isKiller, firstCall)
+entity.onMobDeath(mob, player, isKiller, firstCall)
 end
+
+return entity

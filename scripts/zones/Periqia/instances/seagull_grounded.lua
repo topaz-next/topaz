@@ -16,19 +16,19 @@ function afterInstanceRegister(player)
 end
 
 function onInstanceCreated(instance)
-    instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), dsp.objType.NPC):setPos(-495.000,-9.695,-72.000,0)
-    instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), dsp.objType.NPC):setPos(-490.000,-9.900,-72.000,0)
+    instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(-495.000,-9.695,-72.000,0)
+    instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(-490.000,-9.900,-72.000,0)
 
-    instance:getEntity(bit.band(ID.npc._1K6, 0xFFF), dsp.objType.NPC):setAnimation(8)
-    instance:getEntity(bit.band(ID.npc._1KX, 0xFFF), dsp.objType.NPC):setAnimation(8)
-    instance:getEntity(bit.band(ID.npc._1KZ, 0xFFF), dsp.objType.NPC):setAnimation(8)
-    instance:getEntity(bit.band(ID.npc._JK1, 0xFFF), dsp.objType.NPC):setAnimation(8)
-    instance:getEntity(bit.band(ID.npc._JK3, 0xFFF), dsp.objType.NPC):setAnimation(8)
+    instance:getEntity(bit.band(ID.npc._1K6, 0xFFF), tpz.objType.NPC):setAnimation(8)
+    instance:getEntity(bit.band(ID.npc._1KX, 0xFFF), tpz.objType.NPC):setAnimation(8)
+    instance:getEntity(bit.band(ID.npc._1KZ, 0xFFF), tpz.objType.NPC):setAnimation(8)
+    instance:getEntity(bit.band(ID.npc._JK1, 0xFFF), tpz.objType.NPC):setAnimation(8)
+    instance:getEntity(bit.band(ID.npc._JK3, 0xFFF), tpz.objType.NPC):setAnimation(8)
 
 end
 
 function onInstanceTimeUpdate(instance, elapsed)
-    local mob = instance:getEntity(bit.band(ID.mob[SEAGULL_GROUNDED].MOBS_START.EXCALIAC, 0xFFF), dsp.objType.MOB)
+    local mob = instance:getEntity(bit.band(ID.mob[SEAGULL_GROUNDED].MOBS_START.EXCALIAC, 0xFFF), tpz.objType.MOB)
     if mob ~= nil then
         onTrack(mob)
     end
@@ -55,5 +55,5 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    assaultUtil.instanceOnEventFinish(player, 102, dsp.zone.CAEDARVA_MIRE)
+    assaultUtil.instanceOnEventFinish(player, 102, tpz.zone.CAEDARVA_MIRE)
 end

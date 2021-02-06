@@ -9,7 +9,7 @@ require("scripts/globals/utils/assault")
 
 function onMobSpawn(mob)
     assaultUtil.adjustMobLevel(mob, mob:getID())
-    mob:addImmunity(dsp.immunity.SLEEP)
+    mob:addImmunity(tpz.immunity.SLEEP)
 end
 
 function onMobDeath(mob, player, isKiller, firstCall)

@@ -16,7 +16,7 @@ entity.onTrigger = function(player, npc)
             {
                 {itemid = 2286, droprate = 600}, -- ??? box
                 {itemid = 2278, droprate = 300}, -- ??? ring
-                {itemid =    0, droprate = 100},
+                {itemid =    0, droprate = 100}, -- Nothing
             },
         },
         [PREEMPTIVE_STRIKE] =
@@ -24,7 +24,7 @@ entity.onTrigger = function(player, npc)
             {
                 {itemid = 2286, droprate = 600}, -- ??? Box
                 {itemid = 2282, droprate = 300}, -- ??? Necklace
-                {itemid =    0, droprate = 100},
+                {itemid =    0, droprate = 100}, -- Nothing
             },
         },
     }
@@ -34,30 +34,30 @@ entity.onTrigger = function(player, npc)
         {
             {
                 {itemid = 4118, droprate = 900}, -- Hi-Potion 2
-                {itemid =    0, droprate = 100},
+                {itemid =    0, droprate = 100}, -- Nothing
             },
             {
                 {itemid = 13688, droprate = 100}, -- Hi-Potion Tank
-                {itemid =     0, droprate = 900},
+                {itemid =     0, droprate = 900}, -- Nothing
             },
             {
                 {itemid = 4172, droprate = 530}, -- Reraiser
-                {itemid =    0, droprate = 470},
+                {itemid =    0, droprate = 470}, -- Nothing
             },
         },
         [PREEMPTIVE_STRIKE] =
         {
             {
                 {itemid = 13688, droprate = 100}, -- Hi-Potion Tank
-                {itemid =     0, droprate = 900},
+                {itemid =     0, droprate = 900}, -- Nothing
             },
             {
                 {itemid = 4172, droprate = 300}, -- Reraiser
-                {itemid =    0, droprate = 700},
+                {itemid =    0, droprate = 700}, -- Nothing
             },
             {
                 {itemid = 4173, droprate = 500}, -- Hi-Reraiser
-                {itemid =    0, droprate = 500},
+                {itemid =    0, droprate = 500}, -- Nothing
             },
         },
     }

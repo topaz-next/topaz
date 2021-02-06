@@ -3,29 +3,29 @@
 -- Ancient Lockbox
 -----------------------------------
 local ID = require("scripts/zones/Lebros_Cavern/IDs")
-require("scripts/globals/items")
 require("scripts/globals/missions")
 require("scripts/globals/status")
 require("scripts/globals/appraisal")
 -----------------------------------
+local entity = {}
 
-function onTrigger(player,npc)
+entity.onTrigger = function(player, npc)
     local qItem =
     {
         [EXCAVATION_DUTY] =
         {
             {
-                {itemid = dsp.items.APPRAISAL_BOX, droprate = dsp.frequency.SUPER_COMMON},
-                {itemid = dsp.items.APPRAISAL_EARRING, droprate = dsp.frequency.COMMON},
-                {itemid = 0, droprate = dsp.frequency.VERY_RARE},
+                {itemid = 2286, droprate = tpz.frequency.SUPER_COMMON}, -- ??? Box
+                {itemid = 2277, droprate = tpz.frequency.COMMON},       -- ??? Earring
+                {itemid = 0,    droprate = tpz.frequency.VERY_RARE},    -- Nothing
             },
         },
         [LEBROS_SUPPLIES] =
         {
             {
-                {itemid = dsp.items.APPRAISAL_BOX, droprate = dsp.frequency.SUPER_COMMON},
-                {itemid = dsp.items.APPRAISAL_CAPE, droprate = dsp.frequency.COMMON},
-                {itemid = 0, droprate = dsp.frequency.VERY_RARE},
+                {itemid = 2286, droprate = tpz.frequency.SUPER_COMMON}, -- ??? Box
+                {itemid = 2279, droprate = tpz.frequency.COMMON},       -- ??? Cape
+                {itemid = 0,    droprate = tpz.frequency.VERY_RARE},    -- Nothing
             },
         },
     }
@@ -34,35 +34,35 @@ function onTrigger(player,npc)
         [EXCAVATION_DUTY] =
         {
             {
-                {itemid = dsp.items.REMEDY, droprate = dsp.frequency.SUPER_COMMON},
-                {itemid = 0, droprate = dsp.frequency.RARE},
+                {itemid = 4155, droprate = tpz.frequency.SUPER_COMMON}, -- Remedy
+                {itemid = 0,    droprate = tpz.frequency.RARE},         -- Nothing
             },
             {
-                {itemid = dsp.items.REMEDY, droprate = dsp.frequency.RARE},
-                {itemid = 0, droprate = dsp.frequency.SUPER_COMMON},
+                {itemid = 4155, droprate = tpz.frequency.RARE},      -- Remedy
+                {itemid = 0, droprate = tpz.frequency.SUPER_COMMON}, -- Nothing
             },
             {
-                {itemid = 4119, droprate = dsp.frequency.COMMON},
-                {itemid = 0, droprate = dsp.frequency.COMMON},
+                {itemid = 4119, droprate = tpz.frequency.COMMON}, -- Hi-Potion +3
+                {itemid = 0,    droprate = tpz.frequency.COMMON}, -- Nothing
             },
             {
-                {itemid = 4119, droprate = 200},
-                {itemid = 0, droprate = dsp.frequency.SUPER_COMMON},
+                {itemid = 4119, droprate = 200},                        -- Hi-Potion +3
+                {itemid = 0,    droprate = tpz.frequency.SUPER_COMMON}, -- Nothing
             },
         },
         [LEBROS_SUPPLIES] =
         {
             {
-                {itemid = dsp.items.REMEDY, droprate = dsp.frequency.SUPER_COMMON},
-                {itemid = 0, droprate = dsp.frequency.RARE},
+                {itemid = 4155, droprate = tpz.frequency.SUPER_COMMON}, -- Remedy
+                {itemid = 0,    droprate = tpz.frequency.RARE},         -- Nothing
             },
             {
-                {itemid = dsp.items.RERAISER, droprate = dsp.frequency.RARE},
-                {itemid = 0, droprate = dsp.frequency.SUPER_COMMON},
+                {itemid = 4172, droprate = tpz.frequency.RARE},         -- Reraiser
+                {itemid = 0,    droprate = tpz.frequency.SUPER_COMMON}, -- Nothing
             },
             {
-                {itemid = dsp.items.HI_POTION_TANK, droprate = dsp.frequency.RARE},
-                {itemid = 0, droprate = dsp.frequency.SUPER_COMMON},
+                {itemid = 13688, droprate = tpz.frequency.RARE},         -- Hi-Potion Tank
+                {itemid = 0,     droprate = tpz.frequency.SUPER_COMMON}, -- Nothing
             },
         },
     }
@@ -70,8 +70,10 @@ function onTrigger(player,npc)
     appraisalUtil.assaultChestTrigger(player, npc, qItem[area], regItem[area], ID.text)
 end
 
-function onEventUpdate(player,csid,option)
+entity.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+entity.onEventFinish = function(player, csid, option)
 end
+
+return entity

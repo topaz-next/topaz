@@ -31,9 +31,9 @@ function onEventFinish(player, csid, option)
     elseif csid == 102 then
         local instance = player:getInstance()
         local chars = instance:getChars()
-        
+
         for i,v in pairs(chars) do
-            v:setPos(0,0,0,0,dsp.zone.CAEDARVA_MIRE)
+            v:setPos(0,0,0,0,tpz.zone.CAEDARVA_MIRE)
         end
     end
 end

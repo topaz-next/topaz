@@ -6,7 +6,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:addMod(dsp.mod.FASTCAST, 50)
+    mob:addMod(tpz.mod.FASTCAST, 50)
 end
 
 function onMobDeath(mob, player, isKiller, firstCall)

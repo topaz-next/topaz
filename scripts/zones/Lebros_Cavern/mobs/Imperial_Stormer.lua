@@ -1,42 +1,42 @@
 -----------------------------------
 -- Area: Lebros Cavern
---  MOB: Imperial Stormer
+--  Mob: Imperial Stormer
 -----------------------------------
 local ID = require("scripts/zones/Lebros_Cavern/IDs")
 require("scripts/globals/items")
 require("scripts/globals/status")
 -----------------------------------
+local entity = {}
 
 local assaultFood =
 {
-    {item = dsp.items.SERVING_OF_BISON_STEAK, point = 5},
-    {item = dsp.items.COEURL_SUB, point = 4},
-    {item = dsp.items.STRIP_OF_BISON_JERKY, point = 3},
-    {item = dsp.items.BOWL_OF_PEA_SOUP, point = 2},
-    {item = dsp.items.LOAF_OF_WHITE_BREAD, point = 1},
+    [1] = 5142, -- Serving of Bison Steak
+    [2] = 5166, -- Coeurl Sub
+    [3] = 5207, -- Strip of Bison Jerky
+    [4] = 4416, -- Bowl of Pea Soup
+    [5] = 4356, -- Loaf of White Bread
 }
 
-function foodPoints(player, mob)
-
+local foodPoints = function(player, mob)
     for _, v in pairs(assaultFood) do
-        if player:hasItem(v.item, dsp.inventoryLocation.TEMPITEMS) then
+        if player:hasItem(v.item, tpz.inventoryLocation.TEMPITEMS) then
             mob:setLocalVar("foodEaten", mob:getLocalVar("foodEaten") + v.point)
             player:setLocalVar("foodGiven", 0)
-            player:delItem(v.item, 1, dsp.inventoryLocation.TEMPITEMS)
+            player:delItem(v.item, 1, tpz.inventoryLocation.TEMPITEMS)
             return v.point
         end
     end
     return 0
 end
 
-function onMobSpawn(mob)
-	mob:setStatus(dsp.status.NPC)
+entity.onMobSpawn = function(mob)
+	mob:setStatus(tpz.status.NPC)
 end
 
-function onTrigger(player, mob)
+entity.onTrigger = function(player, mob)
 	local instance = mob:getInstance()
 	local points = foodPoints(player, mob)
-	local MOB = instance:getEntity(bit.band(mob:getID(), 0xFFF), dsp.objType.MOB)
+	local MOB = instance:getEntity(bit.band(mob:getID(), 0xFFF), tpz.objType.MOB)
 
 
 	if points > 0 then
@@ -58,5 +58,7 @@ function onTrigger(player, mob)
 	end
 end
 
-function onMobDeath(mob, player, isKiller, firstCall)
+entity.onMobDeath = function(mob, player, isKiller, firstCall)
 end
+
+return entity

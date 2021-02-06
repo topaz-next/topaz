@@ -6,7 +6,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:addImmunity(dsp.immunity.DARKSLEEP)
+    mob:addImmunity(tpz.immunity.DARKSLEEP)
 end
 
 function onMobDeath(mob, player, isKiller)

@@ -6,7 +6,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobSpawn(mob)
-    mob:setMod(dsp.mod.SLEEPEVA_DARK, 9999)
+    mob:setMod(tpz.mod.SLEEPEVA_DARK, 9999)
 end
 
 function onMobDeath(mob, player, isKiller, firstCall)

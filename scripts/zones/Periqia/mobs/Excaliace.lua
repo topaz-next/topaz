@@ -254,7 +254,7 @@ local path =
 }
 
 function onMobSpawn(mob)
-    mob:addMobMod(dsp.mobMod.NO_ROAM, 1)
+    mob:addMobMod(tpz.mobMod.NO_ROAM, 1)
     mob:setLocalVar("topRoomsOption", math.random(2,3))
     mob:setLocalVar("middleRoomsOption", math.random(4,5))
     mob:setLocalVar("bottomRoomsOption", math.random(6,7))
@@ -299,7 +299,7 @@ function onTrack(mob)
     local rangeClose = false
     local rangeStop = false
     local rangeFollow = false
-    
+
     if pathProgressMask > 0 and missionActive == 1 then
 -- Check for nearby mobs
         for _, enemys in pairs(mobs) do
@@ -349,7 +349,7 @@ function onTrack(mob)
             if mob:checkDistance(players) < 10 and players:isFacing(mob) then -- check if at least 1 player is tailing the NPC
                 rangeFollow = true
             end
-            
+
             if stopTimer + 5 <= os.time() then
                 mob:setLocalVar("stopTimer", os.time())
                 if rangeStop then

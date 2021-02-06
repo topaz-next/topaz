@@ -2,14 +2,15 @@
 -- Area: Lebros Cavern
 -----------------------------------
 local ID = require("scripts/zones/Lebros_Cavern/IDs")
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 require("scripts/globals/zone")
 -----------------------------------
+local entity = {}
 
-function onTrade(player, npc, trade)
+entity.onTrade = function(player, npc, trade)
 end
 
-function onTrigger(player, npc)
+entity.onTrigger = function(player, npc)
     local instance = npc:getInstance()
 
     if instance:completed() then
@@ -19,18 +20,20 @@ function onTrigger(player, npc)
     return 1
 end
 
-function onEventUpdate(player, csid, option)
+entity.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player, csid, option)
+entity.onEventFinish = function(player, csid, option)
     if csid == 100 and option == 1 then
         assaultUtil.runeReleaseFinish(player, LEBROS_ASSAULT_POINT, ID.text)
     elseif csid == 102 then
         local instance = player:getInstance()
         local chars = instance:getChars()
-        
-        for _,v in pairs(chars) do
-            v:setPos(0,0,0,0,dsp.zone.MOUNT_ZHAYOLM)
+
+        for _, v in pairs(chars) do
+            v:setPos(0, 0, 0, 0, tpz.zone.MOUNT_ZHAYOLM)
         end
     end
 end
+
+return entity

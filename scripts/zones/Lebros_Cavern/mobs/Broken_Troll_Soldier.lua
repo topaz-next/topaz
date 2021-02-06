@@ -1,26 +1,29 @@
 -----------------------------------
 -- Area: Lebros Cavern (Troll Fugitives)
---  MOB: Troll Fugitive
+--  Mob: Troll Fugitive
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
 require("scripts/globals/status")
 -----------------------------------
+local entity = {}
 
-function onMobInitialize(mob)
-    mob:addStatusEffect(dsp.effect.NO_REST,1,0,0);
+entity.onMobInitialize = function(mob)
+    mob:addStatusEffect(tpz.effect.NO_REST, 1, 0, 0)
 end
 
-function onMobSpawn(mob)
+entity.onMobSpawn = function(mob)
     local MaxHP = mob:getHP()
-    local bonus = math.random(2,6)
-    
-    mob:setHP(MaxHP / (8/(bonus)))
+    local bonus = math.random(2, 6)
+
+    mob:setHP(MaxHP / (8 / bonus))
 end
 
-function onMobDeath(mob, player, isKiller, firstCall)
+entity.onMobDeath = function(mob, player, isKiller, firstCall)
     local instance = mob:getInstance()
-    
+
     if firstCall then
         instance:setProgress(instance:getProgress() + 1)
     end
 end
+
+return entity

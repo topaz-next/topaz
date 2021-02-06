@@ -13,13 +13,13 @@ function zoneUtil.ImperialAgent_PotHatch(player, npc, posX, posZ, posR)
     npc:setAnimation(8)
 
     if npc:getID() == instance:getProgress() then
-        local BRUJEEL = instance:getEntity(bit.band(ID.npc.BRUJEEL, 0xFFF), dsp.objType.NPC)
+        local BRUJEEL = instance:getEntity(bit.band(ID.npc.BRUJEEL, 0xFFF), tpz.objType.NPC)
         local chars = instance:getChars()
 
         instance:setProgress(0)
         for _,v in pairs(chars) do
             npc:timer(2000, function(npc) BRUJEEL:setPos(posX, -1, posZ, posR)
-            BRUJEEL:setStatus(dsp.status.NORMAL) BRUJEEL:entityAnimationPacket("deru") end)
+            BRUJEEL:setStatus(tpz.status.NORMAL) BRUJEEL:entityAnimationPacket("deru") end)
             npc:timer(4000, function(npc) BRUJEEL:setAnimation(0) end)
             player:timer(7000, function(player) v:showText(BRUJEEL, ID.text.BRUJEEL_TEXT) end)
             player:timer(10000, function(player) v:showText(BRUJEEL, ID.text.BRUJEEL_TEXT + 1) end)
@@ -30,7 +30,7 @@ function zoneUtil.ImperialAgent_PotHatch(player, npc, posX, posZ, posR)
             npc:timer(20000, function(npc) BRUJEEL:entityAnimationPacket("cabk") end)
             npc:timer(22000, function(npc) BRUJEEL:entityAnimationPacket("shbk") end)
             npc:timer(23000, function(npc) BRUJEEL:entityAnimationPacket("kesu") end)
-            npc:timer(24500, function(npc) BRUJEEL:setStatus(dsp.status.DISAPPEAR) end)
+            npc:timer(24500, function(npc) BRUJEEL:setStatus(tpz.status.DISAPPEAR) end)
             npc:timer(26000, function(npc) instance:complete() end)
         end
     end
