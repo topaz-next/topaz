@@ -6,8 +6,9 @@ local ID = require("scripts/zones/Periqia/IDs")
 require("scripts/globals/missions")
 require("scripts/globals/appraisal")
 -----------------------------------
+local entity = {}
 
-function onTrigger(player,npc)
+entity.onTrigger = function(player, npc)
     local qItem =
     {
         [SEAGULL_GROUNDED] =
@@ -17,17 +18,17 @@ function onTrigger(player,npc)
                 {itemid = 2190, droprate = 300}, -- ??? sword
                 {itemid = 2192, droprate = 300}, -- ??? polearm
                 {itemid = 2195, droprate = 100}, -- ??? gloves
-                {itemid = 0, droprate = 100}, -- Nothing
+                {itemid = 0,    droprate = 100}, -- Nothing
             },
         },
         [REQUIEM] =
         {
             {
                 {itemid = 2286, droprate = 400}, -- ??? box
-                {itemid = 2195, droprate = 70}, -- ??? Gloves
+                {itemid = 2195, droprate = 70},  -- ??? Gloves
                 {itemid = 2192, droprate = 330}, -- ??? Polearm
                 {itemid = 2193, droprate = 100}, -- ??? Axe
-                {itemid = 0, droprate = 100}, -- Nothing
+                {itemid = 0,    droprate = 100}, -- Nothing
             },
         },
     }
@@ -37,31 +38,31 @@ function onTrigger(player,npc)
         {
             {
                 {itemid = 4173, droprate = 700}, -- Hi-Reraiser
-                {itemid = 0, droprate = 300}, -- Nothing
+                {itemid = 0,    droprate = 300}, -- Nothing
             },
             {
                 {itemid = 13688, droprate = 100}, -- Hi-Potion Tank
                 {itemid = 13689, droprate = 100}, -- Hi-Ether Tank
-                {itemid = 0, droprate = 800}, -- Nothing
+                {itemid = 0,     droprate = 800}, -- Nothing
             },
             {
                 {itemid = 4119, droprate = 530}, -- Hi-Potion 3
-                {itemid = 0, droprate = 470}, -- Nothing
+                {itemid = 0,    droprate = 470}, -- Nothing
             },
         },
         [REQUIEM] =
         {
             {
                 {itemid = 4119, droprate = 500}, -- Hi Potion 3
-                {itemid = 0, droprate = 500}, -- Nothing
+                {itemid = 0,    droprate = 500}, -- Nothing
             },
             {
                 {itemid = 13689, droprate = 100}, -- Hi-Ether Tank
-                {itemid = 0, droprate = 900}, -- Nothing
+                {itemid = 0,     droprate = 900}, -- Nothing
             },
             {
                 {itemid = 4173, droprate = 500}, -- Hi-Reraiser
-                {itemod = 0, droprate = 500}, -- Nothing
+                {itemod = 0,    droprate = 500}, -- Nothing
             },
         },
     }
@@ -70,8 +71,10 @@ function onTrigger(player,npc)
     appraisalUtil.assaultChestTrigger(player, npc, qItem[area], regItem[area], ID.text)
 end
 
-function onEventUpdate(player,csid,option)
+entity.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+entity.onEventFinish = function(player, csid, option)
 end
+
+return entity

@@ -6,16 +6,17 @@
 local ID = require("scripts/zones/Periqia/IDs")
 require("scripts/globals/instance")
 require("scripts/globals/missions")
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 require("scripts/globals/zone")
 require("scripts/zones/Periqia/mobs/Excaliace")
 -----------------------------------
+local instance_object = {}
 
-function afterInstanceRegister(player)
+instance_object.afterInstanceRegister = function(player)
     assaultUtil.afterInstanceRegister(player, 5346, ID.text, ID.mob)
 end
 
-function onInstanceCreated(instance)
+instance_object.onInstanceCreated = function(instance)
     instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(-495.000,-9.695,-72.000,0)
     instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(-490.000,-9.900,-72.000,0)
 
@@ -27,7 +28,7 @@ function onInstanceCreated(instance)
 
 end
 
-function onInstanceTimeUpdate(instance, elapsed)
+instance_object.onInstanceTimeUpdate = function(instance, elapsed)
     local mob = instance:getEntity(bit.band(ID.mob[SEAGULL_GROUNDED].MOBS_START.EXCALIAC, 0xFFF), tpz.objType.MOB)
     if mob ~= nil then
         onTrack(mob)
@@ -35,11 +36,11 @@ function onInstanceTimeUpdate(instance, elapsed)
     updateInstanceTime(instance, elapsed, ID.text)
 end
 
-function onInstanceFailure(instance)
+instance_object.onInstanceFailure = function(instance)
     assaultUtil.onInstanceFailure(instance, 102, ID.text)
 end
 
-function onInstanceProgressUpdate(instance, progress)
+instance_object.onInstanceProgressUpdate = function(instance, progress)
 
     if progress > 0 then
         instance:complete()
@@ -47,13 +48,15 @@ function onInstanceProgressUpdate(instance, progress)
 
 end
 
-function onInstanceComplete(instance)
+instance_object.onInstanceComplete = function(instance)
     assaultUtil.onInstanceComplete(player, instance, 8, 8, ID.text, ID.npc)
 end
 
-function onEventUpdate(player, csid, option)
+instance_object.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player, csid, option)
+instance_object.onEventFinish = function(player, csid, option)
     assaultUtil.instanceOnEventFinish(player, 102, tpz.zone.CAEDARVA_MIRE)
 end
+
+return instance_object

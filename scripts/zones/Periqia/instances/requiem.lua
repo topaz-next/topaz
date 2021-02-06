@@ -6,40 +6,43 @@
 local ID = require("scripts/zones/Periqia/IDs")
 require("scripts/globals/instance")
 require("scripts/globals/missions")
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 require("scripts/globals/zone")
 -----------------------------------
+local instance_object = {}
 
-function afterInstanceRegister(player)
+instance_object.afterInstanceRegister = function(player)
     assaultUtil.afterInstanceRegister(player, 5346, ID.text, ID.mob)
 end
 
-function onInstanceCreated(instance)
+instance_object.onInstanceCreated = function(instance)
     instance:getEntity(bit.band(ID.npc.RUNE_OF_RELEASE, 0xFFF), tpz.objType.NPC):setPos(-489.999,-9.695,-328.999,0)
     instance:getEntity(bit.band(ID.npc.ANCIENT_LOCKBOX, 0xFFF), tpz.objType.NPC):setPos(-490.000,-9.985,-326.000,0)
 end
 
-function onInstanceTimeUpdate(instance, elapsed)
+instance_object.onInstanceTimeUpdate = function(instance, elapsed)
     updateInstanceTime(instance, elapsed, ID.text)
 end
 
-function onInstanceFailure(instance)
+instance_object.onInstanceFailure = function(instance)
     assaultUtil.onInstanceFailure(instance, 102, ID.text)
 end
 
-function onInstanceProgressUpdate(instance, progress)
+instance_object.onInstanceProgressUpdate = function(instance, progress)
     if progress >= 18 then
         instance:complete()
     end
 end
 
-function onInstanceComplete(instance)
+instance_object.onInstanceComplete = function(instance)
     assaultUtil.onInstanceComplete(player, instance, 5, 9, ID.text, ID.npc)
 end
 
-function onEventUpdate(player, csid, option)
+instance_object.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player, csid, option)
+instance_object.onEventFinish = function(player, csid, option)
     assaultUtil.instanceOnEventFinish(player, 102, tpz.zone.CAEDARVA_MIRE)
 end
+
+return instance_object

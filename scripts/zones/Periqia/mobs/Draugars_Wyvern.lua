@@ -1,16 +1,19 @@
 -----------------------------------
 -- Area: Periqia (Requiem)
---  MOB: Draugars Wyvern
+--  Mob: Draugars Wyvern
 -----------------------------------
 mixins = {require("scripts/mixins/pet_instanced")}
 require("scripts/globals/status")
-require("scripts/globals/utils/assault")
+require("scripts/globals/assault")
 -----------------------------------
+local entity = {}
 
-function onMobSpawn(mob)
+entity.onMobSpawn = function(mob)
     assaultUtil.adjustMobLevel(mob, mob:getID())
     mob:addImmunity(tpz.immunity.SLEEP)
 end
 
-function onMobDeath(mob, player, isKiller, firstCall)
+entity.onMobDeath = function(mob, player, isKiller, firstCall)
 end
+
+return entity

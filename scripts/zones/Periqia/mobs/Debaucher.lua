@@ -1,13 +1,16 @@
 -----------------------------------
 -- Area: Periqia (Seagull Grounded)
---  MOB: Debaucher
+--  Mob: Debaucher
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
+local entity = {}
 
-function onMobInitialize(mob)
+entity.onMobInitialize = function(mob)
     mob:addImmunity(tpz.immunity.DARKSLEEP)
 end
 
-function onMobDeath(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, isKiller)
 end
+
+return entity

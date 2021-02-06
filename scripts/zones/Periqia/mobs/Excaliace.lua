@@ -7,6 +7,7 @@ require("scripts/globals/besieged")
 require("scripts/globals/pathfind")
 require("scripts/globals/utils")
 -----------------------------------
+local entity = {}
 
 local path =
 {
@@ -253,7 +254,7 @@ local path =
     },
 }
 
-function onMobSpawn(mob)
+entity.onMobSpawn = function(mob)
     mob:addMobMod(tpz.mobMod.NO_ROAM, 1)
     mob:setLocalVar("topRoomsOption", math.random(2,3))
     mob:setLocalVar("middleRoomsOption", math.random(4,5))
@@ -267,7 +268,7 @@ function onMobSpawn(mob)
     mob:setLocalVar("pathPoint", 1)
 end
 
-function onTrack(mob)
+entity.onTrack = function(mob)
     local instance = mob:getInstance()
     local chars = instance:getChars()
     local mobs = instance:getMobs()
@@ -559,3 +560,5 @@ function onTrack(mob)
         end
     end
 end
+
+return entity
