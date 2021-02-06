@@ -66,7 +66,7 @@ zones[tpz.zone.PERIQIA] =
                 17006623, 17006625, 17006626, 17006627, 17006628, 17006630, 17006631, 17006633, 17006634,
             },
         },
-        [SHADES_OF_VENGEANCE] =
+        [tpz.mission.id.toau.SHADES_OF_VENGEANCE] = -- SHADES_OF_VENGEANCE
         {
             MOBS_START =
             {

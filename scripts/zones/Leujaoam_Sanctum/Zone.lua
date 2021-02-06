@@ -47,3 +47,5 @@ end
 zone_object.onInstanceLoadFailed = function()
     return 79
 end
+
+return zone_object
