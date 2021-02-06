@@ -7,16 +7,19 @@ local ID = require("scripts/zones/Mamool_Ja_Training_Grounds/IDs")
 local zoneUtil = require("scripts/zones/Mamool_Ja_Training_Grounds/globals/zoneUtil")
 require("scripts/globals/status")
 -----------------------------------
+local entity = {}
 
-function onTrade(player,npc,trade)
+entity.onTrade = function(player, npc, trade)
 end
 
-function onTrigger(player,npc)
+entity.onTrigger = function(player, npc)
     zoneUtil.ImperialAgent_PotHatch(player, npc, 184, -583, 185)
 end
 
-function onEventUpdate(player,csid,option)
+entity.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+entity.onEventFinish = function(player, csid, option)
 end
+
+return entity

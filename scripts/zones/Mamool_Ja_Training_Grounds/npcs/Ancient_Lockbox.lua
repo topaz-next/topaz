@@ -6,8 +6,9 @@ local ID = require("scripts/zones/Mamool_Ja_Training_Grounds/IDs")
 require("scripts/globals/missions")
 require("scripts/globals/appraisal")
 -----------------------------------
+local entity = {}
 
-function onTrigger(player,npc)
+entity.onTrigger = function(player, npc)
     local qItem =
     {
         [IMPERIAL_AGENT_RESCUE] =
@@ -64,8 +65,10 @@ function onTrigger(player,npc)
     appraisalUtil.assaultChestTrigger(player, npc, qItem[area], regItem[area], ID.text)
 end
 
-function onEventUpdate(player,csid,option)
+entity.onEventUpdate = function(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+entity.onEventFinish = function(player, csid, option)
 end
+
+return entity
