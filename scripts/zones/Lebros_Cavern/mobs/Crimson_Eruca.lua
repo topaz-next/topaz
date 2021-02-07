@@ -14,7 +14,7 @@ entity.onMobSpawn = function(mob)
     -- mob:addResist({ tpz.resist.ENFEEBLING_BIND, 25, 0 })
 end
 
-entity.onMobDeath(mob, player, isKiller, firstCall)
+entity.onMobDeath = function(mob, player, isKiller)
 end
 
 return entity

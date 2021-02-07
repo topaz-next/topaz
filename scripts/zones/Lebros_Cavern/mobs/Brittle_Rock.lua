@@ -26,7 +26,7 @@ entity.onMobInitialize = function(mob)
     ]]
 end
 
-entity.onMobSpawn(mob)
+entity.onMobSpawn = function(mob)
     mob:setMod(tpz.mod.NO_DROPS, 1)
     mob:addListener("WEAPONSKILL_TAKE", "BRITTLE_ROCK_WEAPONSKILL_TAKE", function(mob, user, wsid)
         if wsid == 1838 then
@@ -35,10 +35,10 @@ entity.onMobSpawn(mob)
     end)
 end
 
-entity.onMobFight(mob, target)
+entity.onMobFight = function(mob, target)
 end
 
-entity.onMobDeath(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, isKiller)
     local instance = mob:getInstance()
     if mob:getID() == ID.mob[EXCAVATION_DUTY].MOBS_START.BRITTLE_ROCK1 then
         instance:getEntity(bit.band(ID.npc._1rx, 0xFFF), tpz.objType.NPC):setAnimation(8)

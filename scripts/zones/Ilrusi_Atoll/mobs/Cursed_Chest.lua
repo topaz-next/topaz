@@ -1,5 +1,5 @@
 -----------------------------------
--- Area: Illrusi Atoll
+-- Area: Ilrusi Atoll
 --  Mob: Cursed Chest
 -----------------------------------
 local ID = require("scripts/zones/Ilrusi_Atoll/IDs")

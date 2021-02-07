@@ -6,10 +6,10 @@ local ID = require("scripts/zones/Lebros_Cavern/IDs")
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn(mob)
+entity.onMobSpawn = function(mob)
 end
 
-entity.onMobDeath(mob, player, firstCall)
+entity.onMobDeath = function(mob, player, firstCall)
     if math.random(0, 100) >= 70 and firstCall then
         player:addTempItem(5331)
         player:messageSpecial(ID.text.TEMP_ITEM, 5331)

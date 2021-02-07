@@ -82,7 +82,7 @@ zone_object.onEventFinish = function(player, csid, option)
         player:startEvent(35)
     elseif (csid == 90) then -- enter instance: the ashu talif
         player:setPos(0, 0, 0, 0, 60)
-    elseif (csid == 108) then -- enter instance: illrusi atoll
+    elseif (csid == 108) then -- enter instance: ilrusi atoll
         player:setPos(0, 0, 0, 0, 55)
     elseif (csid == 237) then
         player:startEvent(240)

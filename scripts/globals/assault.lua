@@ -24,9 +24,9 @@ function assaultUtil.hasOrders(player)
     return false
 end
 
-function assaultUtil.onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4, csid5, csid6, csid7, beginningsKI, ORDERS)
+function assaultUtil.onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4, csid5, csid6, csid7, beginningsKI, orders)
     local toauMission = player:getCurrentMission(TOAU)
-    local beginnings = player:getQuestStatus(AHT_URHGAN,BEGINNINGS)
+    local beginnings = player:getQuestStatus(tpz.quest.log_id.AHT_URHGAN, tpz.quest.id.ahtUrhgan.BEGINNINGS)
 
     -- IMMORTAL SENTRIES
     if toauMission == IMMORTAL_SENTRIES then
@@ -47,8 +47,8 @@ function assaultUtil.onTriggerArmbandNPC(player, npc, csid1, csid2, csid3, csid4
     -- ASSAULT
     elseif toauMission >= PRESIDENT_SALAHEEM then
         local IPpoint = player:getCurrency("imperial_standing")
-        if player:getCharVar("assaultEntered") == 0 and player:hasKeyItem(ORDERS) and not player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
-            player:startEvent(csid5,50,IPpoint)
+        if player:getCharVar("assaultEntered") == 0 and player:hasKeyItem(orders) and not player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
+            player:startEvent(csid5, 50, IPpoint)
         else
             player:startEvent(csid6)
         end
@@ -76,8 +76,8 @@ function assaultUtil.onEventFinishArmbandNPC(player, csid, option, csid1, csid2,
     end
 end
 
-function assaultUtil.onAssaultTrigger(player, npc, CSID, ORDERS, indexID)
-    if player:hasKeyItem(ORDERS) and player:getCharVar("assaultEntered") == 0 then
+function assaultUtil.onAssaultTrigger(player, npc, csid, orders, indexID)
+    if player:hasKeyItem(orders) and player:getCharVar("assaultEntered") == 0 then
         local assaultID = player:getCurrentAssault()
         local level = assaultUtil.missionInfo[assaultID].suggestedLevel
         local armband = 0
@@ -85,21 +85,21 @@ function assaultUtil.onAssaultTrigger(player, npc, CSID, ORDERS, indexID)
         if player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
             armband = 1
         end
-        player:startEvent(CSID, assaultID, -4, 0, level, indexID, armband)
+        player:startEvent(csid, assaultID, -4, 0, level, indexID, armband)
     else
         player:messageText(player, zones[player:getZoneID()].text.NOTHING_HAPPENS)
     end
 end
 
-function assaultUtil.onAssaultUpdate(player, csid, option, target, ORDERS, zoneID)
+function assaultUtil.onAssaultUpdate(player, csid, option, target, orders, zoneID)
     local assaultID = player:getCurrentAssault()
 
     local cap = bit.band(option, 0x03)
-    if (cap == 0) then
+    if cap == 0 then
         cap = 0
-    elseif (cap == 1) then
+    elseif cap == 1 then
         cap = 70
-    elseif (cap == 2) then
+    elseif cap == 2 then
         cap = 60
     else
         cap = 50
@@ -107,7 +107,7 @@ function assaultUtil.onAssaultUpdate(player, csid, option, target, ORDERS, zoneI
 
     player:setCharVar("AssaultCap", cap)
 
-    if player:getGMLevel() == 0 and player:getPartySize() < 3 and not IsTestServer() then
+    if player:getGMLevel() == 0 and player:getPartySize() < 3 then
         player:messageSpecial(zones[player:getZoneID()].text.PARTY_MIN_REQS, 3)
         player:instanceEntry(target,1)
         return
@@ -121,7 +121,7 @@ function assaultUtil.onAssaultUpdate(player, csid, option, target, ORDERS, zoneI
 
     if party ~= nil then
         for _,v in ipairs(party) do
-            if not v:hasKeyItem(ORDERS) or v:getCurrentAssault() ~= assaultID or v:getCharVar("assaultEntered") ~= 0 or v:getMainLvl() < 50 then
+            if not v:hasKeyItem(orders) or v:getCurrentAssault() ~= assaultID or v:getCharVar("assaultEntered") ~= 0 or v:getMainLvl() < 50 then
                 player:messageText(player, zones[player:getZoneID()].text.MEMBER_NO_REQS, false)
                 player:instanceEntry(target,1)
                 return
