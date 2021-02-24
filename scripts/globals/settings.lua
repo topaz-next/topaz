@@ -51,6 +51,10 @@ CAP_CURRENCY_VALOR     = 50000
 -- Magian Trials
 ENABLE_MAGIAN_TRIALS = 1
 
+-- Login Campaign (Set to 0 if you don't want to run a Login Campaign)
+-- Please visit scripts/globals/events/login_campaign.lua for assigning the correct campaign.
+ENABLE_LOGIN_CAMPAIGN = 1
+
 -- TREASURE CASKETS
 -- Retail droprate = 0.1 (10%) with no other effects active
 -- Set to 0 to disable caskets.
