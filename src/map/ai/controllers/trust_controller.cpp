@@ -460,7 +460,7 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
         return false;
     }
 
-    return CController::Cast(targid, spellid);
+    return CMobController::Cast(targid, spellid);
 }
 
 CBattleEntity* CTrustController::GetTopEnmity()
