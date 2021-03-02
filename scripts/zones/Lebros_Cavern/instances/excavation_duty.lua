@@ -3,11 +3,11 @@
 -- The Imperial Army plans to traverse Lebros Cavern as part of their attack on Halvung,
 -- however the tunnels are blocked with rocks. You must remove the obstructions.
 -----------------------------------
-local ID = require("scripts/zones/Lebros_Cavern/IDs")
 require("scripts/globals/instance")
 require("scripts/globals/missions")
 require("scripts/globals/assault")
 require("scripts/globals/zone")
+local ID = require("scripts/zones/Lebros_Cavern/IDs")
 -----------------------------------
 local instance_object = {}
 
@@ -21,7 +21,7 @@ instance_object.onInstanceCreated = function(instance)
 end
 
 instance_object.onInstanceTimeUpdate = function(instance, elapsed)
-    updateInstanceTime(instance, elapsed, ID.text)
+    tpz.instance.updateInstanceTime(instance, elapsed, ID.text)
 end
 
 instance_object.onInstanceFailure = function(instance)

@@ -3,11 +3,11 @@
 -- An Immortal has reported the existence of a large force of undead soldiers.
 -- Destroy these undead minions before they can organize an attack on the Empire.
 -----------------------------------
-local ID = require("scripts/zones/Periqia/IDs")
 require("scripts/globals/instance")
 require("scripts/globals/missions")
 require("scripts/globals/assault")
 require("scripts/globals/zone")
+local ID = require("scripts/zones/Periqia/IDs")
 -----------------------------------
 local instance_object = {}
 
@@ -21,7 +21,7 @@ instance_object.onInstanceCreated = function(instance)
 end
 
 instance_object.onInstanceTimeUpdate = function(instance, elapsed)
-    updateInstanceTime(instance, elapsed, ID.text)
+    tpz.instance.updateInstanceTime(instance, elapsed, ID.text)
 end
 
 instance_object.onInstanceFailure = function(instance)

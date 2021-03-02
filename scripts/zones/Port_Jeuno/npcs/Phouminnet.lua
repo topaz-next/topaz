@@ -1,8 +1,9 @@
 -----------------------------------
--- Area: Bastok Markets
---  NPC: Chat Manual
--- Type: Tutorial NPC
--- !pos -309.989 -10.004 -116.634 235
+-- Area: Port Jeuno
+--  NPC: Prouminnet
+-- !pos -81 8 53 246
+-----------------------------------
+local ID = require("scripts/zones/Port_Jeuno/IDs")
 -----------------------------------
 local entity = {}
 
@@ -10,7 +11,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(6106)
+    player:showText(npc, ID.text.DEPARTURE_NPC)
 end
 
 entity.onEventUpdate = function(player, csid, option)

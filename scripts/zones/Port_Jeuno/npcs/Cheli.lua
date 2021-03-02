@@ -1,8 +1,9 @@
 -----------------------------------
--- Area: Windurst Woods
---  NPC: Chat Manual
--- Type: Tutorial NPC
--- !pos 10.928 1.915 -40.094 241
+-- Area: Port Jeuno
+--  NPC: Cheli
+-- !pos -60 8 51 246
+-----------------------------------
+local ID = require("scripts/zones/Port_Jeuno/IDs")
 -----------------------------------
 local entity = {}
 
@@ -10,7 +11,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(6106)
+    player:showText(npc, ID.text.DEPARTURE_NPC)
 end
 
 entity.onEventUpdate = function(player, csid, option)

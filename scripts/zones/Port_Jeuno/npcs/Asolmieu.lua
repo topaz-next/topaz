@@ -1,8 +1,9 @@
 -----------------------------------
--- Area: Western Adoulin
---  NPC: Chat Manual
--- Type: Tutorial NPC
--- !pos 28.790 0 -143.440 256
+-- Area: Port Jeuno
+--  NPC: Asolmieu
+-- !pos -81 8 53 246
+-----------------------------------
+local ID = require("scripts/zones/Port_Jeuno/IDs")
 -----------------------------------
 local entity = {}
 
@@ -10,7 +11,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(6106)
+    player:showText(npc, ID.text.DEPARTURE_NPC)
 end
 
 entity.onEventUpdate = function(player, csid, option)

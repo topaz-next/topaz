@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -120,10 +120,13 @@
 #include "../packets/guild_menu_buy.h"
 #include "../packets/independant_animation.h"
 #include "../packets/instance_entry.h"
+#include "../packets/inventory_assign.h"
 #include "../packets/inventory_finish.h"
+#include "../packets/inventory_item.h"
 #include "../packets/inventory_modify.h"
 #include "../packets/inventory_size.h"
 #include "../packets/key_items.h"
+#include "../packets/linkshell_equip.h"
 #include "../packets/menu_merit.h"
 #include "../packets/menu_mog.h"
 #include "../packets/menu_raisetractor.h"
@@ -3368,6 +3371,54 @@ bool CLuaBaseEntity::breakLinkshell(std::string const& lsname)
     }
 
     return found;
+}
+
+/************************************************************************
+ *  Function: addLinkpearl()
+ *  Purpose : Adds a linkpearl (pearlsack for GMs) to inventory, optionally equips to slot 2
+ *  Example : player:addLinkpearl("NewPlayers", true)
+ ************************************************************************/
+
+bool CLuaBaseEntity::addLinkpearl(std::string const& lsname, bool equip)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    CCharEntity*    PChar          = (CCharEntity*)m_PBaseEntity;
+    CItemLinkshell* PItemLinkPearl = PChar->m_GMlevel > 0 ? (CItemLinkshell*)itemutils::GetItem(514) : (CItemLinkshell*)itemutils::GetItem(515);
+    LSTYPE          lstype         = PChar->m_GMlevel > 0 ? LSTYPE_PEARLSACK : LSTYPE_LINKPEARL;
+    if (PItemLinkPearl != NULL)
+    {
+        const char* Query = "SELECT linkshellid, color FROM linkshells WHERE name = '%s' AND broken = 0";
+        int32       ret   = Sql_Query(SqlHandle, Query, lsname);
+        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            // build linkpearl
+            int8 EncodedString[16];
+            EncodeStringLinkshell((int8*)lsname.c_str(), EncodedString);
+            ((CItem*)PItemLinkPearl)->setSignature(EncodedString);
+            PItemLinkPearl->SetLSID(Sql_GetUIntData(SqlHandle, 0));
+            PItemLinkPearl->SetLSColor(Sql_GetIntData(SqlHandle, 1));
+            PItemLinkPearl->SetLSType(lstype);
+            if (charutils::AddItem(PChar, LOC_INVENTORY, PItemLinkPearl) != ERROR_SLOTID)
+            {
+                // equip linkpearl to slot 2
+                if (equip)
+                {
+                    linkshell::AddOnlineMember(PChar, PItemLinkPearl, 2);
+                    PItemLinkPearl->setSubType(ITEM_LOCKED);
+                    PChar->equip[SLOT_LINK2]    = PItemLinkPearl->getSlotID();
+                    PChar->equipLoc[SLOT_LINK2] = LOC_INVENTORY;
+                    PChar->pushPacket(new CInventoryAssignPacket(PItemLinkPearl, INV_LINKSHELL));
+                    charutils::SaveCharEquip(PChar);
+                    PChar->pushPacket(new CLinkshellEquipPacket(PChar, PItemLinkPearl->GetLSID()));
+                    PChar->pushPacket(new CInventoryItemPacket(PItemLinkPearl, LOC_INVENTORY, PItemLinkPearl->getSlotID()));
+                    PChar->pushPacket(new CInventoryFinishPacket());
+                    charutils::LoadInventory(PChar);
+                }
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 /************************************************************************
@@ -7282,16 +7333,19 @@ void CLuaBaseEntity::delLearnedWeaponskill(uint8 wsID)
  *  Notes   :
  ************************************************************************/
 
-void CLuaBaseEntity::trySkillUp(uint8 skill, uint8 level)
+void CLuaBaseEntity::trySkillUp(uint8 skill, uint8 level, sol::object const& forceSkillUpObj, sol::object const& useSubSkillObj)
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
-        ShowWarning("CLuaBaseEntity::trySkillUp() - Non-PC passed to function.\n");
+        // Do not attempt to skillup for non-PCs
         return;
     }
 
+    bool forceSkillUp = (forceSkillUpObj != sol::nil) ? forceSkillUpObj.as<bool>() : false;
+    bool useSubSkill  = (useSubSkillObj != sol::nil) ? forceSkillUpObj.as<bool>() : false;
+
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    charutils::TrySkillUP(PChar, static_cast<SKILLTYPE>(skill), level);
+    charutils::TrySkillUP(PChar, static_cast<SKILLTYPE>(skill), level, forceSkillUp, useSubSkill);
 }
 
 /************************************************************************
@@ -7400,20 +7454,25 @@ void CLuaBaseEntity::delLearnedAbility(uint16 abilityID)
  *  Notes   :
  ************************************************************************/
 
-void CLuaBaseEntity::addSpell(uint16 spellID, sol::object const& arg_silent, sol::object const& arg_save)
+void CLuaBaseEntity::addSpell(uint16 spellID, sol::variadic_args va)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    bool silent = (arg_silent != sol::nil) ? arg_silent.as<bool>() : false;
-    bool save   = (arg_save != sol::nil) ? arg_save.as<bool>() : true;
+    bool silentLog  = va[0].is<bool>() ? va[0].as<bool>() : false;
+    bool save       = va[1].is<bool>() ? va[1].as<bool>() : true;
+    bool sendUpdate = va[2].is<bool>() ? va[2].as<bool>() : true;
 
     if (charutils::addSpell(PChar, spellID))
     {
-        if (!silent)
+        if (sendUpdate)
         {
             PChar->pushPacket(new CCharSpellsPacket(PChar));
+        }
+
+        if (!silentLog)
+        {
             PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, 0, 23));
         }
 
@@ -9409,7 +9468,7 @@ bool CLuaBaseEntity::delStatusEffect(uint16 StatusID, sol::object const& SubID)
  *  Notes   : Used for removal of multiple effects with matching flag
  ************************************************************************/
 
-void CLuaBaseEntity::delStatusEffectsByFlag(uint16 flag, sol::object const& silent)
+void CLuaBaseEntity::delStatusEffectsByFlag(uint32 flag, sol::object const& silent)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
@@ -11866,10 +11925,10 @@ sol::table CLuaBaseEntity::getEnmityList()
             {
                 auto subTable = luautils::lua.create_table();
 
-                subTable["entity"] = CLuaBaseEntity(member.second.PEnmityOwner);
-                subTable["ce"] = member.second.CE;
-                subTable["ve"] = member.second.VE;
-                subTable["active"] = member.second.active;
+                subTable["entity"]   = CLuaBaseEntity(member.second.PEnmityOwner);
+                subTable["ce"]       = member.second.CE;
+                subTable["ve"]       = member.second.VE;
+                subTable["active"]   = member.second.active;
                 subTable["tameable"] = ((CMobEntity*)m_PBaseEntity)->PEnmityContainer->IsTameable();
 
                 table.add(subTable);
@@ -12473,6 +12532,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("addShopItem", CLuaBaseEntity::addShopItem);
     SOL_REGISTER("getCurrentGPItem", CLuaBaseEntity::getCurrentGPItem);
     SOL_REGISTER("breakLinkshell", CLuaBaseEntity::breakLinkshell);
+    SOL_REGISTER("addLinkpearl", CLuaBaseEntity::addLinkpearl);
 
     // Trading
     SOL_REGISTER("getContainerSize", CLuaBaseEntity::getContainerSize);
