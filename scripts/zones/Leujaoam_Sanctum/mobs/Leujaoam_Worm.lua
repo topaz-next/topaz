@@ -8,10 +8,10 @@ require("scripts/globals/status")
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    mob:setMod(tpz.mod.UDMGMAGIC, -50)
+    -- TODO: mob:setMod(tpz.mod.UDMGMAGIC, -50)
     mob:addMod(tpz.mod.DEF, 100)
-    mob:setMobMod(tpz.mobMod.MAGIC_STANDBACK, 1) -- Only will cast when out of combat range
-    mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 15) -- Doesnt work
+    --mob:setMobMod(tpz.mobMod.MAGIC_STANDBACK, 1) -- TODO: Only will cast when out of combat range
+    --mob:setMobMod(tpz.mobMod.STANDBACK_COOL, 15) -- TODO: Doesn't work
 end
 
 entity.onMobDeath = function(mob, player, isKiller)

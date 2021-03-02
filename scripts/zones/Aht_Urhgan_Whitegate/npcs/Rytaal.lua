@@ -40,7 +40,7 @@ entity.onTrigger = function(player, npc)
         player:startEvent(270)
     elseif currentAssault ~= 0 and player:getCharVar("assaultEntered") ~= 0 then
         if player:getCharVar("AssaultComplete") == 1 then
-            player:messageText(player, ID.text.ASSAULT_COMPLETE)
+            player:messageText(player, ID.text.RYTAAL_MISSION_COMPLETE)
             player:completeAssault(currentAssault)
         elseif currentAssault == 51 then
             player:messageText(player, ID.text.NYZUL_FAIL)
@@ -48,7 +48,7 @@ entity.onTrigger = function(player, npc)
         else
             local assaultPoint = assaultOrders[player:getCharVar("assaultEntered")].points
             player:addCurrency(assaultPoint, 100)
-            player:messageText(player, ID.text.ASSAULT_FAILED)
+            player:messageText(player, ID.text.RYTAAL_MISSION_FAILED)
             player:delAssault(currentAssault)
         end
         player:setCharVar("AssaultComplete", 0)
@@ -74,6 +74,11 @@ entity.onTrigger = function(player, npc)
 
         while currentTime >= refreshTime and tagStock < 3 do
             refreshTime = refreshTime + 86400
+            tagStock = tagStock + 1
+        end
+
+        -- GMs need tags for testing
+        if tagStock == 0 and player:getGMLevel() > 0 then
             tagStock = tagStock + 1
         end
 

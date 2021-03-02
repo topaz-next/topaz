@@ -2897,12 +2897,12 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
             ShowError("AddItem: id is nil");
             return false;
         }
+        uint16 id = table.get<uint16>("id");
 
-        uint16 id       = table.get<uint16>("id");
-        int32  quantity = table.get<int32>("quantity");
-        if (quantity == 0)
+        int32 quantity = 1;
+        if (table["quantity"].valid())
         {
-            quantity = 1;
+            quantity = table.get<int32>("quantity");
         }
 
         while (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0 && quantity > 0)

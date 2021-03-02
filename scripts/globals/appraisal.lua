@@ -1318,7 +1318,7 @@ function appraisalUtil.appraisalOnEventFinish(player, csid, option, gil, apprais
     if csid == appraisalCsid then
         local itemId = player:getLocalVar("Appraisal")
         player:confirmTrade()
-        player:addTreasure(itemId, npc, true)
+        player:addTreasure(itemId, npc)
         player:delGil(gil)
         player:setLocalVar("Appraisal", 0)
     end
