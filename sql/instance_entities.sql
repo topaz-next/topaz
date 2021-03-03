@@ -55,9 +55,50 @@ INSERT INTO `instance_entities` VALUES (1,17059855);
 -- Npcs
 INSERT INTO `instance_entities` VALUES (1,17060014);
 INSERT INTO `instance_entities` VALUES (1,17060015);
-INSERT INTO `instance_entities` VALUES (1,17060138);
-INSERT INTO `instance_entities` VALUES (1,17060146);
-INSERT INTO `instance_entities` VALUES (1,17060147);
+-- INSERT INTO `instance_entities` VALUES (1,17060138);
+-- NC: INSERT INTO `instance_entities` VALUES (1,17060146);
+-- NC: INSERT INTO `instance_entities` VALUES (1,17060147);
+
+-- Orichalcum Survey
+-- Mobs
+-- Qiqirn Miners
+INSERT INTO `instance_entities` VALUES (2,17059856);
+INSERT INTO `instance_entities` VALUES (2,17059857);
+INSERT INTO `instance_entities` VALUES (2,17059858);
+INSERT INTO `instance_entities` VALUES (2,17059859);
+INSERT INTO `instance_entities` VALUES (2,17059860);
+INSERT INTO `instance_entities` VALUES (2,17059861);
+INSERT INTO `instance_entities` VALUES (2,17059862);
+INSERT INTO `instance_entities` VALUES (2,17059863);
+-- Mineral Eaters
+INSERT INTO `instance_entities` VALUES (2,17059864);
+INSERT INTO `instance_entities` VALUES (2,17059865);
+INSERT INTO `instance_entities` VALUES (2,17059866);
+INSERT INTO `instance_entities` VALUES (2,17059867);
+INSERT INTO `instance_entities` VALUES (2,17059868);
+INSERT INTO `instance_entities` VALUES (2,17059869);
+INSERT INTO `instance_entities` VALUES (2,17059870);
+INSERT INTO `instance_entities` VALUES (2,17059871);
+INSERT INTO `instance_entities` VALUES (2,17059872);
+INSERT INTO `instance_entities` VALUES (2,17059873);
+-- Npcs
+INSERT INTO `instance_entities` VALUES (2,17060014);
+INSERT INTO `instance_entities` VALUES (2,17060015);
+-- Mining Points
+INSERT INTO `instance_entities` VALUES (2,17060016);
+INSERT INTO `instance_entities` VALUES (2,17060017);
+INSERT INTO `instance_entities` VALUES (2,17060018);
+INSERT INTO `instance_entities` VALUES (2,17060019);
+INSERT INTO `instance_entities` VALUES (2,17060020);
+INSERT INTO `instance_entities` VALUES (2,17060021);
+INSERT INTO `instance_entities` VALUES (2,17060022);
+INSERT INTO `instance_entities` VALUES (2,17060023);
+INSERT INTO `instance_entities` VALUES (2,17060024);
+INSERT INTO `instance_entities` VALUES (2,17060025);
+INSERT INTO `instance_entities` VALUES (2,17060026);
+-- INSERT INTO `instance_entities` VALUES (2,17060138);
+-- NC: INSERT INTO `instance_entities` VALUES (2,17060146);
+-- NC: INSERT INTO `instance_entities` VALUES (2,17060147);
 
 -- Preemtive Strike
 -- Mobs

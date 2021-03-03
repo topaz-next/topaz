@@ -5,7 +5,6 @@
 -----------------------------------
 local ID = require("scripts/zones/Leujaoam_Sanctum/IDs")
 require("scripts/globals/instance")
-require("scripts/globals/items")
 require("scripts/globals/missions")
 require("scripts/globals/status")
 require("scripts/globals/assault")
@@ -24,10 +23,9 @@ instance_object.onInstanceCreated = function(instance)
         for _, point in pairs(miningPoints) do
             if instance:getEntity(bit.band(point, 0xFFF), tpz.objType.NPC):getStatus() == tpz.status.DISAPPEAR then
                 instance:getEntity(bit.band(point, 0xFFF), tpz.objType.NPC):setStatus(tpz.status.NORMAL)
-                instance:getEntity(bit.band(point, 0xFFF), tpz.objType.NPC):setLocalVar("Mined", math.random(5,10))
-                points = points - 1
-                break
+                instance:getEntity(bit.band(point, 0xFFF), tpz.objType.NPC):setLocalVar("Mined", math.random(5, 10))
             end
+            points = points - 1
         end
     end
 
@@ -36,7 +34,7 @@ instance_object.onInstanceCreated = function(instance)
 end
 
 instance_object.onInstanceTimeUpdate = function(instance, elapsed)
-    updateInstanceTime(instance, elapsed, ID.text)
+    tpz.instance.updateInstanceTime(instance, elapsed, ID.text)
 end
 
 instance_object.onInstanceFailure = function(instance)

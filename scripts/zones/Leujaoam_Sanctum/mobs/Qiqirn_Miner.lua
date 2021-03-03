@@ -9,17 +9,17 @@ require("scripts/globals/status")
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-	mob:setStatus(tpz.status.NPC)
+	-- TODO: mob:setStatus(tpz.status.NPC)
 end
 
 entity.onMobRoam = function(mob)
 	instance = mob:getInstance()
 
 	if instance:getStage() == 1 and mob:getLocalVar("Stage") == 0 then
-		mob:setStatus(tpz.status.MOB)
+		-- TODO: mob:setStatus(tpz.status.MOB)
 		mob:setAnimation(1)
-		mob:speed(100)
-		mob:setAggressive(1)
+		mob:setSpeed(100)
+		mob:setAggressive(true)
 		mob:setLocalVar("Stage", 1)
 	end
 end

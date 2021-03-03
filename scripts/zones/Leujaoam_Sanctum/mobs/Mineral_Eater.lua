@@ -3,6 +3,7 @@
 --  Mob: Mineral Eater
 -- Immune to Charm
 -----------------------------------
+require("scripts/globals/assault")
 require("scripts/globals/status")
 -----------------------------------
 local entity = {}
