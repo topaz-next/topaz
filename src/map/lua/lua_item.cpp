@@ -290,6 +290,16 @@ bool CLuaItem::isInstalled()
     return PFurnishing->isInstalled();
 }
 
+uint8 CLuaItem::getAppraisalID()
+{
+    return m_PLuaItem->m_extra[0x16];
+}
+
+void CLuaItem::setAppraisalID(uint8 id)
+{
+    m_PLuaItem->m_extra[0x16] = id;
+}
+
 //==========================================================//
 
 void CLuaItem::Register()
@@ -322,6 +332,8 @@ void CLuaItem::Register()
     SOL_REGISTER("isShield", CLuaItem::isShield);
     SOL_REGISTER("getSignature", CLuaItem::getSignature);
     SOL_REGISTER("isInstalled", CLuaItem::isInstalled);
+    SOL_REGISTER("getAppraisalID", CLuaItem::getAppraisalID);
+    SOL_REGISTER("setAppraisalID", CLuaItem::setAppraisalID);
 }
 
 //======================================================//
