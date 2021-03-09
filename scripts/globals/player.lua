@@ -5,6 +5,7 @@ require("scripts/globals/status")
 require("scripts/globals/teleports")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
+require("scripts/globals/events/login_campaign")
 -----------------------------------
 require("scripts/quests/full_speed_ahead")
 -----------------------------------
@@ -191,6 +192,9 @@ tpz.player.onGameIn = function(player, firstLogin, zoning)
 
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
+
+    -- Login Campaign rewards points once daily
+    player:timer(2000, function (player) tpz.events.loginCampaign.onGameIn(player) end) -- Hacky recommendation by Teo.
 end
 
 tpz.player.onPlayerLevelUp = function(player)
