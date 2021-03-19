@@ -257,6 +257,8 @@ public:
     static constexpr float sound_range{ 8.f };
     static constexpr float sight_range{ 15.f };
 
+    std::vector<CBattleEntity*> m_EntitiesTryingToClaim;
+
 protected:
     void DistributeRewards();
     void DropItems(CCharEntity* PChar);

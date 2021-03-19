@@ -51,6 +51,7 @@ public:
     virtual bool Cast(uint16 targid, SpellID spellid) override;
 
 protected:
+    void         ResolveClaim();
     virtual bool TryDeaggro();
 
     virtual void TryLink();

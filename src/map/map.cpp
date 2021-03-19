@@ -134,7 +134,7 @@ map_session_data_t* mapsession_createsession(uint32 ip, uint16 port)
 
     map_session_data->server_packet_data = new int8[map_config.buffer_size + 20];
 
-    map_session_data->last_update = time(nullptr);
+    map_session_data->last_update = highres_clock::now();
     map_session_data->client_addr = ip;
     map_session_data->client_port = port;
 
@@ -402,7 +402,7 @@ int32 do_sockets(fd_set* rfd, duration next)
                 }
             }
 
-            map_session_data->last_update = time(nullptr);
+            map_session_data->last_update = highres_clock::now();
             size_t size                   = ret;
 
             if (recv_parse(g_PBuff, &size, &from, map_session_data) != -1)
@@ -849,7 +849,9 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
 
         CCharEntity* PChar = map_session_data->PChar;
 
-        if ((time(nullptr) - map_session_data->last_update) > 5)
+        auto last_update_time_sec = std::chrono::duration_cast<std::chrono::seconds>(highres_clock::now() - map_session_data->last_update).count();
+
+        if (last_update_time_sec > 5)
         {
             if (PChar != nullptr && !(PChar->nameflags.flags & FLAG_DC))
             {
@@ -860,7 +862,8 @@ int32 map_cleanup(time_point tick, CTaskMgr::CTask* PTask)
                     PChar->loc.zone->SpawnPCs(PChar);
                 }
             }
-            if ((time(nullptr) - map_session_data->last_update) > map_config.max_time_lastupdate)
+
+            if (last_update_time_sec > map_config.max_time_lastupdate)
             {
                 if (PChar != nullptr)
                 {

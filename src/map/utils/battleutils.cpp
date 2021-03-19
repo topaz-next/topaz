@@ -4772,80 +4772,100 @@ namespace battleutils
 
     void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing)
     {
-        TracyZoneScoped;
         if (PDefender->objtype == TYPE_MOB)
         {
-            CBattleEntity* original = PAttacker;
-            if (PAttacker->objtype != TYPE_PC)
-            {
-                if (PAttacker->PMaster && PAttacker->PMaster->objtype == TYPE_PC)
-                { // claim by master
-                    PAttacker = PAttacker->PMaster;
-                }
-                else
-                {
-                    return;
-                }
+            auto* PMob  = static_cast<CMobEntity*>(PDefender);
+            PMob->m_EntitiesTryingToClaim.emplace_back(PAttacker);
+        }
+    }
+
+    void ClaimMobFinal(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing)
+    {
+        TracyZoneScoped;
+
+        if (PDefender->objtype != TYPE_MOB)
+        {
+            return;
+        }
+
+        CBattleEntity* original = PAttacker;
+        if (PAttacker->objtype != TYPE_PC)
+        {
+            if (PAttacker->PMaster && PAttacker->PMaster->objtype == TYPE_PC)
+            { // claim by master
+                PAttacker = PAttacker->PMaster;
             }
-            CBattleEntity* battleTarget = original->GetBattleTarget();
-            CMobEntity*    mob          = static_cast<CMobEntity*>(PDefender);
+            else
+            {
+                return;
+            }
+        }
+
+        CBattleEntity* battleTarget = original->GetBattleTarget();
+        CMobEntity*    mob          = static_cast<CMobEntity*>(PDefender);
+
+        if (!passing)
+        {
+            mob->PEnmityContainer->UpdateEnmity(original, 0, 0, true, true);
+        }
+
+        if (PAttacker)
+        {
+            CCharEntity* attacker = static_cast<CCharEntity*>(PAttacker);
             if (!passing)
             {
-                mob->PEnmityContainer->UpdateEnmity(original, 0, 0, true, true);
+                battleutils::DirtyExp(PDefender, PAttacker);
             }
-            if (PAttacker)
+
+            if (!battleTarget || battleTarget == PDefender || battleTarget != attacker->PClaimedMob || PDefender->isDead())
             {
-                CCharEntity* attacker = static_cast<CCharEntity*>(PAttacker);
-                if (!passing)
-                {
-                    battleutils::DirtyExp(PDefender, PAttacker);
+                if (PDefender->isAlive() && attacker->PClaimedMob && attacker->PClaimedMob != PDefender && attacker->PClaimedMob->isAlive() &&
+                    attacker->PClaimedMob->m_OwnerID.id == attacker->id)
+                { // unclaim any other living mobs owned by attacker
+                    static_cast<CMobController*>(attacker->PClaimedMob->PAI->GetController())->TapDeclaimTime();
+                    attacker->PClaimedMob = nullptr;
                 }
-                if (!battleTarget || battleTarget == PDefender || battleTarget != attacker->PClaimedMob || PDefender->isDead())
+
+                if (!mob->CalledForHelp())
                 {
-                    if (PDefender->isAlive() && attacker->PClaimedMob && attacker->PClaimedMob != PDefender && attacker->PClaimedMob->isAlive() &&
-                        attacker->PClaimedMob->m_OwnerID.id == attacker->id)
-                    { // unclaim any other living mobs owned by attacker
-                        static_cast<CMobController*>(attacker->PClaimedMob->PAI->GetController())->TapDeclaimTime();
-                        attacker->PClaimedMob = nullptr;
+                    if (battleutils::HasClaim(PAttacker, PDefender))
+                    { // mob is currently claimed by your alliance, update ownership
+                        mob->m_OwnerID.id     = PAttacker->id;
+                        mob->m_OwnerID.targid = PAttacker->targid;
+                        if (PDefender->isAlive())
+                        { // ignore killing blow
+                            mob->updatemask |= UPDATE_STATUS;
+                            attacker->PClaimedMob = PDefender;
+                        }
                     }
-                    if (!mob->CalledForHelp())
-                    {
-                        if (battleutils::HasClaim(PAttacker, PDefender))
-                        { // mob is currently claimed by your alliance, update ownership
+                    else
+                    { // mob is unclaimed
+                        if (PDefender->isDead())
+                        { // always give rewards on the killing blow
                             mob->m_OwnerID.id     = PAttacker->id;
                             mob->m_OwnerID.targid = PAttacker->targid;
-                            if (PDefender->isAlive())
-                            { // ignore killing blow
-                                mob->updatemask |= UPDATE_STATUS;
-                                attacker->PClaimedMob = PDefender;
-                            }
+                            return;
                         }
-                        else
-                        { // mob is unclaimed
-                            if (PDefender->isDead())
-                            { // always give rewards on the killing blow
+
+                        CBattleEntity* highestClaim = mob->PEnmityContainer->GetHighestEnmity();
+                        if (highestClaim && highestClaim->objtype == TYPE_TRUST)
+                        {
+                            highestClaim = static_cast<CTrustEntity*>(highestClaim)->PMaster;
+                        }
+
+                        PAttacker->ForAlliance([&](CBattleEntity* PMember) {
+                            if (!highestClaim || highestClaim == PMember || highestClaim == PMember->PPet)
+                            { // someone in your alliance is top of hate list, claim for your alliance
                                 mob->m_OwnerID.id     = PAttacker->id;
                                 mob->m_OwnerID.targid = PAttacker->targid;
-                                return;
-                            }
-                            CBattleEntity* highestClaim = mob->PEnmityContainer->GetHighestEnmity();
-                            if (highestClaim && highestClaim->objtype == TYPE_TRUST)
-                            {
-                                highestClaim = static_cast<CTrustEntity*>(highestClaim)->PMaster;
-                            }
-                            PAttacker->ForAlliance([&](CBattleEntity* PMember) {
-                                if (!highestClaim || highestClaim == PMember || highestClaim == PMember->PPet)
-                                { // someone in your alliance is top of hate list, claim for your alliance
-                                    mob->m_OwnerID.id     = PAttacker->id;
-                                    mob->m_OwnerID.targid = PAttacker->targid;
-                                    if (PDefender->isAlive())
-                                    { // ignore killing blow
-                                        mob->updatemask |= UPDATE_STATUS;
-                                        attacker->PClaimedMob = PDefender;
-                                    }
+
+                                if (PDefender->isAlive())
+                                { // ignore killing blow
+                                    mob->updatemask |= UPDATE_STATUS;
+                                    attacker->PClaimedMob = PDefender;
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 }
             }

@@ -649,9 +649,11 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
     TracyZoneScoped;
     TracyZoneCString("Player Action");
 
-    // uint32 ID = data.ref<uint32>(0x04);
-    uint16 TargID = data.ref<uint16>(0x08);
-    uint8  action = data.ref<uint8>(0x0A);
+    uint16 TargID    = data.ref<uint16>(0x08);
+    uint8  action    = data.ref<uint8>(0x0A);
+
+    // Used later for claim resolution
+    PChar->lastActionTime = PSession->last_update;
 
     switch (action)
     {

@@ -160,16 +160,16 @@ struct map_config_t
 
 struct map_session_data_t
 {
-    uint32     client_addr;
-    uint16     client_port;
-    uint16     client_packet_id;   // id последнего пакета, пришедшего от клиента
-    uint16     server_packet_id;   // id последнего пакета, отправленного сервером
-    int8*      server_packet_data; // указатель на собранный пакет, который был ранее отправлен клиенту
-    size_t     server_packet_size; // размер пакета, который был ранее отправлен клиенту
-    time_t     last_update;        // time of last packet recv
-    blowfish_t blowfish;           // unique decypher keys
-    CCharEntity* PChar;            // game char
-    uint8        shuttingDown;     // prevents double session closing
+    uint32        client_addr;
+    uint16        client_port;
+    uint16        client_packet_id;   // id последнего пакета, пришедшего от клиента
+    uint16        server_packet_id;   // id последнего пакета, отправленного сервером
+    int8*         server_packet_data; // указатель на собранный пакет, который был ранее отправлен клиенту
+    size_t        server_packet_size; // размер пакета, который был ранее отправлен клиенту
+    hr_time_point last_update;        // time of last packet recv
+    blowfish_t    blowfish;           // unique decypher keys
+    CCharEntity*  PChar;              // game char
+    uint8         shuttingDown;       // prevents double session closing
 
     map_session_data_t()
     {
